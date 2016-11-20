@@ -10,6 +10,8 @@ import java.sql.Date;
  *
  */
 public class Subject {
+	
+	/*Instance varibles*/
 
 	private String subjectId;
 	private String subjectName;
