@@ -120,10 +120,10 @@ public class TeacherServlet extends HttpServlet {
 			request.setAttribute("teacherList", teacherList);
 			request.getRequestDispatcher("view_teacher_attendance2.jsp").forward(request, response);
 		} else if (uri.endsWith("addTeacherAtten.teacher")) {
-			TeacherAttendance teacherAttendance = new TeacherAttendance();
 			List<TeacherAttendance> teachAttenList = new ArrayList<TeacherAttendance>();
 			List<Teacher> teacherList = teacherOperImp.getTeachers();
 			for (Teacher teacher : teacherList) {
+				TeacherAttendance teacherAttendance = new TeacherAttendance();
 				teacherAttendance.setAttendanceStatus(request.getParameter("attSta" + teacher.getEmployeeId()));
 				try {
 					teacherAttendance.setAttendanceDate((Date) formatter.parse(request.getParameter("teacherAtDate")));
@@ -135,10 +135,9 @@ public class TeacherServlet extends HttpServlet {
 				teachAttenList.add(teacherAttendance);
 			}
 			teacherAtnOprImp.addTeacherAttandance(teachAttenList);
-			request.getRequestDispatcher("teacher_attendance.jsp").forward(request, response);
+			request.getRequestDispatcher("view_teacher_attendance2.jsp").forward(request, response);
 		} else if (uri.endsWith("getTeacherStatus.teacher")) {
 			TeacherAttendance teacherAttendance = new TeacherAttendance();
-			System.out.println(request.getParameter("selectedDate"));
 			List<TeacherAttendance> attList = null;
 			try {
 				teacherAttendance.setAttendanceDate((Date) formatter.parse(request.getParameter("selectedDate")));

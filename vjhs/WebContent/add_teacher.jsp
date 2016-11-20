@@ -7,10 +7,10 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Home Page</title>
-<script type="text/javascript" src="js_files/jquery-1.11.0.min.js"></script> 
+<script type="text/javascript" src="js_files/jquery-1.11.0.min.js"></script>
 <script type="text/javascript" src="js_files/jquery.validate.min.js"></script>
 <script type="text/javascript" src="js_files/teacher_registration.js"></script>
-<script type="text/javascript" src="js_files/vjhs_util.js"></script> 
+<script type="text/javascript" src="js_files/vjhs_util.js"></script>
 <script type="text/javascript" src="js_files/jquery-ui.js"></script>
 <link rel="stylesheet" type="text/css" href="css_files/jquery-ui.css" />
 <link rel="stylesheet" type="text/css" href="css_files/style.css" />
@@ -45,9 +45,7 @@
 							Teachers</a></li>
 					<li><a href="view.teacher">View Teachers</a></li>
 					<li><a href="attendance.teacher">Attendance</a></li>
-					<li><a href="viewAttendance.teacher">View Attendance</a></li>
-					<li><a href="addtt.teacher">Add Time Table</a></li>
-					<li><a href="viewtt.teacher">View Time Table</a></li>
+					<li><a href="viewtt.teacher">Time Table</a></li>
 				</ul>
 			</div>
 			<div class="mainRightBodyStyle">
@@ -67,8 +65,8 @@
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message
 											key="DATE_OF_JOINING"></fmt:message></label> <label
-										class="rightLabel"> <input 
-										type="text" name="doj" id="doj" required
+										class="rightLabel"> <input type="text" name="doj"
+										id="doj" required
 										value="<fmt:formatDate value = "${sessionScope.teacher.dateOfJoining}"/>"
 										class="datepicker inputType"></label>
 								</div>
@@ -244,14 +242,13 @@
 									<label class="leftLabel"><fmt:message key="DOB" /></label> <label
 										class="rightLabel"><input class="datepicker inputType"
 										type="text" name="dob" id="dob" required readonly
-										
 										value="${sessionScope.teacher.dateOfBirth}"></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="GENDER" /></label>
 									<label class="rightLabel"><select class="selectType"
 										id="gender" name="gender">
-											
+
 											<option value="male"
 												<c:if test="${sessionScope.teacher!=null && sessionScope.teacher.gender=='male'}">selected</c:if>><fmt:message
 													key="GENDER_MALE"></fmt:message>
@@ -266,7 +263,7 @@
 									<label class="leftLabel"><fmt:message
 											key="MARITAL_STATUS" /></label> <label class="rightLabel"><select
 										class="selectType" id="marStatus" name="marStatus">
-											
+
 											<option value="single"
 												<c:if test="${sessionScope.teacher!=null && sessionScope.teacher.maritalStatus=='single'}">selected</c:if>><fmt:message
 													key="MARITAL_STATUS_SINGLE"></fmt:message>

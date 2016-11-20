@@ -77,10 +77,8 @@
 					<li><a href="add.teacher">Add Teachers</a></li>
 					<li><a href="view.teacher">View Teachers</a></li>
 					<li><a href="attendance.teacher">Attendance</a></li>
-					<li><a href="viewAttendance.teacher">View Attendance</a></li>
-					<li><a href="addtt.teacher">Add Time Table</a></li>
-					<li class="activeLeftPane"><a href="viewtt.teacher">View
-							Time Table</a></li>
+					<li class="activeLeftPane"><a href="viewtt.teacher">Time
+							Table</a></li>
 				</ul>
 			</div>
 			<div class="mainRightBodyStyle">
@@ -89,8 +87,8 @@
 						<fieldset>
 							<legend>View / Update Time Table</legend>
 							<div class="fulWidth">
-								<label class="leftLabel">Please select Teacher to get
-									Time Table</label> <label class="rightLabel"> <select
+								<label class="leftLabelST">Please select Teacher to get
+									Time Table</label> <label class="rightLabelST"> <select
 									name="teacherName" id="teacherName"
 									onchange="onChangeTeacher()">
 										<option value="select">--Select--</option>

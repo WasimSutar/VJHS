@@ -30,36 +30,34 @@
 
 	function getEmpData() {
 		var urlPat = "getTeacherStatus.teacher?selectedDate=" + $('#teacherAtDate').val();
-		alert(urlPat);
-		if (selectedDate.length > 0) {
-			$(function() {
-				$.ajax({
-					type : "POST",
-					url : urlPat,
-					datatype : "xml",
-					async : "true",
-					success : function(xml) {
-						$('.showTab').addClass("noHide");
-						$('.teachAttenTab > tbody').empty();
-						$(xml).find('EMP').each(
-								function() {
-									$('.teachAttenTab > tbody').append(
-											'<tr><th>' + $(this).find('EMP_NAME').text()
-													+ '</th><td>'
-													+ creSelect($(this).find('EMP_ID').text())
-													+ '</td></tr>');
-									if ($(this).find('EMP_STATUS').text() == '') {
-										$('#attSta' + $(this).find('EMP_ID').text()).val()
-									}
-									$('.showTab').removeClass("noHide");
-								});
-					},
-					error : function() {
-						alert("Error occured while getting XML");
-					}
-				});
+		$(function() {
+			$.ajax({
+				type : "POST",
+				url : urlPat,
+				datatype : "xml",
+				async : "true",
+				success : function(xml) {
+					$('.showTab').addClass("noHide");
+					$('.teachAttenTab > tbody').empty();
+					$(xml).find('EMP').each(
+							function() {
+								$('.teachAttenTab > tbody').append(
+										'<tr><th>' + $(this).find('EMP_NAME').text() + '</th><td>'
+												+ creSelect($(this).find('EMP_ID').text())
+												+ '</td></tr>');
+								if ($(this).find('EMP_STATUS').text() != ''
+										&& $(this).find('EMP_STATUS').text() != 'null') {
+									$('#attSta' + $(this).find('EMP_ID').text()).val(
+											$(this).find('EMP_STATUS').text());
+								}
+								$('.showTab').removeClass("noHide");
+							});
+				},
+				error : function() {
+					alert("Error occured while getting XML");
+				}
 			});
-		}
+		});
 	}
 </script>
 </head>
@@ -92,9 +90,7 @@
 					<li><a href="add.teacher">Add Teachers</a></li>
 					<li><a href="view.teacher">View Teachers</a></li>
 					<li class="activeLeftPane"><a href="attendance.teacher">Attendance</a></li>
-					<li><a href="viewAttendance.teacher">View Attendance</a></li>
-					<li><a href="addtt.teacher">Add Time Table</a></li>
-					<li><a href="viewtt.teacher">View Time Table</a></li>
+					<li><a href="viewtt.teacher">Time Table</a></li>
 				</ul>
 			</div>
 			<div class="mainRightBodyStyle">

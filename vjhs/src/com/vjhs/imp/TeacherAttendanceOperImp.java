@@ -48,11 +48,11 @@ public class TeacherAttendanceOperImp implements TeacherAttendanceOperations {
 					pst2.setDate(2, (Date) techAttendance.getUpdatedDate());
 					pst2.setString(3, techAttendance.getUpdatedBy());
 					pst2.setString(4, techAttendance.getEmployeeId());
-					pst2.setDate(5, (Date) techAttendance.getAttendanceDate());
+					pst2.setDate(5, new Date(techAttendance.getAttendanceDate().getTime()));
 					pst2.addBatch();
 				} else {
 					pst.setString(1, techAttendance.getEmployeeId());
-					pst.setDate(2, (Date) techAttendance.getAttendanceDate());
+					pst.setDate(2, new Date(techAttendance.getAttendanceDate().getTime()));
 					pst.setString(3, techAttendance.getAttendanceStatus());
 					pst.setDate(4, (Date) techAttendance.getCreationDate());
 					pst.setString(5, techAttendance.getCreatedBy());
@@ -94,7 +94,7 @@ public class TeacherAttendanceOperImp implements TeacherAttendanceOperations {
 		try {
 			con = dbConnection.getConnection();
 			pst = con.prepareStatement(GET_TEACHER_ATTENDANCE_BY_EMPID);
-			pst.setDate(1, (Date) teachAtten.getAttendanceDate());
+			pst.setDate(1, new Date(teachAtten.getAttendanceDate().getTime()));
 			rs = pst.executeQuery();
 			while (rs.next()) {
 				TeacherAttendance teachAtdance = new TeacherAttendance();
