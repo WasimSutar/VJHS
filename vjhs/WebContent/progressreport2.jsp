@@ -48,7 +48,26 @@
 	    if( (input.value < 0) || (input.value > 100)){
 	    	alert('Mark should be in between 0 and 100');
 	    	input.value = ""
+	    	input.focus();
 	    	return;
+	    }else{
+	    	var mark = $("#totalMark").val()
+	    	average = (sum/600) * 100;
+		    var gpa = 0;
+		    if ((average >=40) && (average<=50)){
+		    	gpa = 5;
+		    }else if ((average >50) && (average<=60)){
+		    	gpa = 6;
+		    }else if ((average >60) && (average<=70)){
+		    	gpa = 7;
+		    }else if ((average >70) && (average<=80)){
+		    	gpa = 8;
+		    }else if ((average >80) && (average<=90)){
+		    	gpa = 9;
+		    }else if ((average >90) && (average<=100)){
+		    	gpa = 10;
+		    }
+	    	
 	    }
 	  }
 	
@@ -61,6 +80,50 @@
 	    return true;
 	}
 	
+	function totalMarks(){
+		var sum = 0;
+		var average = 0;
+		$(".num ").each(function() {
+			if ($(this).val() && ($(this).val()).length != 0) {
+				
+				sum += parseFloat($(this).val());
+				
+			}
+	    average = (sum/600) * 100;
+	    var gpa = 0;
+	    if ((average >=40) && (average<=50)){
+	    	gpa = 5;
+	    }else if ((average >50) && (average<=60)){
+	    	gpa = 6;
+	    }else if ((average >60) && (average<=70)){
+	    	gpa = 7;
+	    }else if ((average >70) && (average<=80)){
+	    	gpa = 8;
+	    }else if ((average >80) && (average<=90)){
+	    	gpa = 9;
+	    }else if ((average >90) && (average<=100)){
+	    	gpa = 10;
+	    }
+	    
+		$("#totalMark").val(sum);
+		$('#marksaverage').html(Number((average).toFixed(2)) );
+		$('#gpa').html(gpa);
+		});
+	}
+	
+	function clearMarks(){
+	
+		$(".num ").each(function() {
+			$(this).val('') ;
+		});
+		
+		$(".total").val('');
+		
+		$('#marksaverage').html("");
+	}
+	function getAttendancePercentage(){
+		
+	}
 	function getStudentsNames() {
 		$(function() {
 			var sendURL = 'getMonthDet.examinations?className='
@@ -97,29 +160,29 @@
 	function getWorkingDays() {
 		$(function() {
 			var sendURL = 'getMonthDet.examinations?className='
-					+ $('#className option:selected').val()+'&adminNo='+ $('#admissionNo option:selected').val();
+					+ $('#className option:selected').val()+'&adminNo='+ $('#admissionNo option:selected').val()+'&month='+$('#monthAttn option:selected').val();
 			$.ajax({
 				type : "POST",
 				url : sendURL,
 				dataType : "xml",
 				cache : false,
+				beforeSend: function(){
+					$('#workingDays').html('');
+					$('#presentDays').html('');
+				},
 				success : function(xml) {
-					$(xml).find('STUDENT').each(
+					$(xml).find('MONTH_ATTEN').each(
 							function() {
 								var temp = '';
 								var temp2 = '';
+								alert($(this).find('PRESENT_DAYS').text());
 								var presentDays = $(this).find('PRESENT_DAYS').text();
-								var workingDays = $this.find('WORKING_DAYS')
-								
-								$('#workingDays') = workingDays;
-								$('#presentDays') = presentDays;
-								/* var adminNo = $(this).find('ADMIN_NO').text();
-								temp = '<option value='+adminNo+' >' + name
-										+ '</option>';
-								temp2 = '<option value='+adminNo+' >' + adminNo
-										+ '</option>';
-								$('#studentName').append(temp);
-								$("#admissionNo").append(temp2); */
+								var workingDays = $(this).find('WORKING_DAYS').text();
+								alert(workingDays+"   "+presentDays);
+								$('#workingDays').html(workingDays);
+								$('#presentDays').html(presentDays);
+								var average = (presentDays / workingDays) * 100;
+								$('#attendanceaverage').html(average);
 							});
 				},
 				error : function() {
@@ -147,7 +210,8 @@
 								var temp = '';
 								var temp2 = '';
 								var adminNo = $(this).find('NUMBER').text();
-								temp2 = '<option value='+adminNo+' >' + adminNo
+								var name = $(this).find('NAME').text();
+								temp2 = '<option value='+adminNo+' >' + name+" / "+adminNo
 										+ '</option>';
 								$("#admissionNo").append(temp2);
 							});
@@ -188,161 +252,208 @@
 	</div>
 	<div class="mainBody">
 		<div class="mainBodyStyle">
-		<div class="mainLeftBodyStyle">
+			<div class="mainLeftBodyStyle">
 				<div class="leftPaneHeadding">Manage Examinations</div>
 				<ul>
 					<li><a href="attendance.examinations">Attendance</a></li>
 					<li><a href="subjects.examinations">Subjects</a></li>
 					<li><a href="schedule.examinations">Schedule</a></li>
 					<li><a href="student_mark.examinations">Marks Report</a></li>
-					<li class="activeLeftPane"><a href="progress_report.examinations">Progress Report</a></li>
+					<li class="activeLeftPane"><a
+						href="progress_report.examinations">Progress Report</a></li>
 					<li><a href="certificates.examinations">Certificates</a></li>
 				</ul>
 			</div>
 			<div class="mainRightBodyStyle">
-			<fmt:bundle basename="com.vjhs.labels.label">
-				<fieldset>
-							<legend>Progress Report</legend>
+				<fmt:bundle basename="com.vjhs.labels.label">
+					<fieldset>
+						<legend>Progress Report</legend>
 						<div class="fulWidth">
-							<label class="leftLabelST">Examination Name</label>
-							<label class="rightLabelST">
-								<select name="examType" id="examType">
-									<option value="select"><fmt:message key="SELECT"/> </option>
-									<option value="FA1"><fmt:message key="FA1"/> </option>
-									<option value="FA2"><fmt:message key="FA2"/> </option>
-									<option value="FA3"><fmt:message key="FA3"/> </option>
-									<option value="FA4"><fmt:message key="FA4"/> </option>
-									<option value="FA5"><fmt:message key="FA5"/> </option>
-									<option value="SA1"><fmt:message key="SA1"/> </option>
-									<option value="SA2"><fmt:message key="SA2"/> </option>
-									<option value="SA3"><fmt:message key="SA3"/> </option>
-									<option value="PAE"><fmt:message key="PAE"/> </option>
-									<option value="AE"><fmt:message key="AE"/> </option>
-								</select>
+							<label class="leftLabelST">Examination Name</label> <label
+								class="rightLabelST"> <select name="examType"
+								id="examType">
+									<option value="select"><fmt:message key="SELECT" />
+									</option>
+									<option value="FA1"><fmt:message key="FA1" />
+									</option>
+									<option value="FA2"><fmt:message key="FA2" />
+									</option>
+									<option value="FA3"><fmt:message key="FA3" />
+									</option>
+									<option value="FA4"><fmt:message key="FA4" />
+									</option>
+									<option value="FA5"><fmt:message key="FA5" />
+									</option>
+									<option value="SA1"><fmt:message key="SA1" />
+									</option>
+									<option value="SA2"><fmt:message key="SA2" />
+									</option>
+									<option value="SA3"><fmt:message key="SA3" />
+									</option>
+									<option value="PAE"><fmt:message key="PAE" />
+									</option>
+									<option value="AE"><fmt:message key="AE" />
+									</option>
+							</select>
 							</label>
 						</div>
 						<div class="fulWidth">
-							<label class="leftLabelST">Class</label>
-							<label class="rightLabelST">
-								<select name="className" id="className" onchange="getAdminssionNumbesByClassName();">
-									<option value="select"><fmt:message key="SELECT"/> </option>
-									<option value="nursery"><fmt:message key="NURSERY"/> </option>
-									<option value="lkg"><fmt:message key="LKG"/> </option>
-									<option value="ukg"><fmt:message key="UKG"/> </option>
-									<option value="first"><fmt:message key="FIRST_STANDARD"/> </option>
-									<option value="second"><fmt:message key="SECOND_STANDARD"/> </option>
-									<option value="third"><fmt:message key="THIRD_STANDARD"/> </option>
-									<option value="fourth"><fmt:message key="FOURTH_STANDARD"/> </option>
-									<option value="fifth"><fmt:message key="FIFTH_STANDARD"/> </option>
-									<option value="sixth"><fmt:message key="SIXTH_STANDARD"/> </option>
-									<option value="seventh"><fmt:message key="SEVENTH_STANDARD"/> </option>
-									<option value="eight"><fmt:message key="EIGHT_STANDARD"/> </option>
-									<option value="nineth"><fmt:message key="NINETH_STANDARD"/> </option>
-									<option value="tenth"><fmt:message key="TENTH_STANDARD"/> </option>
-								</select>
+							<label class="leftLabelST">Class</label> <label
+								class="rightLabelST"> <select name="className"
+								id="className" onchange="getAdminssionNumbesByClassName();">
+									<option value="select"><fmt:message key="SELECT" />
+									</option>
+									<option value="nursery"><fmt:message key="NURSERY" />
+									</option>
+									<option value="lkg"><fmt:message key="LKG" />
+									</option>
+									<option value="ukg"><fmt:message key="UKG" />
+									</option>
+									<option value="first"><fmt:message
+											key="FIRST_STANDARD" />
+									</option>
+									<option value="second"><fmt:message
+											key="SECOND_STANDARD" />
+									</option>
+									<option value="third"><fmt:message
+											key="THIRD_STANDARD" />
+									</option>
+									<option value="fourth"><fmt:message
+											key="FOURTH_STANDARD" />
+									</option>
+									<option value="fifth"><fmt:message
+											key="FIFTH_STANDARD" />
+									</option>
+									<option value="sixth"><fmt:message
+											key="SIXTH_STANDARD" />
+									</option>
+									<option value="seventh"><fmt:message
+											key="SEVENTH_STANDARD" />
+									</option>
+									<option value="eight"><fmt:message
+											key="EIGHT_STANDARD" />
+									</option>
+									<option value="nineth"><fmt:message
+											key="NINETH_STANDARD" />
+									</option>
+									<option value="tenth"><fmt:message
+											key="TENTH_STANDARD" />
+									</option>
+							</select>
 							</label>
 						</div>
 						<div class="fulWidth">
-							<label class="leftLabelST">Student Admission No</label>
-							<label class="rightLabelST">
-								<select name="admissionNo" id="admissionNo" onchange="getTableData()">
-									<option value="select"><fmt:message key="SELECT"/> </option>
-								</select>
+							<label class="leftLabelST">Student Name / Admission No </label> <label
+								class="rightLabelST"> <select name="admissionNo"
+								id="admissionNo" onchange="getTableData()">
+									<option value="select"><fmt:message key="SELECT" />
+									</option>
+							</select>
 							</label>
 						</div>
 						<div class="getAfterAdminNo">
-						<div>&nbsp;</div>
-						<div class="fulWidth">
-							<label class="heddingLabel">Marks Report  :</label>
-							<table class="progressReportTab">
-								<tr>
-									<th>Subjects</th>
-									<th>Marks / Out of</th>
-									<th>Grade Points</th>
-								</tr>
-								<c:forEach var="subList" items="${subjectList}">
+							<div>&nbsp;</div>
+							<div class="fulWidth">
+								<label class="heddingLabel">Marks Report :</label>
+								<table class="progressReportTab">
 									<tr>
-										<td><c:out value="${subList.subjectName}">${subList.subjectName}</c:out></td>
-										<td><input type="text" name="mark1" class = "num" id="mark1" onkeypress="return isNumber(event)" onchange="handleChange(this);calculateSum(this);" maxlength="3"/>&nbsp;&nbsp;/&nbsp;&nbsp;<label class="outOfMarks fonBold">100</label></td>
-										<td><label class = "fonBold">A1</label></td>
+										<th>Subjects</th>
+										<th>Marks / Out of 100</th>
+										<th>Grade Points</th>
 									</tr>
-								</c:forEach>
-							</table>
-						</div>
-						<div class="fulWidth">
-							<table class="totalMarksTab">
-								<tr class="totalMarksTR">
-									<td class="left"><label class = "fonBold">Total Marks :</label></td>
-									<td class="middle"><label id = "totalMarks"class="totalMarks"></label>
-									<input type="text" name="totalMark" id="totalMark" 
-								readonly="readonly" style="font: bold;"
-							 placeholder="0.0"
-								 />
-									
-									&nbsp;&nbsp;/&nbsp;&nbsp;<label class="outOfMarks">600</label></td>
-								</tr>
-							</table>
-						</div>
-						<div class="fulWidth">
-							<label class="heddingLabel">Attendance Report  :</label>
-							<table class="progressReportTab">
-								<tr>
-									<th>Months</th>
-									<th>
-										<select name="monthAttn" id="monthAttn" onChange = "getWorkingDays();">
-											<option value="<fmt:message key="SELECT"/>"><fmt:message key="SELECT"/></option>
-											<option value="<fmt:message key="JAN"/>"><fmt:message key="JAN"/></option>
-											<option value="<fmt:message key="FEB"/>"><fmt:message key="FEB"/></option>
-											<option value="<fmt:message key="MAR"/>"><fmt:message key="MAR"/></option>
-											<option value="<fmt:message key="APR"/>"><fmt:message key="APR"/></option>
-											<option value="<fmt:message key="MAY"/>"><fmt:message key="MAY"/></option>
-											<option value="<fmt:message key="JUN"/>"><fmt:message key="JUN"/></option>
-											<option value="<fmt:message key="JUL"/>"><fmt:message key="JUL"/></option>
-											<option value="<fmt:message key="AUG"/>"><fmt:message key="AUG"/></option>
-											<option value="<fmt:message key="SEP"/>"><fmt:message key="SEP"/></option>
-											<option value="<fmt:message key="OCT"/>"><fmt:message key="OCT"/></option>
-											<option value="<fmt:message key="NOV"/>"><fmt:message key="NOV"/></option>
-											<option value="<fmt:message key="DEC"/>"><fmt:message key="DEC"/></option>
-										</select>
-									</th>
-								</tr>
-								<tr>
-									<td class="left "><label class = "fonBold">Number of Working Days :</label></td>
-									<td class="middle"><label id="workingDays" class = "fonBold"></label></td>
-								</tr>
-								<tr>
-									<td class="left"><label class = "fonBold">Number of Days Present :</label></td>
-									<td class="middle"><label id = "presentDays" class = "fonBold"></label></td>
-								</tr>
-							</table>
-						</div>
-						<div class="fulWidth">
-							<label class="heddingLabel">Report Summary :</label>
-							<table class="totalMarksTab">
-								<tr class="totalMarksTR">
-									<td class="left"><label class = "fonBold">Marks Percentage ( % ) :</label></td>
-									<td class="middle"><label></label></td>
-								</tr>
-								<tr class="totalMarksTR">
-									<td class="left"><label class = "fonBold">Grade Points Average ( GPA ) :</label></td>
-									<td class="middle"><label></label></td>
-								</tr>
-								<tr class="totalMarksTR">
-									<td class="left"><label class = "fonBold">Attendance Percentage ( % ) :</label></td>
-									<td class="middle"><label></label></td>
-								</tr>
-							</table>
-						</div>
-						<div class="formButtons">
-							<input type="submit" value="Add" class="btnStyle"/>&nbsp;&nbsp;
-							<input type="reset" value="Reset" class="btnStyle"/>
-						</div>
+									<c:forEach var="subList" items="${subjectList}">
+										<tr>
+											<td><c:out value="${subList.subjectName}">${subList.subjectName}</c:out></td>
+											<td><input type="text" name="mark1" class="num"
+												id="mark1" onkeypress="return isNumber(event)"
+												placeholder="0" onchange="handleChange(this);totalMarks()"
+												maxlength="3" /></td>
+											<td><label class="fonBold">A1</label></td>
+										</tr>
+									</c:forEach>
+								</table>
+							</div>
+							<div class="fulWidth">
+								<table class="totalMarksTab">
+									<tr class="totalMarksTR">
+										<td>
+										<td class="left"><label class="fonBold">Total
+												Marks :</label></td>
+										<td class="middle"><label id="totalMarks"
+											class="totalMarks"></label> <input class="total" type="text"
+											name="totalMark" id="totalMark" readonly="readonly"
+											style="font: bold;" placeholder="0.0" />
+
+											&nbsp;&nbsp;/&nbsp;&nbsp;<label class="outOfMarks">600</label></td>
+									</tr>
+								</table>
+							</div>
+							<div class="fulWidth">
+								<label class="heddingLabel">Attendance Report :</label>
+								<table class="progressReportTab">
+									<tr>
+										<th>Months</th>
+										<th><select name="monthAttn" id="monthAttn"
+											onChange="getWorkingDays();">
+												<option value=""><fmt:message key="SELECT" /></option>
+												<option value="0"><fmt:message key="JAN" /></option>
+												<option value="1"><fmt:message key="FEB" /></option>
+												<option value="2"><fmt:message key="MAR" /></option>
+												<option value="3"><fmt:message key="APR" /></option>
+												<option value="5"><fmt:message key="JUN" /></option>
+												<option value="6"><fmt:message key="JUL" /></option>
+												<option value="7"><fmt:message key="AUG" /></option>
+												<option value="8"><fmt:message key="SEP" /></option>
+												<option value="9"><fmt:message key="OCT" /></option>
+												<option value="10"><fmt:message key="NOV" /></option>
+												<option value="11"><fmt:message key="DEC" /></option>
+										</select></th>
+									</tr>
+									<tr>
+										<td class="left "><label class="fonBold">Number
+												of Working Days :</label></td>
+										<td class="middle"><label id="workingDays"
+											class="fonBold"></label></td>
+									</tr>
+									<tr>
+										<td class="left"><label class="fonBold">Number of
+												Days Present :</label></td>
+										<td class="middle"><label id="presentDays"
+											class="fonBold"></label></td>
+									</tr>
+								</table>
+							</div>
+							<div class="fulWidth">
+								<label class="heddingLabel">Report Summary :</label>
+								<table class="totalMarksTab">
+									<tr class="totalMarksTR">
+										<td class="left"><label class="fonBold">Marks
+												Percentage ( % ) :</label></td>
+										<td class="middle" id="marksaverage"><label></label></td>
+									</tr>
+									<tr class="totalMarksTR">
+										<td class="left"><label class="fonBold">Grade
+												Points Average ( GPA ) :</label></td>
+										<td class="middle" id="gpa"><label></label></td>
+									</tr>
+									<tr class="totalMarksTR">
+										<td class="left"><label class="fonBold">Attendance
+												Percentage ( % ) :</label></td>
+										<td class="middle" id="attendanceaverage"><label></label></td>
+									</tr>
+								</table>
+							</div>
+							<div class="formButtons">
+								<input type="submit" value="Add" class="btnStyle" />&nbsp;&nbsp;
+								<input type="reset" value="Reset" class="btnStyle" onclick="clearMarks()" />
+							</div>
 						</div>
 					</fieldset>
-			</fmt:bundle>
+				</fmt:bundle>
 			</div>
 		</div>
-		</div><div class="footerStyle">© 2015 All rights Reserved | Vignana
+	</div>
+	<div class="footerStyle">© 2015 All rights Reserved | Vignana
 		Jyothi High School</div>
 </body>
 </html>

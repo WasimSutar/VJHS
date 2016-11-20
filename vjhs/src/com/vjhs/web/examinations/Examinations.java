@@ -25,6 +25,7 @@ import com.vjhs.interfaces.StudentAttendanceOperation;
 import com.vjhs.interfaces.StudentOperations;
 import com.vjhs.interfaces.SubjectOperation;
 import com.vjhs.pojo.ExamSheduleClass;
+import com.vjhs.pojo.Student;
 import com.vjhs.pojo.StudentAttendance;
 import com.vjhs.pojo.Subject;
 
@@ -124,21 +125,39 @@ public class Examinations extends HttpServlet {
 				admissionXML += "<ADMISSION><NUMBER>" + admission + "</NUMBER></ADMISSION>";
 			}
 			out.print(admissionXML);
-		}else if (uri.endsWith("getAdminssionNumbesByClassName.examinations")) {
+		} else if (uri.endsWith("getAdminssionNumbesByClassName.examinations")) {
 			String cls = request.getParameter("className");
 			String admissionXML = "<ADMISSIONS>";
 			StudentOperations studOper = new StudentOperImp();
-			List<String> admissionList = studOper.getStudentAdminNoByClassName(cls);
-			for (String admission : admissionList) {
-				admissionXML += "<ADMISSION><NUMBER>" + admission + "</NUMBER></ADMISSION>";
+			List<Student> admissionList = studOper.getStudentAdminNoByClassName(cls);
+			for (Student student : admissionList) {
+				admissionXML += "<ADMISSION><NUMBER>" + student.getAdmissionNo() + "</NUMBER><NAME>"
+						+ student.getStudentName() + "</NAME></ADMISSION>";
 			}
 			admissionXML += "</ADMISSIONS>";
 			out.print(admissionXML);
 		} else if (uri.endsWith("getMonthDet.examinations")) {
+			System.out.println("Hittin the servlet");
 			String cls = request.getParameter("className");
 			String adminNo = request.getParameter("adminNo");
+			String month = request.getParameter("month");
+			System.out.println(cls + "   " + adminNo + "   " + month);
 			ExamSheduleClassOperations schduleOpr = new ExamSheduleClassOperImp();
+			String attendanceList = schduleOpr.getMonthDetForProg(cls, adminNo, month);
+			System.out.println(attendanceList);
+			out.print(attendanceList);
+		} else if (uri.endsWith("getMonthDetForProg.examinations")) {
+			System.out.println("Hittin the servlet");
+			String cls = request.getParameter("className");
+			System.out.println("Hittin the servlet - 1");
+			String adminNo = request.getParameter("adminNo");
+			System.out.println("Hittin the servlet - 2");
+
+			ExamSheduleClassOperations schduleOpr = new ExamSheduleClassOperImp();
+			System.out.println("Hittin the servlet - 3");
 			String attendanceList = schduleOpr.getMonthPercentage(cls, adminNo);
+			System.out.println("Hittin the servlet 4");
+			System.out.println(attendanceList);
 			out.print(attendanceList);
 		} else if (uri.endsWith("addStudentAtten.examinations")) {
 			List<StudentAttendance> stuAttenList = new ArrayList<StudentAttendance>();

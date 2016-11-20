@@ -391,8 +391,8 @@ public class StudentOperImp implements StudentOperations {
 	}
 
 	@Override
-	public List<String> getStudentAdminNoByClassName(String cls) {
-		List<String> stdAdmissionList = new ArrayList<String>();
+	public List<Student> getStudentAdminNoByClassName(String cls) {
+		List<Student> stdAdmissionList = new ArrayList<Student>();
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -402,7 +402,10 @@ public class StudentOperImp implements StudentOperations {
 			pst.setString(1, cls);
 			rs = pst.executeQuery();
 			while (rs.next()) {
-				stdAdmissionList.add(rs.getString("ADMISSION_NUMBER"));
+				Student student = new Student();
+				student.setAdmissionNo(rs.getString("ADMISSION_NUMBER"));
+				student.setStudentName(rs.getString("STUDENT_NAME"));
+				stdAdmissionList.add(student);
 			}
 		} catch (SQLException e) {
 			LOGGER.info("While Getting perticular Student Info into database: " + e.getMessage());

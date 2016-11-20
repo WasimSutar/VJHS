@@ -27,7 +27,12 @@ public interface ExamSheduleClassOperations {
 
 	String getMonthPercentage(String cls, String adminNo);
 
+	String getMonthDetForProg(String cls,String adminNo,String month);
+	
 	int getAttendence(String cls, String adminNo, int month, int year);
 
 	int getDateDiff(Date date1, Date date2);
+	
+	int getYearbyMonth(int month);
+	
 }

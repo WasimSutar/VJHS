@@ -8,6 +8,7 @@ import static com.vjhs.interfaces.SQLQuery.GET_HOLIDAY_MONTH;
 import static com.vjhs.interfaces.SQLQuery.GET_PRESENT_YEAR_MONTH;
 import static com.vjhs.interfaces.SQLQuery.GET_STUDENT_ATTENDED_DAYS;
 import static com.vjhs.interfaces.SQLQuery.UPDATE_EXAM_SCHEDULE;
+import static com.vjhs.interfaces.SQLQuery.GET_YEAR_BY_MONTH;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -247,6 +248,48 @@ public class ExamSheduleClassOperImp implements ExamSheduleClassOperations {
 			LOGGER.info("While Getting differnece from two dates: " + e.getMessage());
 		}
 		return diffDays;
+	}
+
+	@Override
+	public String getMonthDetForProg(String cls, String adminNo, String month) {
+		int monthInt = Integer.parseInt(month);
+		int year = getYearbyMonth(Integer.parseInt(month));
+		double workingDays = 0;
+		int holidaysMonth = 0;
+		double presentDays = 0;
+		double percentage = 0;
+		String attendence = "<STU_ATTENDANCE>";
+		if (year != -1) {
+			holidaysMonth = getHolidaysMonth(year, monthInt);
+			workingDays = getWorkingDaysMonth(year, monthInt, 1, holidaysMonth);
+			presentDays = getAttendence(cls, adminNo, monthInt, year);
+			attendence += "<MONTH_ATTEN><PRESENT_DAYS>" + presentDays + "</PRESENT_DAYS><WORKING_DAYS>" + workingDays
+					+ "</WORKING_DAYS><PERCENTAGE>" + percentage + "</PERCENTAGE></MONTH_ATTEN>";
+		}
+		attendence += "</STU_ATTENDANCE>";
+		return attendence;
+	}
+
+	@Override
+	public int getYearbyMonth(int month) {
+		int year = -1;
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try {
+			con = dbConnection.getConnection();
+			pst = con.prepareStatement(GET_YEAR_BY_MONTH);
+			pst.setInt(1, month);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				year = rs.getInt("YEAR");
+			}
+		} catch (SQLException e) {
+			LOGGER.info("While Getting holidays from database: " + e.getMessage());
+		} finally {
+			dbConnection.close(rs, pst, con);
+		}
+		return year;
 	}
 
 }

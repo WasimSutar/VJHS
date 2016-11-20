@@ -25,6 +25,6 @@ public interface StudentOperations {
 	
 	List<String> getStudentAdminNo(String cls, String name);
 	
-	List<String> getStudentAdminNoByClassName(String cls);
+	List<Student> getStudentAdminNoByClassName(String cls);
 
 }
