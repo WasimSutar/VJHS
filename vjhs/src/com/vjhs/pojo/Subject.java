@@ -6,7 +6,7 @@ package com.vjhs.pojo;
 import java.sql.Date;
 
 /**
- * @author wasimakram.sutar
+ * @author wasimakram.sutar and Gangadhar
  *
  */
 public class Subject {
