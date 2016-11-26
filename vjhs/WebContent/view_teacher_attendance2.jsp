@@ -18,8 +18,19 @@
 <link rel="stylesheet" type="text/css" href="css_files/style.css" />
 <script type="text/javascript">
 	function creSelect(id) {
-		var select = '<select name="attSta'+id+'" id="attSta'+id+'" class="selectType42"><option value="">Select</option><option value="Present">Present</option><option value="Absent">Absent</option><option value="Half-Day">Half-Day</option><option value="Leave">Leave</option><option value="Holiday">Holiday</option></select>'
+		var select = '<select name="attSta'
+				+ id
+				+ '" id="attSta'
+				+ id
+				+ '" class="selectType42" onchange="javascript:toSetHoliday(id)"><option value="">Select</option><option value="Present">Present</option><option value="Absent">Absent</option><option value="Half-Day">Half-Day</option><option value="Leave">Leave</option><option value="Holiday">Holiday</option></select>'
 		return select;
+	}
+
+	function toSetHoliday(id) {
+		var attenSta = $('#' + id).val();
+		if (attenSta == 'Holiday') {
+			$("select").val("Holiday");
+		}
 	}
 
 	function getTeacherMonthAtData() {
@@ -29,34 +40,62 @@
 	}
 
 	function getEmpData() {
-		var urlPat = "getTeacherStatus.teacher?selectedDate=" + $('#teacherAtDate').val();
+		var urlPat = "getTeacherStatus.teacher?selectedDate="
+				+ $('#teacherAtDate').val();
 		$(function() {
-			$.ajax({
-				type : "POST",
-				url : urlPat,
-				datatype : "xml",
-				async : "true",
-				success : function(xml) {
-					$('.showTab').addClass("noHide");
-					$('.teachAttenTab > tbody').empty();
-					$(xml).find('EMP').each(
-							function() {
-								$('.teachAttenTab > tbody').append(
-										'<tr><th>' + $(this).find('EMP_NAME').text() + '</th><td>'
-												+ creSelect($(this).find('EMP_ID').text())
-												+ '</td></tr>');
-								if ($(this).find('EMP_STATUS').text() != ''
-										&& $(this).find('EMP_STATUS').text() != 'null') {
-									$('#attSta' + $(this).find('EMP_ID').text()).val(
-											$(this).find('EMP_STATUS').text());
-								}
-								$('.showTab').removeClass("noHide");
-							});
-				},
-				error : function() {
-					alert("Error occured while getting XML");
-				}
-			});
+			$
+					.ajax({
+						type : "POST",
+						url : urlPat,
+						datatype : "xml",
+						async : "true",
+						success : function(xml) {
+							$('.showTab').addClass("noHide");
+							$('.teachAttenTab > tbody').empty();
+							$(xml)
+									.find('EMP')
+									.each(
+											function() {
+												$('.teachAttenTab > tbody')
+														.append(
+																'<tr><th>'
+																		+ $(
+																				this)
+																				.find(
+																						'EMP_NAME')
+																				.text()
+																		+ '</th><td>'
+																		+ creSelect($(
+																				this)
+																				.find(
+																						'EMP_ID')
+																				.text())
+																		+ '</td></tr>');
+												if ($(this).find('EMP_STATUS')
+														.text() != ''
+														&& $(this).find(
+																'EMP_STATUS')
+																.text() != 'null') {
+													$(
+															'#attSta'
+																	+ $(this)
+																			.find(
+																					'EMP_ID')
+																			.text())
+															.val(
+																	$(this)
+																			.find(
+																					'EMP_STATUS')
+																			.text());
+												}
+												$('.showTab').removeClass(
+														"noHide");
+											});
+						},
+						error : function() {
+							alert("Error occured while getting XML");
+						}
+					});
 		});
 	}
 </script>
