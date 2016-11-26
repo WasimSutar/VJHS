@@ -488,7 +488,8 @@ legend {
 
 .ttLabel {
 	width: 100px;
-	text-align: left;
+	border: 1px solid #fff;
+	text-align: center;
 }
 
 .thLabel {
@@ -523,6 +524,13 @@ input:FOCUS, select:FOCUS, textarea:FOCUS {
 	margin: auto;
 }
 
+.teachTimTbl {
+	border: 2px solid #0083b4;
+	border-collapse: collapse;
+	background-color: #fff;
+	margin: auto;
+}
+
 .cumulativePercen {
 	float: right;
 }
@@ -538,17 +546,16 @@ input:FOCUS, select:FOCUS, textarea:FOCUS {
 	text-align: center;
 }
 
-.monthAttend th, .teachAttenTab th {
+.monthAttend th, .teachAttenTab th, .teachTimTbl th {
 	font-size: 13px;
 	background-color: #0083b4;
 	color: #fff;
 }
 
-.teachAttenTab td, .teachAttenTab th{
+.teachAttenTab td, .teachAttenTab th, .teachTimTbl td, .teachTimTbl th {
 	text-align: center;
-	padding:3px 5px;
+	padding: 3px 5px;
 }
-
 
 .monthAttend .toShowNo {
 	width: 18%;
@@ -644,4 +651,16 @@ input:FOCUS, select:FOCUS, textarea:FOCUS {
 	text-decoration: underline;
 	font-family: Monotype Corsiva;
 	padding: 0px 5px;
+}
+
+.selectStyleAdd select {
+	/*for firefox*/
+	-moz-appearance: none;
+	/*for chrome*/
+	-webkit-appearance: none;
+}
+
+/*for IE10*/
+.selectStyleAdd select::-ms-expand {
+	display: none;
 }

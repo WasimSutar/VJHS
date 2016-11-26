@@ -20,13 +20,15 @@
 			$('.showClassData').hide();
 		} else {
 			var urlPat = "getTeachertt.teacher?empId=" + empId;
-			alert(urlPat);
 			$(function() {
 				$.ajax({
 					type : "POST",
 					url : urlPat,
 					datatype : "xml",
 					async : "true",
+					beforeSend : function() {
+						$('.teachTimTbl select').val('');
+					},
 					success : function(xml) {
 						$(xml).find('LEVEL').each(function() {
 							var day = $(this).find("DAY").text();
@@ -40,6 +42,23 @@
 							$('#g' + dayVal).val($(this).find("PD7").text());
 							$('#h' + dayVal).val($(this).find("PD8").text());
 						});
+						var count = 0;
+						$(".teachTimTbl select").each(function() {
+							if (this.value != "") {
+								count++;
+							}
+						});
+						if (count == 0) {
+							$('.teachTimTbl').removeClass("selectStyleAdd");
+							$('.teachTimTbl select').prop('disabled', false);
+							$('#edit').hide();
+							$('#submit').show();
+						} else {
+							$('.teachTimTbl').addClass("selectStyleAdd");
+							$('#edit').show();
+							$('#submit').hide();
+							$('.teachTimTbl select').prop('disabled', true);
+						}
 					},
 					error : function() {
 						alert("Error occured while getting XML");
@@ -66,6 +85,15 @@
 		}
 		return dayVal;
 	}
+
+	$(function() {
+		$("#edit").click(function() {
+			$('.teachTimTbl').removeClass("selectStyleAdd");
+			$('.teachTimTbl select').prop('disabled', false);
+			$('#edit').hide();
+			$('#submit').show();
+		});
+	});
 </script>
 </head>
 <body>
@@ -120,17 +148,17 @@
 							</div>
 							<div class="techrTable noHide">
 								<div class="fulWidth">
-									<table class="viewCttTable">
+									<table class="teachTimTbl" border="1">
 										<tr>
 											<th></th>
-											<th><label class="ttLabel">Period I</label></th>
-											<th><label class="ttLabel">Period II</label></th>
-											<th><label class="ttLabel">Period III</label></th>
-											<th><label class="ttLabel">Period IV</label></th>
-											<th><label class="ttLabel">Period V</label></th>
-											<th><label class="ttLabel">Period VI</label></th>
-											<th><label class="ttLabel">Period VII</label></th>
-											<th><label class="ttLabel">Period VIII</label></th>
+											<th>Period I</th>
+											<th>Period II</th>
+											<th>Period III</th>
+											<th>Period IV</th>
+											<th>Period V</th>
+											<th>Period VI</th>
+											<th>Period VII</th>
+											<th>Period VIII</th>
 										</tr>
 
 										<c:forEach begin="1" end="6" var="i">
@@ -164,56 +192,56 @@
 
 
 												<td><select name="a${i}" id="a${i}" class="ttLabel">
-														<option value="">Select</option>
+														<option value="" />
 														<c:forEach var="subList" items="${subjectList}">
 															<option value="${subList.subjectId}">${subList.subjectName}</option>
 														</c:forEach>
 												</select></td>
 
 												<td><select name="b${i}" id="b${i}" class="ttLabel">
-														<option value="">Select</option>
+														<option value="" />
 														<c:forEach var="subList" items="${subjectList}">
 															<option value="${subList.subjectId}">${subList.subjectName}</option>
 														</c:forEach>
 												</select></td>
 
 												<td><select name="c${i}" id="c${i}" class="ttLabel">
-														<option value="">Select</option>
+														<option value="" />
 														<c:forEach var="subList" items="${subjectList}">
 															<option value="${subList.subjectId}">${subList.subjectName}</option>
 														</c:forEach>
 												</select></td>
 
 												<td><select name="d${i}" id="d${i}" class="ttLabel">
-														<option value="">Select</option>
+														<option value="" />
 														<c:forEach var="subList" items="${subjectList}">
 															<option value="${subList.subjectId}">${subList.subjectName}</option>
 														</c:forEach>
 												</select></td>
 
 												<td><select name="e${i}" id="e${i}" class="ttLabel">
-														<option value="">Select</option>
+														<option value="" />
 														<c:forEach var="subList" items="${subjectList}">
 															<option value="${subList.subjectId}">${subList.subjectName}</option>
 														</c:forEach>
 												</select></td>
 
 												<td><select name="f${i}" id="f${i}" class="ttLabel">
-														<option value="">Select</option>
+														<option value="" />
 														<c:forEach var="subList" items="${subjectList}">
 															<option value="${subList.subjectId}">${subList.subjectName}</option>
 														</c:forEach>
 												</select></td>
 
 												<td><select name="g${i}" id="g${i}" class="ttLabel">
-														<option value="">Select</option>
+														<option value="" />
 														<c:forEach var="subList" items="${subjectList}">
 															<option value="${subList.subjectId}">${subList.subjectName}</option>
 														</c:forEach>
 												</select></td>
 
 												<td><select name="h${i}" id="h${i}" class="ttLabel">
-														<option value="">Select</option>
+														<option value="" />
 														<c:forEach var="subList" items="${subjectList}">
 															<option value="${subList.subjectId}">${subList.subjectName}</option>
 														</c:forEach>
@@ -224,6 +252,7 @@
 									</table>
 								</div>
 								<div class="formButtons">
+									<input type="button" class="btnStyle" id="edit" value="Edit">
 									<input type="submit" class="btnStyle" id="submit" name="Submit"
 										value="Add / Update"> &nbsp;&nbsp; <input
 										class="btnStyle" type="reset" id="reset" name="reset"

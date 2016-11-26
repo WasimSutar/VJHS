@@ -82,6 +82,7 @@ public class TeacherTTOperImp implements TeacherTTOperations {
 		} catch (SQLException e) {
 			LOGGER.info("While Adding / Updating Teacher Timetable into Database: " + e.getMessage());
 		} finally {
+			dbConnection.close(pst2);
 			dbConnection.close(pst, con);
 		}
 		return res;
