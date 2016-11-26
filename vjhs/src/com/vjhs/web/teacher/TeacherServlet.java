@@ -16,11 +16,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.vjhs.imp.SubjectOperImp;
 import com.vjhs.imp.TeacherAttendanceOperImp;
 import com.vjhs.imp.TeacherOperImp;
+import com.vjhs.imp.TeacherTTOperImp;
+import com.vjhs.interfaces.SubjectOperation;
 import com.vjhs.interfaces.TeacherAttendanceOperations;
+import com.vjhs.interfaces.TeacherTTOperations;
+import com.vjhs.pojo.Subject;
 import com.vjhs.pojo.Teacher;
 import com.vjhs.pojo.TeacherAttendance;
+import com.vjhs.pojo.TeacherTT;
 
 /**
  * Servlet implementation class TeacherServlet
@@ -157,8 +163,36 @@ public class TeacherServlet extends HttpServlet {
 			request.setAttribute("teacherList", teacherList);
 			request.getRequestDispatcher("view_teachers2.jsp").forward(request, response);
 		} else if (uri.endsWith("addtt.teacher")) {
-			request.getRequestDispatcher("teachertt.jsp").forward(request, response);
+			TeacherTTOperations tchrTTOpt = new TeacherTTOperImp();
+			String empId = request.getParameter("empId");
+			List<TeacherTT> tchrTTList = new ArrayList<TeacherTT>();
+			for (int i = 1; i <= 6; i++) {
+				TeacherTT tchrTT = new TeacherTT();
+				tchrTT.setEmployeeId(empId);
+				tchrTT.setPeriodI(request.getParameter("a" + i));
+				tchrTT.setPeriodII(request.getParameter("b" + i));
+				tchrTT.setPeriodIII(request.getParameter("c" + i));
+				tchrTT.setPeriodIV(request.getParameter("d" + i));
+				tchrTT.setPeriodV(request.getParameter("e" + i));
+				tchrTT.setPeriodVI(request.getParameter("f" + i));
+				tchrTT.setPeriodVII(request.getParameter("g" + i));
+				tchrTT.setPeriodVIII(request.getParameter("h" + i));
+				tchrTT.setDays(request.getParameter("i" + i));
+				tchrTTList.add(tchrTT);
+			}
+			tchrTTOpt.addTimeTable(tchrTTList);
+			SubjectOperation subjectOperations = new SubjectOperImp();
+			List<Subject> subjectsList = subjectOperations.getSubjects();
+			request.setAttribute("subjectList", subjectsList);
+			List<Teacher> teacherList = teacherOperImp.getTeachers();
+			request.setAttribute("teacherList", teacherList);
+			request.getRequestDispatcher("view_teachertt2.jsp").forward(request, response);
 		} else if (uri.endsWith("viewtt.teacher")) {
+			SubjectOperation subjectOperations = new SubjectOperImp();
+			List<Subject> subjectsList = subjectOperations.getSubjects();
+			request.setAttribute("subjectList", subjectsList);
+			List<Teacher> teacherList = teacherOperImp.getTeachers();
+			request.setAttribute("teacherList", teacherList);
 			request.getRequestDispatcher("view_teachertt2.jsp").forward(request, response);
 		} else if (uri.endsWith("regform.teacher")) {
 			Teacher teacher = getTeacherDetails(request);
@@ -184,6 +218,19 @@ public class TeacherServlet extends HttpServlet {
 			List<Teacher> teacherList = teacherOperImp.getTeachers();
 			request.setAttribute("teacherList", teacherList);
 			request.getRequestDispatcher("view_teacher_attendance.jsp").forward(request, response);
+		} else if (uri.endsWith("getTeachertt.teacher")) {
+			TeacherTTOperations tchrTTOpt = new TeacherTTOperImp();
+			String empId = request.getParameter("empId");
+			List<TeacherTT> teachTT = tchrTTOpt.getTimeTableByJobId(empId);
+			out.print("<LIST>");
+			for (TeacherTT tchrTT : teachTT) {
+				out.print("<LEVEL><PD1>" + tchrTT.getPeriodI() + "</PD1><PD2>" + tchrTT.getPeriodII() + "</PD2><PD3>"
+						+ tchrTT.getPeriodIII() + "</PD3><PD4>" + tchrTT.getPeriodIV() + "</PD4><PD5>"
+						+ tchrTT.getPeriodV() + "</PD5><PD6>" + tchrTT.getPeriodVI() + "</PD6><PD7>"
+						+ tchrTT.getPeriodVII() + "</PD7><PD8>" + tchrTT.getPeriodVIII() + "</PD8><DAY>"
+						+ tchrTT.getDays() + "</DAY></LEVEL>");
+			}
+			out.print("</LIST>");
 		}
 
 	}

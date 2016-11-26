@@ -17,46 +17,74 @@ import com.vjhs.pojo.TeacherTT;
 public class TeacherTTOperImp implements TeacherTTOperations {
 
 	DBConnection dbConnection = DBConnection.util;
-	private static final Logger LOGGER = Logger
-			.getLogger(TeacherTTOperImp.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(TeacherTTOperImp.class.getName());
 
 	@Override
 	public boolean addTimeTable(List<TeacherTT> teacherTTList) {
 		Connection con = null;
 		PreparedStatement pst = null;
-		int[] countArray = null;
-		boolean flag=false;
+		PreparedStatement pst2 = null;
+		int[] count, count2;
+		boolean res = false;
 		try {
 			con = dbConnection.getConnection();
 			pst = con.prepareStatement(ADD_TEACHER_TIMETABLE);
+			pst2 = con.prepareStatement(UPDATE_TEACHER_TIMETABLE);
 			for (TeacherTT teacherTT : teacherTTList) {
-				pst.setInt(1, teacherTT.getDays());
-				pst.setString(2, teacherTT.getEmployeeId());
-				pst.setString(3, teacherTT.getPeriodI());
-				pst.setString(4, teacherTT.getPeriodII());
-				pst.setString(5, teacherTT.getPeriodIII());
-				pst.setString(6, teacherTT.getPeriodIV());
-				pst.setString(7, teacherTT.getPeriodV());
-				pst.setString(8, teacherTT.getPeriodVI());
-				pst.setString(9, teacherTT.getPeriodVII());
-				pst.setString(10, teacherTT.getPeriodVIII());
-				pst.addBatch();
+				if (isTchrTTExist(teacherTT.getDays(), teacherTT.getEmployeeId())) {
+					System.out.println(teacherTT.toString());
+					pst2.setString(1, teacherTT.getPeriodI());
+					pst2.setString(2, teacherTT.getPeriodII());
+					pst2.setString(3, teacherTT.getPeriodIII());
+					pst2.setString(4, teacherTT.getPeriodIV());
+					pst2.setString(5, teacherTT.getPeriodV());
+					pst2.setString(6, teacherTT.getPeriodVI());
+					pst2.setString(7, teacherTT.getPeriodVII());
+					pst2.setString(8, teacherTT.getPeriodVIII());
+					pst2.setDate(9, teacherTT.getUpdatedDate());
+					pst2.setString(10, teacherTT.getUpdatedBy());
+					pst2.setString(11, teacherTT.getEmployeeId());
+					pst2.setString(12, teacherTT.getDays());
+					pst2.addBatch();
+				} else {
+					pst.setString(1, teacherTT.getEmployeeId());
+					pst.setString(2, teacherTT.getDays());
+					pst.setString(3, teacherTT.getPeriodI());
+					pst.setString(4, teacherTT.getPeriodII());
+					pst.setString(5, teacherTT.getPeriodIII());
+					pst.setString(6, teacherTT.getPeriodIV());
+					pst.setString(7, teacherTT.getPeriodV());
+					pst.setString(8, teacherTT.getPeriodVI());
+					pst.setString(9, teacherTT.getPeriodVII());
+					pst.setString(10, teacherTT.getPeriodVIII());
+					pst.setDate(11, teacherTT.getCreation_Date());
+					pst.setString(12, teacherTT.getCreatedBy());
+					pst.addBatch();
+				}
 			}
-			countArray = pst.executeBatch();
+			count = pst.executeBatch();
+			count2 = pst2.executeBatch();
+			for (int i : count) {
+				if (i > 0) {
+					res = true;
+				} else {
+					res = false;
+				}
+			}
+			for (int i : count2) {
+				if (i > 0) {
+					res = true;
+				} else {
+					res = false;
+				}
+			}
 			con.commit();
 		} catch (SQLException e) {
-			LOGGER.info("While Adding Teacher Timetable into Database: "
-					+ e.getMessage());
+			LOGGER.info("While Adding / Updating Teacher Timetable into Database: " + e.getMessage());
 		} finally {
 			dbConnection.close(pst, con);
 		}
-		for(int count:countArray){
-			if(count<1){
-				flag=true;
-				return flag;
-			}
-		}
-		return flag;
+		return res;
 	}
 
 	@Override
@@ -64,12 +92,12 @@ public class TeacherTTOperImp implements TeacherTTOperations {
 		Connection con = null;
 		PreparedStatement pst = null;
 		int[] countArray = null;
-		boolean flag=false;
+		boolean flag = false;
 		try {
 			con = dbConnection.getConnection();
 			pst = con.prepareStatement(UPDATE_TEACHER_TIMETABLE);
 			for (TeacherTT teacherTT : teacherTTList) {
-				pst.setInt(1, teacherTT.getDays());
+				pst.setString(1, teacherTT.getDays());
 				pst.setString(2, teacherTT.getEmployeeId());
 				pst.setString(3, teacherTT.getPeriodI());
 				pst.setString(4, teacherTT.getPeriodII());
@@ -84,19 +112,19 @@ public class TeacherTTOperImp implements TeacherTTOperations {
 			countArray = pst.executeBatch();
 			con.commit();
 		} catch (SQLException e) {
-			LOGGER.info("While Updating Teacher Timetable into Database: "
-					+ e.getMessage());
+			LOGGER.info("While Updating Teacher Timetable into Database: " + e.getMessage());
 		} finally {
 			dbConnection.close(pst, con);
 		}
-		for(int count:countArray){
-			if(count<1){
-				flag=true;
+		for (int count : countArray) {
+			if (count < 1) {
+				flag = true;
 				return flag;
 			}
 		}
 		return flag;
 	}
+
 	@Override
 	public boolean deleteTimeTable(String jobId) {
 		Connection con = null;
@@ -109,8 +137,7 @@ public class TeacherTTOperImp implements TeacherTTOperations {
 			count = pst.executeUpdate();
 			con.commit();
 		} catch (SQLException e) {
-			LOGGER.info("While Deleting Teacher Timetable into Database: "
-					+ e.getMessage());
+			LOGGER.info("While Deleting Teacher Timetable into Database: " + e.getMessage());
 		} finally {
 			dbConnection.close(pst, con);
 		}
@@ -118,7 +145,7 @@ public class TeacherTTOperImp implements TeacherTTOperations {
 	}
 
 	@Override
-	public List<TeacherTT> getTimeTableByJobId(String jobId) {
+	public List<TeacherTT> getTimeTableByJobId(String empId) {
 		Connection con = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
@@ -126,12 +153,12 @@ public class TeacherTTOperImp implements TeacherTTOperations {
 		try {
 			con = dbConnection.getConnection();
 			pst = con.prepareStatement(GET_TEACHER_TABLE_BY_ID);
-			pst.setString(1, jobId);
+			pst.setString(1, empId);
 			rs = pst.executeQuery();
 			while (rs.next()) {
 				TeacherTT teacherTT = new TeacherTT();
-				teacherTT.setDays(rs.getInt("DAY"));
-				teacherTT.setEmployeeId(rs.getString("EMP_ID"));
+				teacherTT.setDays(rs.getString("DAY"));
+				teacherTT.setEmployeeId(empId);
 				teacherTT.setPeriodI(rs.getString("PERIOD_I"));
 				teacherTT.setPeriodII(rs.getString("PERIOD_II"));
 				teacherTT.setPeriodIII(rs.getString("PERIOD_III"));
@@ -143,12 +170,34 @@ public class TeacherTTOperImp implements TeacherTTOperations {
 				teacherTTList.add(teacherTT);
 			}
 		} catch (SQLException e) {
-			LOGGER.info("While Adding Teacher Timetable into Database: "
-					+ e.getMessage());
+			LOGGER.info("While getting Teacher Timetable into Database: " + e.getMessage());
 		} finally {
 			dbConnection.close(pst, con);
 		}
 		return teacherTTList;
+	}
+
+	@Override
+	public boolean isTchrTTExist(String day, String empId) {
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			con = dbConnection.getConnection();
+			pst = con.prepareStatement(IS_TEACHER_EXIT);
+			pst.setString(1, day);
+			pst.setString(2, empId);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				count = rs.getInt("COUNT");
+			}
+		} catch (SQLException e) {
+			LOGGER.info("While checking Employee existance from Database: " + e.getMessage());
+		} finally {
+			dbConnection.close(rs, pst, con);
+		}
+		return (count > 0);
 	}
 
 }

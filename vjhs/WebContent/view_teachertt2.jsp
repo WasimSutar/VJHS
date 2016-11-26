@@ -13,38 +13,58 @@
 	href="css_files/jquery.dataTables.css">
 <link rel="stylesheet" type="text/css" href="css_files/style.css" />
 <script type="text/javascript">
-	function getClassData(className) {
-		$('.showClassData').show();
-		$('.showInitial').hide();
-		$('.classNamePlace').html(className);
-		$('#updateCT').hide();
-		$('#editCT,#deleteCT').show();
-	}
-
-	function editClassTT() {
-		$('#updateCT').show();
-		$('#editCT,#deleteCT').hide();
-		$('.viewCttTable input').css('border', '1px solid black');
-	}
-
-	function deleteClassTT() {
-
-	}
-
-	function updateClassTT() {
-
-	}
-
 	function onChangeTeacher() {
-		$('#updateCT').hide();
-		$('#editCT,#deleteCT').show();
-		$('.viewCttTable input').css('border', '1px solid #fff');
-		var teachName = $('#teacherName').val();
-		if (teachName == 'select') {
+		var empId = $('#empId option:selected').val();
+		if (empId == '') {
+			$('.techrTable').addClass('noHide');
 			$('.showClassData').hide();
 		} else {
-			$('.showClassData').show();
+			var urlPat = "getTeachertt.teacher?empId=" + empId;
+			alert(urlPat);
+			$(function() {
+				$.ajax({
+					type : "POST",
+					url : urlPat,
+					datatype : "xml",
+					async : "true",
+					success : function(xml) {
+						$(xml).find('LEVEL').each(function() {
+							var day = $(this).find("DAY").text();
+							var dayVal = getDayVal(day);
+							$('#a' + dayVal).val($(this).find("PD1").text());
+							$('#b' + dayVal).val($(this).find("PD2").text());
+							$('#c' + dayVal).val($(this).find("PD3").text());
+							$('#d' + dayVal).val($(this).find("PD4").text());
+							$('#e' + dayVal).val($(this).find("PD5").text());
+							$('#f' + dayVal).val($(this).find("PD6").text());
+							$('#g' + dayVal).val($(this).find("PD7").text());
+							$('#h' + dayVal).val($(this).find("PD8").text());
+						});
+					},
+					error : function() {
+						alert("Error occured while getting XML");
+					}
+				});
+			});
+			$('.techrTable').removeClass('noHide');
 		}
+	}
+	function getDayVal(day) {
+		var dayVal = -1;
+		if (day == 'MON') {
+			dayVal = 1;
+		} else if (day == 'TUE') {
+			dayVal = 2;
+		} else if (day == 'WED') {
+			dayVal = 3;
+		} else if (day == 'THU') {
+			dayVal = 4;
+		} else if (day == 'FRI') {
+			dayVal = 5;
+		} else if (day == 'SAT') {
+			dayVal = 6;
+		}
+		return dayVal;
 	}
 </script>
 </head>
@@ -82,157 +102,135 @@
 				</ul>
 			</div>
 			<div class="mainRightBodyStyle">
-				<form name="updateCTable" method="post" id="updateCTable" action="#">
+				<form name="updateCTable" method="post" id="updateCTable"
+					action="addtt.teacher">
 					<div>
 						<fieldset>
 							<legend>View / Update Time Table</legend>
 							<div class="fulWidth">
 								<label class="leftLabelST">Please select Teacher to get
 									Time Table</label> <label class="rightLabelST"> <select
-									name="teacherName" id="teacherName"
-									onchange="onChangeTeacher()">
-										<option value="select">--Select--</option>
-										<option value="phani">Phani</option>
-										<option value="wasim">Wasim</option>
+									name="empId" id="empId" onchange="onChangeTeacher()">
+										<option value="">Select</option>
+										<c:forEach items="${teacherList}" var="teacher">
+											<option value="${teacher.employeeId}">${teacher.teacherName}</option>
+										</c:forEach>
 								</select>
 								</label>
 							</div>
-							<div class="fulWidth">
-								<table class="viewCttTable">
-									<tr>
-										<th></th>
-										<th><label class="ttLabel">Period&nbsp;I</label></th>
-										<th><label class="ttLabel">Period&nbsp;II</label></th>
-										<th><label class="ttLabel">Period&nbsp;III</label></th>
-										<th><label class="ttLabel">Period&nbsp;IV</label></th>
-										<th><label class="ttLabel">Period&nbsp;V</label></th>
-										<th><label class="ttLabel">Period&nbsp;VI</label></th>
-										<th><label class="ttLabel">Period&nbsp;VII</label></th>
-										<th><label class="ttLabel">Period&nbsp;VIII</label></th>
-									</tr>
-									<tr>
-										<th class="thLabel">MON</th>
-										<td><input type="text" name="a1" id="a1" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="a2" id="a2" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="a3" id="a3" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="a4" id="a4" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="a5" id="a5" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="a6" id="a6" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="a7" id="a" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="a8" id="a8" value=""
-											class="ttLabel" /></td>
-									</tr>
-									<tr>
-										<th class="thLabel">TUE</th>
-										<td><input type="text" name="b1" id="b1" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="b2" id="b2" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="b3" id="b3" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="b4" id="b4" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="b5" id="b5" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="b6" id="b6" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="b7" id="b7" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="b8" id="b8" value=""
-											class="ttLabel" /></td>
-									</tr>
-									<tr>
-										<th class="thLabel">WED</th>
-										<td><input type="text" name="c1" id="c1" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="c2" id="c2" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="c3" id="c3" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="c4" id="c4" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="c5" id="c5" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="c6" id="c6" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="c7" id="c7" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="c8" id="c8" value=""
-											class="ttLabel" /></td>
-									</tr>
-									<tr>
-										<th class="thLabel">THU</th>
-										<td><input type="text" name="d1" id="d1" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="d2" id="d2" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="d3" id="d3" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="d4" id="d4" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="d5" id="d5" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="d6" id="d6" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="d7" id="d7" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="d8" id="d8" value=""
-											class="ttLabel" /></td>
-									</tr>
-									<tr>
-										<th class="thLabel">FRI</th>
-										<td><input type="text" name="e1" id="e1" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="e2" id="e2" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="e3" id="e3" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="e4" id="e4" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="e5" id="e5" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="e6" id="e6" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="e7" id="e7" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="e8" id="e8" value=""
-											class="ttLabel" /></td>
-									</tr>
-									<tr>
-										<th class="thLabel">SAT</th>
-										<td><input type="text" name="f1" id="f1" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="f2" id="f2" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="f3" id="f3" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="f4" id="f4" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="f5" id="f5" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="f6" id="f6" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="f7" id="f7" value=""
-											class="ttLabel" /></td>
-										<td><input type="text" name="f8" id="f8" value=""
-											class="ttLabel" /></td>
-									</tr>
-								</table>
+							<div class="techrTable noHide">
+								<div class="fulWidth">
+									<table class="viewCttTable">
+										<tr>
+											<th></th>
+											<th><label class="ttLabel">Period I</label></th>
+											<th><label class="ttLabel">Period II</label></th>
+											<th><label class="ttLabel">Period III</label></th>
+											<th><label class="ttLabel">Period IV</label></th>
+											<th><label class="ttLabel">Period V</label></th>
+											<th><label class="ttLabel">Period VI</label></th>
+											<th><label class="ttLabel">Period VII</label></th>
+											<th><label class="ttLabel">Period VIII</label></th>
+										</tr>
+
+										<c:forEach begin="1" end="6" var="i">
+											<tr>
+												<th class="thLabel"><c:choose>
+														<c:when test="${i == 1}">
+       MON
+       <input type="hidden" name="i${i}" id="i${i}" value="MON" />
+														</c:when>
+														<c:when test="${i==2}">
+        TUE
+        <input type="hidden" name="i${i}" id="i${i}" value="TUE" />
+														</c:when>
+														<c:when test="${i==3}">
+        WED
+        <input type="hidden" name="i${i}" id="i${i}" value="WED" />
+														</c:when>
+														<c:when test="${i==4}">
+        THU
+        <input type="hidden" name="i${i}" id="i${i}" value="THU" />
+														</c:when>
+														<c:when test="${i==5}">
+        FRI
+        <input type="hidden" name="i${i}" id="i${i}" value="FRI" />
+														</c:when>
+														<c:when test="${i==6}">
+        SAT
+        <input type="hidden" name="i${i}" id="i${i}" value="SAT" />
+														</c:when>
+													</c:choose></th>
+
+
+												<td><select name="a${i}" id="a${i}" class="ttLabel">
+														<option value="">Select</option>
+														<c:forEach var="subList" items="${subjectList}">
+															<option value="${subList.subjectId}">${subList.subjectName}</option>
+														</c:forEach>
+												</select></td>
+
+												<td><select name="b${i}" id="b${i}" class="ttLabel">
+														<option value="">Select</option>
+														<c:forEach var="subList" items="${subjectList}">
+															<option value="${subList.subjectId}">${subList.subjectName}</option>
+														</c:forEach>
+												</select></td>
+
+												<td><select name="c${i}" id="c${i}" class="ttLabel">
+														<option value="">Select</option>
+														<c:forEach var="subList" items="${subjectList}">
+															<option value="${subList.subjectId}">${subList.subjectName}</option>
+														</c:forEach>
+												</select></td>
+
+												<td><select name="d${i}" id="d${i}" class="ttLabel">
+														<option value="">Select</option>
+														<c:forEach var="subList" items="${subjectList}">
+															<option value="${subList.subjectId}">${subList.subjectName}</option>
+														</c:forEach>
+												</select></td>
+
+												<td><select name="e${i}" id="e${i}" class="ttLabel">
+														<option value="">Select</option>
+														<c:forEach var="subList" items="${subjectList}">
+															<option value="${subList.subjectId}">${subList.subjectName}</option>
+														</c:forEach>
+												</select></td>
+
+												<td><select name="f${i}" id="f${i}" class="ttLabel">
+														<option value="">Select</option>
+														<c:forEach var="subList" items="${subjectList}">
+															<option value="${subList.subjectId}">${subList.subjectName}</option>
+														</c:forEach>
+												</select></td>
+
+												<td><select name="g${i}" id="g${i}" class="ttLabel">
+														<option value="">Select</option>
+														<c:forEach var="subList" items="${subjectList}">
+															<option value="${subList.subjectId}">${subList.subjectName}</option>
+														</c:forEach>
+												</select></td>
+
+												<td><select name="h${i}" id="h${i}" class="ttLabel">
+														<option value="">Select</option>
+														<c:forEach var="subList" items="${subjectList}">
+															<option value="${subList.subjectId}">${subList.subjectName}</option>
+														</c:forEach>
+												</select></td>
+											</tr>
+
+										</c:forEach>
+									</table>
+								</div>
+								<div class="formButtons">
+									<input type="submit" class="btnStyle" id="submit" name="Submit"
+										value="Add / Update"> &nbsp;&nbsp; <input
+										class="btnStyle" type="reset" id="reset" name="reset"
+										value="Clear">
+								</div>
 							</div>
 						</fieldset>
-					</div>
-					<div class="formButtons">
-						<input type="submit" class="btnStyle" id="submit" name="Submit"
-							value="Add / Update"> &nbsp;&nbsp; <input
-							class="btnStyle" type="reset" id="reset" name="reset"
-							value="Clear">
 					</div>
 				</form>
 			</div>

@@ -14,4 +14,5 @@ public interface TeacherTTOperations {
 
 	List<TeacherTT> getTimeTableByJobId(String jobId);
 
+	boolean isTchrTTExist(String day, String empId);
 }
