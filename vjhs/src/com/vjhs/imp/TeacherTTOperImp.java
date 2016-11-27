@@ -32,7 +32,6 @@ public class TeacherTTOperImp implements TeacherTTOperations {
 			pst2 = con.prepareStatement(UPDATE_TEACHER_TIMETABLE);
 			for (TeacherTT teacherTT : teacherTTList) {
 				if (isTchrTTExist(teacherTT.getDays(), teacherTT.getEmployeeId())) {
-					System.out.println(teacherTT.toString());
 					pst2.setString(1, teacherTT.getPeriodI());
 					pst2.setString(2, teacherTT.getPeriodII());
 					pst2.setString(3, teacherTT.getPeriodIII());
@@ -41,10 +40,18 @@ public class TeacherTTOperImp implements TeacherTTOperations {
 					pst2.setString(6, teacherTT.getPeriodVI());
 					pst2.setString(7, teacherTT.getPeriodVII());
 					pst2.setString(8, teacherTT.getPeriodVIII());
-					pst2.setDate(9, teacherTT.getUpdatedDate());
-					pst2.setString(10, teacherTT.getUpdatedBy());
-					pst2.setString(11, teacherTT.getEmployeeId());
-					pst2.setString(12, teacherTT.getDays());
+					pst2.setString(9, teacherTT.getPeriodIClass());
+					pst2.setString(10, teacherTT.getPeriodIIClass());
+					pst2.setString(11, teacherTT.getPeriodIIIClass());
+					pst2.setString(12, teacherTT.getPeriodIVClass());
+					pst2.setString(13, teacherTT.getPeriodVClass());
+					pst2.setString(14, teacherTT.getPeriodVIClass());
+					pst2.setString(15, teacherTT.getPeriodVIIClass());
+					pst2.setString(16, teacherTT.getPeriodVIIIClass());
+					pst2.setDate(17, teacherTT.getUpdatedDate());
+					pst2.setString(18, teacherTT.getUpdatedBy());
+					pst2.setString(19, teacherTT.getEmployeeId());
+					pst2.setString(20, teacherTT.getDays());
 					pst2.addBatch();
 				} else {
 					pst.setString(1, teacherTT.getEmployeeId());
@@ -57,8 +64,16 @@ public class TeacherTTOperImp implements TeacherTTOperations {
 					pst.setString(8, teacherTT.getPeriodVI());
 					pst.setString(9, teacherTT.getPeriodVII());
 					pst.setString(10, teacherTT.getPeriodVIII());
-					pst.setDate(11, teacherTT.getCreation_Date());
-					pst.setString(12, teacherTT.getCreatedBy());
+					pst.setString(11, teacherTT.getPeriodIClass());
+					pst.setString(12, teacherTT.getPeriodIIClass());
+					pst.setString(13, teacherTT.getPeriodIIIClass());
+					pst.setString(14, teacherTT.getPeriodIVClass());
+					pst.setString(15, teacherTT.getPeriodVClass());
+					pst.setString(16, teacherTT.getPeriodVIClass());
+					pst.setString(17, teacherTT.getPeriodVIIClass());
+					pst.setString(18, teacherTT.getPeriodVIIIClass());
+					pst.setDate(19, teacherTT.getCreation_Date());
+					pst.setString(20, teacherTT.getCreatedBy());
 					pst.addBatch();
 				}
 			}
@@ -168,6 +183,14 @@ public class TeacherTTOperImp implements TeacherTTOperations {
 				teacherTT.setPeriodVI(rs.getString("PERIOD_VI"));
 				teacherTT.setPeriodVII(rs.getString("PERIOD_VII"));
 				teacherTT.setPeriodVIII(rs.getString("PERIOD_VIII"));
+				teacherTT.setPeriodIClass(rs.getString("PERIOD_I_CLASS"));
+				teacherTT.setPeriodIIClass(rs.getString("PERIOD_II_CLASS"));
+				teacherTT.setPeriodIIIClass(rs.getString("PERIOD_III_CLASS"));
+				teacherTT.setPeriodIVClass(rs.getString("PERIOD_IV_CLASS"));
+				teacherTT.setPeriodVClass(rs.getString("PERIOD_V_CLASS"));
+				teacherTT.setPeriodVIClass(rs.getString("PERIOD_VI_CLASS"));
+				teacherTT.setPeriodVIIClass(rs.getString("PERIOD_VII_CLASS"));
+				teacherTT.setPeriodVIIIClass(rs.getString("PERIOD_VIII_CLASS"));
 				teacherTTList.add(teacherTT);
 			}
 		} catch (SQLException e) {

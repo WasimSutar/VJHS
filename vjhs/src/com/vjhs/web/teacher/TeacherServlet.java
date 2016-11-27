@@ -16,13 +16,16 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.vjhs.imp.ClassStrengthOperImp;
 import com.vjhs.imp.SubjectOperImp;
 import com.vjhs.imp.TeacherAttendanceOperImp;
 import com.vjhs.imp.TeacherOperImp;
 import com.vjhs.imp.TeacherTTOperImp;
+import com.vjhs.interfaces.ClassStrengthOperations;
 import com.vjhs.interfaces.SubjectOperation;
 import com.vjhs.interfaces.TeacherAttendanceOperations;
 import com.vjhs.interfaces.TeacherTTOperations;
+import com.vjhs.pojo.Class_Strength;
 import com.vjhs.pojo.Subject;
 import com.vjhs.pojo.Teacher;
 import com.vjhs.pojo.TeacherAttendance;
@@ -177,6 +180,14 @@ public class TeacherServlet extends HttpServlet {
 				tchrTT.setPeriodVI(request.getParameter("f" + i));
 				tchrTT.setPeriodVII(request.getParameter("g" + i));
 				tchrTT.setPeriodVIII(request.getParameter("h" + i));
+				tchrTT.setPeriodIClass(request.getParameter("aC" + i));
+				tchrTT.setPeriodIIClass(request.getParameter("bC" + i));
+				tchrTT.setPeriodIIIClass(request.getParameter("cC" + i));
+				tchrTT.setPeriodIVClass(request.getParameter("dC" + i));
+				tchrTT.setPeriodVClass(request.getParameter("eC" + i));
+				tchrTT.setPeriodVIClass(request.getParameter("fC" + i));
+				tchrTT.setPeriodVIIClass(request.getParameter("gC" + i));
+				tchrTT.setPeriodVIIIClass(request.getParameter("hC" + i));
 				tchrTT.setDays(request.getParameter("i" + i));
 				tchrTTList.add(tchrTT);
 			}
@@ -186,8 +197,14 @@ public class TeacherServlet extends HttpServlet {
 			request.setAttribute("subjectList", subjectsList);
 			List<Teacher> teacherList = teacherOperImp.getTeachers();
 			request.setAttribute("teacherList", teacherList);
+			ClassStrengthOperations classStrengthOperations = new ClassStrengthOperImp();
+			List<Class_Strength> class_StrengthsList = classStrengthOperations.getClassStrengthList();
+			request.setAttribute("classList", class_StrengthsList);
 			request.getRequestDispatcher("view_teachertt2.jsp").forward(request, response);
 		} else if (uri.endsWith("viewtt.teacher")) {
+			ClassStrengthOperations classStrengthOperations = new ClassStrengthOperImp();
+			List<Class_Strength> class_StrengthsList = classStrengthOperations.getClassStrengthList();
+			request.setAttribute("classList", class_StrengthsList);
 			SubjectOperation subjectOperations = new SubjectOperImp();
 			List<Subject> subjectsList = subjectOperations.getSubjects();
 			request.setAttribute("subjectList", subjectsList);
@@ -227,7 +244,11 @@ public class TeacherServlet extends HttpServlet {
 				out.print("<LEVEL><PD1>" + tchrTT.getPeriodI() + "</PD1><PD2>" + tchrTT.getPeriodII() + "</PD2><PD3>"
 						+ tchrTT.getPeriodIII() + "</PD3><PD4>" + tchrTT.getPeriodIV() + "</PD4><PD5>"
 						+ tchrTT.getPeriodV() + "</PD5><PD6>" + tchrTT.getPeriodVI() + "</PD6><PD7>"
-						+ tchrTT.getPeriodVII() + "</PD7><PD8>" + tchrTT.getPeriodVIII() + "</PD8><DAY>"
+						+ tchrTT.getPeriodVII() + "</PD7><PD8>" + tchrTT.getPeriodVIII() + "</PD8><PCD1>"
+						+ tchrTT.getPeriodIClass() + "</PCD1><PCD2>" + tchrTT.getPeriodIIClass() + "</PCD2><PCD3>"
+						+ tchrTT.getPeriodIIIClass() + "</PCD3><PCD4>" + tchrTT.getPeriodIVClass() + "</PCD4><PCD5>"
+						+ tchrTT.getPeriodVClass() + "</PCD5><PCD6>" + tchrTT.getPeriodVIClass() + "</PCD6><PCD7>"
+						+ tchrTT.getPeriodVIIClass() + "</PCD7><PCD8>" + tchrTT.getPeriodVIIIClass() + "</PCD8><DAY>"
 						+ tchrTT.getDays() + "</DAY></LEVEL>");
 			}
 			out.print("</LIST>");

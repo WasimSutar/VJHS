@@ -14,6 +14,14 @@ public class TeacherTT {
 	private String periodVI;
 	private String periodVII;
 	private String periodVIII;
+	private String periodIClass;
+	private String periodIIClass;
+	private String periodIIIClass;
+	private String periodIVClass;
+	private String periodVClass;
+	private String periodVIClass;
+	private String periodVIIClass;
+	private String periodVIIIClass;
 	private Date creation_Date;
 	private String createdBy;
 	private Date updatedDate;
@@ -175,6 +183,126 @@ public class TeacherTT {
 	}
 
 	/**
+	 * @return the periodIClass
+	 */
+	public String getPeriodIClass() {
+		return periodIClass;
+	}
+
+	/**
+	 * @param periodIClass
+	 *            the periodIClass to set
+	 */
+	public void setPeriodIClass(String periodIClass) {
+		this.periodIClass = periodIClass;
+	}
+
+	/**
+	 * @return the periodIIClass
+	 */
+	public String getPeriodIIClass() {
+		return periodIIClass;
+	}
+
+	/**
+	 * @param periodIIClass
+	 *            the periodIIClass to set
+	 */
+	public void setPeriodIIClass(String periodIIClass) {
+		this.periodIIClass = periodIIClass;
+	}
+
+	/**
+	 * @return the periodIIIClass
+	 */
+	public String getPeriodIIIClass() {
+		return periodIIIClass;
+	}
+
+	/**
+	 * @param periodIIIClass
+	 *            the periodIIIClass to set
+	 */
+	public void setPeriodIIIClass(String periodIIIClass) {
+		this.periodIIIClass = periodIIIClass;
+	}
+
+	/**
+	 * @return the periodIVClass
+	 */
+	public String getPeriodIVClass() {
+		return periodIVClass;
+	}
+
+	/**
+	 * @param periodIVClass
+	 *            the periodIVClass to set
+	 */
+	public void setPeriodIVClass(String periodIVClass) {
+		this.periodIVClass = periodIVClass;
+	}
+
+	/**
+	 * @return the periodVClass
+	 */
+	public String getPeriodVClass() {
+		return periodVClass;
+	}
+
+	/**
+	 * @param periodVClass
+	 *            the periodVClass to set
+	 */
+	public void setPeriodVClass(String periodVClass) {
+		this.periodVClass = periodVClass;
+	}
+
+	/**
+	 * @return the periodVIClass
+	 */
+	public String getPeriodVIClass() {
+		return periodVIClass;
+	}
+
+	/**
+	 * @param periodVIClass
+	 *            the periodVIClass to set
+	 */
+	public void setPeriodVIClass(String periodVIClass) {
+		this.periodVIClass = periodVIClass;
+	}
+
+	/**
+	 * @return the periodVIIClass
+	 */
+	public String getPeriodVIIClass() {
+		return periodVIIClass;
+	}
+
+	/**
+	 * @param periodVIIClass
+	 *            the periodVIIClass to set
+	 */
+	public void setPeriodVIIClass(String periodVIIClass) {
+		this.periodVIIClass = periodVIIClass;
+	}
+
+	/**
+	 * @return the periodVIIIClass
+	 */
+	public String getPeriodVIIIClass() {
+		return periodVIIIClass;
+	}
+
+	/**
+	 * @param periodVIIIClass
+	 *            the periodVIIIClass to set
+	 */
+	public void setPeriodVIIIClass(String periodVIIIClass) {
+		this.periodVIIIClass = periodVIIIClass;
+	}
+
+	/**
 	 * @return the creation_Date
 	 */
 	public Date getCreation_Date() {
@@ -308,17 +436,4 @@ public class TeacherTT {
 	public void setAttributes(String attributes) {
 		this.attributes = attributes;
 	}
-
-	@Override
-	public String toString() {
-		return "TeacherTT [days=" + days + ", employeeId=" + employeeId + ", periodI=" + periodI + ", periodII="
-				+ periodII + ", periodIII=" + periodIII + ", periodIV=" + periodIV + ", periodV=" + periodV
-				+ ", periodVI=" + periodVI + ", periodVII=" + periodVII + ", periodVIII=" + periodVIII
-				+ ", creation_Date=" + creation_Date + ", createdBy=" + createdBy + ", updatedDate=" + updatedDate
-				+ ", updatedBy=" + updatedBy + ", attribute1=" + attribute1 + ", attribute2=" + attribute2
-				+ ", attribute3=" + attribute3 + ", attribute4=" + attribute4 + ", attributes=" + attributes + "]";
-	}
-	
-	
-
 }

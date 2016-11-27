@@ -664,3 +664,24 @@ input:FOCUS, select:FOCUS, textarea:FOCUS {
 .selectStyleAdd select::-ms-expand {
 	display: none;
 }
+
+.clsList {
+	width: 30px;
+	border: #fff;
+}
+
+.subList {
+	width: 65px;
+	padding-left: 3px;
+	border-top: #fff;
+	border-bottom: #fff;
+	border-right: #fff;
+	border-left: 1px solid #808080;
+}
+
+.borderF {
+	border-top: #fff;
+	border-bottom: #fff;
+	border-right: #fff;
+	border-left: #808080;
+}

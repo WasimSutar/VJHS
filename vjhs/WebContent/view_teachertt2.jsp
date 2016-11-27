@@ -41,6 +41,14 @@
 							$('#f' + dayVal).val($(this).find("PD6").text());
 							$('#g' + dayVal).val($(this).find("PD7").text());
 							$('#h' + dayVal).val($(this).find("PD8").text());
+							$('#aC' + dayVal).val($(this).find("PCD1").text());
+							$('#bC' + dayVal).val($(this).find("PCD2").text());
+							$('#cC' + dayVal).val($(this).find("PCD3").text());
+							$('#dC' + dayVal).val($(this).find("PCD4").text());
+							$('#eC' + dayVal).val($(this).find("PCD5").text());
+							$('#fC' + dayVal).val($(this).find("PCD6").text());
+							$('#gC' + dayVal).val($(this).find("PCD7").text());
+							$('#hC' + dayVal).val($(this).find("PCD8").text());
 						});
 						var count = 0;
 						$(".teachTimTbl select").each(function() {
@@ -49,12 +57,30 @@
 							}
 						});
 						if (count == 0) {
-							$('.teachTimTbl').removeClass("selectStyleAdd");
+							$('.clsList').css({
+								"border-top" : "1px solid #808080",
+								"border-bottom" : "1px solid #808080",
+								"border-left" : "1px solid #808080"
+							});
+							$('.subList').css({
+								"border-top" : "1px solid #808080",
+								"border-bottom" : "1px solid #808080",
+								"border-right" : "1px solid #808080"
+							});
 							$('.teachTimTbl select').prop('disabled', false);
 							$('#edit').hide();
 							$('#submit').show();
 						} else {
-							$('.teachTimTbl').addClass("selectStyleAdd");
+							$('.clsList').css({
+								"border-top" : "1px solid #fff",
+								"border-bottom" : "1px solid #fff",
+								"border-left" : "1px solid #fff"
+							});
+							$('.subList').css({
+								"border-top" : "1px solid #fff",
+								"border-bottom" : "1px solid #fff",
+								"border-right" : "1px solid #fff"
+							});
 							$('#edit').show();
 							$('#submit').hide();
 							$('.teachTimTbl select').prop('disabled', true);
@@ -88,12 +114,26 @@
 
 	$(function() {
 		$("#edit").click(function() {
-			$('.teachTimTbl').removeClass("selectStyleAdd");
+			$('.clsList').css({
+				"border-top" : "1px solid #808080",
+				"border-bottom" : "1px solid #808080",
+				"border-left" : "1px solid #808080"
+			});
+			$('.subList').css({
+				"border-top" : "1px solid #808080",
+				"border-bottom" : "1px solid #808080",
+				"border-right" : "1px solid #808080"
+			});
 			$('.teachTimTbl select').prop('disabled', false);
 			$('#edit').hide();
 			$('#submit').show();
 		});
 	});
+
+	function resetPage() {
+		$('select').val("");
+		$('.techrTable').addClass('noHide');
+	}
 </script>
 </head>
 <body>
@@ -130,8 +170,7 @@
 				</ul>
 			</div>
 			<div class="mainRightBodyStyle">
-				<form name="updateCTable" method="post" id="updateCTable"
-					action="addtt.teacher">
+				<form name="updateCTable" method="post" action="addtt.teacher">
 					<div>
 						<fieldset>
 							<legend>View / Update Time Table</legend>
@@ -148,7 +187,7 @@
 							</div>
 							<div class="techrTable noHide">
 								<div class="fulWidth">
-									<table class="teachTimTbl" border="1">
+									<table class="teachTimTbl selectStyleAdd" border="1">
 										<tr>
 											<th></th>
 											<th>Period I</th>
@@ -190,57 +229,96 @@
 														</c:when>
 													</c:choose></th>
 
-
-												<td><select name="a${i}" id="a${i}" class="ttLabel">
+												<td><select name="aC${i}" id="aC${i}" class="clsList">
+														<option value="" />
+														<c:forEach var="classList" items="${classList}">
+															<option value="${classList.className}">${classList.className}</option>
+														</c:forEach>
+												</select><select name="a${i}" id="a${i}" class="subList">
 														<option value="" />
 														<c:forEach var="subList" items="${subjectList}">
 															<option value="${subList.subjectId}">${subList.subjectName}</option>
 														</c:forEach>
 												</select></td>
 
-												<td><select name="b${i}" id="b${i}" class="ttLabel">
+												<td><select name="bC${i}" id="bC${i}" class="clsList">
+														<option value="" />
+														<c:forEach var="classList" items="${classList}">
+															<option value="${classList.className}">${classList.className}</option>
+														</c:forEach>
+												</select><select name="b${i}" id="b${i}" class="subList">
 														<option value="" />
 														<c:forEach var="subList" items="${subjectList}">
 															<option value="${subList.subjectId}">${subList.subjectName}</option>
 														</c:forEach>
 												</select></td>
 
-												<td><select name="c${i}" id="c${i}" class="ttLabel">
+												<td><select name="cC${i}" id="cC${i}" class="clsList">
+														<option value="" />
+														<c:forEach var="classList" items="${classList}">
+															<option value="${classList.className}">${classList.className}</option>
+														</c:forEach>
+												</select><select name="c${i}" id="c${i}" class="subList">
 														<option value="" />
 														<c:forEach var="subList" items="${subjectList}">
 															<option value="${subList.subjectId}">${subList.subjectName}</option>
 														</c:forEach>
 												</select></td>
 
-												<td><select name="d${i}" id="d${i}" class="ttLabel">
+												<td><select name="dC${i}" id="dC${i}" class="clsList">
+														<option value="" />
+														<c:forEach var="classList" items="${classList}">
+															<option value="${classList.className}">${classList.className}</option>
+														</c:forEach>
+												</select><select name="d${i}" id="d${i}" class="subList">
 														<option value="" />
 														<c:forEach var="subList" items="${subjectList}">
 															<option value="${subList.subjectId}">${subList.subjectName}</option>
 														</c:forEach>
 												</select></td>
 
-												<td><select name="e${i}" id="e${i}" class="ttLabel">
+												<td><select name="eC${i}" id="eC${i}" class="clsList">
+														<option value="" />
+														<c:forEach var="classList" items="${classList}">
+															<option value="${classList.className}">${classList.className}</option>
+														</c:forEach>
+												</select><select name="e${i}" id="e${i}" class="subList">
 														<option value="" />
 														<c:forEach var="subList" items="${subjectList}">
 															<option value="${subList.subjectId}">${subList.subjectName}</option>
 														</c:forEach>
 												</select></td>
 
-												<td><select name="f${i}" id="f${i}" class="ttLabel">
+												<td><select name="fC${i}" id="fC${i}" class="clsList">
+														<option value="" />
+														<c:forEach var="classList" items="${classList}">
+															<option value="${classList.className}">${classList.className}</option>
+														</c:forEach>
+												</select><select name="f${i}" id="f${i}" class="subList">
 														<option value="" />
 														<c:forEach var="subList" items="${subjectList}">
 															<option value="${subList.subjectId}">${subList.subjectName}</option>
 														</c:forEach>
 												</select></td>
 
-												<td><select name="g${i}" id="g${i}" class="ttLabel">
+												<td><select name="gC${i}" id="gC${i}" class="clsList">
+														<option value="" />
+														<c:forEach var="classList" items="${classList}">
+															<option value="${classList.className}">${classList.className}</option>
+														</c:forEach>
+												</select><select name="g${i}" id="g${i}" class="subList">
 														<option value="" />
 														<c:forEach var="subList" items="${subjectList}">
 															<option value="${subList.subjectId}">${subList.subjectName}</option>
 														</c:forEach>
 												</select></td>
 
-												<td><select name="h${i}" id="h${i}" class="ttLabel">
+												<td><select name="hC${i}" id="hC${i}" class="clsList">
+														<option value="" />
+														<c:forEach var="classList" items="${classList}">
+															<option value="${classList.className}">${classList.className}</option>
+														</c:forEach>
+												</select><select name="h${i}" id="h${i}" class="subList">
 														<option value="" />
 														<c:forEach var="subList" items="${subjectList}">
 															<option value="${subList.subjectId}">${subList.subjectName}</option>
@@ -253,10 +331,10 @@
 								</div>
 								<div class="formButtons">
 									<input type="button" class="btnStyle" id="edit" value="Edit">
-									<input type="submit" class="btnStyle" id="submit" name="Submit"
+									<input type="submit" class="btnStyle" id="submit"
 										value="Add / Update"> &nbsp;&nbsp; <input
-										class="btnStyle" type="reset" id="reset" name="reset"
-										value="Clear">
+										class="btnStyle" type="button" id="reset" value="Clear"
+										onclick="resetPage()">
 								</div>
 							</div>
 						</fieldset>
