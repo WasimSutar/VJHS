@@ -39,12 +39,8 @@ public class ProgressReportOperImp implements ProgressReportOperations {
 			pst1 = con.prepareStatement(ADD_PROGRESS_REPORT_OF_STUDENT);
 			pst = con.prepareStatement(UPDATE_PROGRESS_REPORT_OF_STUDENT);
 			for (ProgressReport progressReport : progressReportList) {
-				// UPDATE PROGRESS_REPORT SET
-				// EXAM_TYPE=?,CLASS=?,MARKS=?,GRADEPOINT=?,UPDATED_DATE=?,UPDATED_BY=?
-				// WHERE ADMISSION_NUMBER=? AND SUBJECT=?";
 				if (isStudentExists(progressReport.getAdmissionNo(), progressReport.getClassName(),
 						progressReport.getExamType())) {
-					System.out.println("Updating----------------------");
 					pst.setString(1, progressReport.getExamType());
 					pst.setString(2, progressReport.getClassName());
 					pst.setInt(3, progressReport.getMarks());
@@ -58,11 +54,6 @@ public class ProgressReportOperImp implements ProgressReportOperations {
 
 				} else {
 
-					// String ADD_PROGRESS_REPORT_OF_STUDENT = "INSERT INTO
-					// PROGRESS_REPORT(EXAM_TYPE, CLASS, ADMISSION_NUMBER,
-					// SUBJECT, MARKS, GRADEPOINT, CREATION_DATE, CREATED_BY)
-					// VALUES (?,?,?,?,?,?,?,?)";
-					System.out.println("Writing----------------------");
 					pst1.setString(1, progressReport.getExamType());
 					pst1.setString(2, progressReport.getClassName());
 					pst1.setString(3, progressReport.getAdmissionNo());
@@ -201,7 +192,7 @@ public class ProgressReportOperImp implements ProgressReportOperations {
 				progReportList.add(progressReport);
 			}
 		} catch (SQLException e) {
-			LOGGER.info("While Adding Teacher Timetable into Database: " + e.getMessage());
+			LOGGER.info("While getting progress report: " + e.getMessage());
 		} finally {
 			dbConnection.close(pst, con);
 		}

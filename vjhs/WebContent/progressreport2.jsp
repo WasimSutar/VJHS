@@ -163,7 +163,7 @@
 								$('#workingDays').html(workingDays);
 								$('#presentDays').html(presentDays);
 								var average = (presentDays / workingDays) * 100;
-								$('#attendanceaverage').val(average);
+								$('#attendanceaverage').val(Number((average).toFixed(2)));
 							});
 				},
 				error : function() {

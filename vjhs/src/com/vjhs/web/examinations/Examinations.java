@@ -256,7 +256,6 @@ public class Examinations extends HttpServlet {
 			List<ProgressReport> progressReport = operations.getProgressReport(adminNo, className, examType);
 			out.print("<MAIN>");
 			for (ProgressReport pReport : progressReport) {
-				System.out.println(pReport.toString());
 				out.print("<LEVEL><SUBJECT>" + pReport.getSubject() + "</SUBJECT><MARKS>" + pReport.getMarks()
 						+ "</MARKS><GPOINT>" + pReport.getGradePoint() + "</GPOINT><MONTH>" + pReport.getMonth()
 						+ "</MONTH></LEVEL>");

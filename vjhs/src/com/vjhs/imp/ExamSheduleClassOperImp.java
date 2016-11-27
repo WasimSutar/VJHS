@@ -252,8 +252,12 @@ public class ExamSheduleClassOperImp implements ExamSheduleClassOperations {
 
 	@Override
 	public String getMonthDetForProg(String cls, String adminNo, String month) {
-		int monthInt = Integer.parseInt(month);
-		int year = getYearbyMonth(Integer.parseInt(month));
+		// To handle illegal argument when month is "" for new entries 
+		int monthInt = 13 ;
+		if(month!=null && month!=""){
+			monthInt = Integer.parseInt(month);
+		}
+		int year = getYearbyMonth(monthInt);
 		double workingDays = 0;
 		int holidaysMonth = 0;
 		double presentDays = 0;
