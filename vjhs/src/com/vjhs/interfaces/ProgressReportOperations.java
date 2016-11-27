@@ -4,6 +4,8 @@
 package com.vjhs.interfaces;
 
 
+import java.util.List;
+
 import com.vjhs.pojo.ProgressReport;
 
 /**
@@ -11,12 +13,12 @@ import com.vjhs.pojo.ProgressReport;
  *
  */
 public interface ProgressReportOperations {
-	boolean addProgressReport(ProgressReport progressReport);
+	boolean addProgressReport(List<ProgressReport> progressReport);
 
 	boolean updateProgressReport(ProgressReport progressReport);
 	
 	boolean deleteProgressReport(String admissionNo);
 	
-	ProgressReport getProgressReport(String admissionNo);
+	 List<ProgressReport> getProgressReport(String admissionNo,String className,String examType);
 
 }

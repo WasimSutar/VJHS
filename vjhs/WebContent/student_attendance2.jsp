@@ -193,42 +193,45 @@
 									<label class="leftLabelST">Class</label> <label
 										class="rightLabelST"> <select name="className"
 										id="className" onchange="getStudentsNames()">
-											<option value="select"><fmt:message key="SELECT" />
+											<option value=""><fmt:message key="SELECT" />
 											</option>
-											<option value="nursery"><fmt:message key="NURSERY" />
+											<option value="<fmt:message key="NURSERY" />"><fmt:message
+													key="NURSERY" />
 											</option>
-											<option value="lkg"><fmt:message key="LKG" />
+											<option value="<fmt:message key="LKG" />"><fmt:message
+													key="LKG" />
 											</option>
-											<option value="ukg"><fmt:message key="UKG" />
+											<option value="<fmt:message key="UKG" />"><fmt:message
+													key="UKG" />
 											</option>
-											<option value="first"><fmt:message
+											<option value="<fmt:message key="FIRST_STANDARD" />"><fmt:message
 													key="FIRST_STANDARD" />
 											</option>
-											<option value="second"><fmt:message
+											<option value="<fmt:message key="SECOND_STANDARD" />"><fmt:message
 													key="SECOND_STANDARD" />
 											</option>
-											<option value="third"><fmt:message
+											<option value="<fmt:message key="THIRD_STANDARD" />"><fmt:message
 													key="THIRD_STANDARD" />
 											</option>
-											<option value="fourth"><fmt:message
+											<option value="<fmt:message key="FOURTH_STANDARD" />"><fmt:message
 													key="FOURTH_STANDARD" />
 											</option>
-											<option value="fifth"><fmt:message
+											<option value="<fmt:message key="FIFTH_STANDARD" />"><fmt:message
 													key="FIFTH_STANDARD" />
 											</option>
-											<option value="sixth"><fmt:message
+											<option value="<fmt:message key="SIXTH_STANDARD" />"><fmt:message
 													key="SIXTH_STANDARD" />
 											</option>
-											<option value="seventh"><fmt:message
+											<option value="<fmt:message key="SEVENTH_STANDARD" />"><fmt:message
 													key="SEVENTH_STANDARD" />
 											</option>
-											<option value="eight"><fmt:message
+											<option value="<fmt:message key="EIGHT_STANDARD" />"><fmt:message
 													key="EIGHT_STANDARD" />
 											</option>
-											<option value="nineth"><fmt:message
+											<option value="<fmt:message key="NINETH_STANDARD" />"><fmt:message
 													key="NINETH_STANDARD" />
 											</option>
-											<option value="tenth"><fmt:message
+											<option value="<fmt:message key="TENTH_STANDARD" />"><fmt:message
 													key="TENTH_STANDARD" />
 											</option>
 									</select>

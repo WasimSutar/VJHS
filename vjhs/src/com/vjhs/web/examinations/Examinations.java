@@ -17,14 +17,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.vjhs.imp.ExamSheduleClassOperImp;
+import com.vjhs.imp.ProgressReportOperImp;
 import com.vjhs.imp.StudentAttendanceOperImp;
 import com.vjhs.imp.StudentOperImp;
 import com.vjhs.imp.SubjectOperImp;
 import com.vjhs.interfaces.ExamSheduleClassOperations;
+import com.vjhs.interfaces.ProgressReportOperations;
 import com.vjhs.interfaces.StudentAttendanceOperation;
 import com.vjhs.interfaces.StudentOperations;
 import com.vjhs.interfaces.SubjectOperation;
 import com.vjhs.pojo.ExamSheduleClass;
+import com.vjhs.pojo.ProgressReport;
 import com.vjhs.pojo.Student;
 import com.vjhs.pojo.StudentAttendance;
 import com.vjhs.pojo.Subject;
@@ -137,27 +140,23 @@ public class Examinations extends HttpServlet {
 			admissionXML += "</ADMISSIONS>";
 			out.print(admissionXML);
 		} else if (uri.endsWith("getMonthDet.examinations")) {
-			System.out.println("Hittin the servlet");
+			String cls = request.getParameter("className");
+			String adminNo = request.getParameter("adminNo");
+			ExamSheduleClassOperations schduleOpr = new ExamSheduleClassOperImp();
+			String attendanceList = schduleOpr.getMonthPercentage(cls, adminNo);
+			out.print(attendanceList);
+		} else if (uri.endsWith("getOneMonthDet.examinations")) {
 			String cls = request.getParameter("className");
 			String adminNo = request.getParameter("adminNo");
 			String month = request.getParameter("month");
-			System.out.println(cls + "   " + adminNo + "   " + month);
 			ExamSheduleClassOperations schduleOpr = new ExamSheduleClassOperImp();
 			String attendanceList = schduleOpr.getMonthDetForProg(cls, adminNo, month);
-			System.out.println(attendanceList);
 			out.print(attendanceList);
 		} else if (uri.endsWith("getMonthDetForProg.examinations")) {
-			System.out.println("Hittin the servlet");
 			String cls = request.getParameter("className");
-			System.out.println("Hittin the servlet - 1");
 			String adminNo = request.getParameter("adminNo");
-			System.out.println("Hittin the servlet - 2");
-
 			ExamSheduleClassOperations schduleOpr = new ExamSheduleClassOperImp();
-			System.out.println("Hittin the servlet - 3");
 			String attendanceList = schduleOpr.getMonthPercentage(cls, adminNo);
-			System.out.println("Hittin the servlet 4");
-			System.out.println(attendanceList);
 			out.print(attendanceList);
 		} else if (uri.endsWith("addStudentAtten.examinations")) {
 			List<StudentAttendance> stuAttenList = new ArrayList<StudentAttendance>();
@@ -179,11 +178,12 @@ public class Examinations extends HttpServlet {
 				i++;
 			}
 			if (attenOper.updateStudentAttendence(stuAttenList)) {
-				request.setAttribute("message", "Attendance detilas added successfully for Admission No: " + adminNo);
+				request.setAttribute("message",
+						"Attendance detilas added successfully for Ad	mission No: " + adminNo);
 			} else {
 				request.setAttribute("message", "Error while adding attendance details for Admission No: " + adminNo);
 			}
-			request.getRequestDispatcher("student_attendance.jsp").forward(request, response);
+			request.getRequestDispatcher("student_attendance2.jsp").forward(request, response);
 		} else if (uri.endsWith("getSubList.examinations")) {
 			List<Subject> subjectsList = subjectOperations.getSubjects();
 			String subjects = "<SUBJECTS>";
@@ -227,6 +227,42 @@ public class Examinations extends HttpServlet {
 					examSchList.add(sheClass);
 				}
 			}
+		} else if (uri.endsWith("progress.examinations")) {
+			ProgressReportOperations operations = new ProgressReportOperImp();
+			String examType = request.getParameter("examType");
+			String className = request.getParameter("className");
+			String admissionNo = request.getParameter("admissionNo");
+			List<Subject> subjectsList = subjectOperations.getSubjects();
+			List<ProgressReport> progressReportList = new ArrayList<ProgressReport>();
+			for (Subject sub : subjectsList) {
+				ProgressReport progressReport = new ProgressReport();
+				progressReport.setExamType(examType);
+				progressReport.setClassName(className);
+				progressReport.setAdmissionNo(admissionNo);
+				progressReport.setSubject(request.getParameter("sub" + sub.getSubjectId()));
+				progressReport.setMarks(Integer.parseInt(request.getParameter("mark" + sub.getSubjectId())));
+				progressReport.setGradePoint(request.getParameter("mark" + sub.getSubjectId() + "Grd1"));
+				progressReport.setMonth(request.getParameter("monthAttn"));
+				progressReportList.add(progressReport);
+			}
+			operations.addProgressReport(progressReportList);
+			request.setAttribute("subjectList", subjectsList);
+			request.getRequestDispatcher("progressreport2.jsp").forward(request, response);
+		} else if (uri.endsWith("getMarkRpt.examinations")) {
+			ProgressReportOperations operations = new ProgressReportOperImp();
+			String className = request.getParameter("className");
+			String adminNo = request.getParameter("adminNo");
+			String examType = request.getParameter("examType");
+			List<ProgressReport> progressReport = operations.getProgressReport(adminNo, className, examType);
+			out.print("<MAIN>");
+			for (ProgressReport pReport : progressReport) {
+				System.out.println(pReport.toString());
+				out.print("<LEVEL><SUBJECT>" + pReport.getSubject() + "</SUBJECT><MARKS>" + pReport.getMarks()
+						+ "</MARKS><GPOINT>" + pReport.getGradePoint() + "</GPOINT><MONTH>" + pReport.getMonth()
+						+ "</MONTH></LEVEL>");
+			}
+			out.print("</MAIN>");
+
 		}
 	}
 
@@ -238,107 +274,4 @@ public class Examinations extends HttpServlet {
 			throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }
-
-/*
- * 
- * 
- * 
- * package com.vjhs.web.examinations;
- * 
- * import java.io.IOException; import java.io.PrintWriter; import
- * java.util.ArrayList; import java.util.List; import java.util.Map;
- * 
- * import javax.servlet.ServletException; import
- * javax.servlet.annotation.WebServlet; import javax.servlet.http.HttpServlet;
- * import javax.servlet.http.HttpServletRequest; import
- * javax.servlet.http.HttpServletResponse;
- * 
- * import com.vjhs.imp.ExamSheduleClassOperImp; import
- * com.vjhs.imp.StudentAttendanceOperImp; import com.vjhs.imp.StudentOperImp;
- * import com.vjhs.interfaces.ExamSheduleClassOperations; import
- * com.vjhs.interfaces.StudentAttendanceOperation; import
- * com.vjhs.interfaces.StudentOperations; import
- * com.vjhs.pojo.StudentAttendance;
- * 
- *//**
-	 * Servlet implementation class Examinations
-	 */
-/*
- * @WebServlet("*.examinations") public class Examinations extends HttpServlet {
- * private static final long serialVersionUID = 1L;
- * 
- *//**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
-/*
- * protected void doGet(HttpServletRequest request, HttpServletResponse
- * response) throws ServletException, IOException { PrintWriter out =
- * response.getWriter(); String uri = request.getRequestURI(); if
- * (uri.endsWith("attendance.examinations")) {
- * request.getRequestDispatcher("student_attendance2.jsp").forward(request,
- * response); } else if (uri.endsWith("schedule.examinations")) {
- * request.getRequestDispatcher("exam.jsp").forward(request, response); } else
- * if (uri.endsWith("subjects.examinations")) {
- * request.getRequestDispatcher("subjects.jsp").forward(request, response); }
- * else if (uri.endsWith("student_mark.examinations")) {
- * request.getRequestDispatcher("student_marks_parent.jsp").forward(request,
- * response); } else if (uri.endsWith("progress_report.examinations")) {
- * request.getRequestDispatcher("progressreport.jsp").forward(request,
- * response); } else if (uri.endsWith("certificates.examinations")) {
- * request.getRequestDispatcher("certificates.jsp").forward(request, response);
- * } else if (uri.endsWith("getStudentName.examinations")) { String cls =
- * request.getParameter("className"); String students = "<STUDENTS>";
- * StudentOperations studOper = new StudentOperImp(); Map<String, String>
- * studentList = studOper.getStudentNames(cls); for (String stud :
- * studentList.keySet()) { students += "<STUDENT><ADMIN_NO>" + stud +
- * "</ADMIN_NO>"; students += "<NAME>" + studentList.get(stud) +
- * "</NAME></STUDENT>"; } students += "</STUDENTS>"; out.print(students); } else
- * if (uri.endsWith("getStudentAdminNo.examinations")) { String cls =
- * request.getParameter("className"); String name =
- * request.getParameter("studentName"); String admissionXML = "<ADMISSIONS>";
- * StudentOperations studOper = new StudentOperImp(); List<String> admissionList
- * = studOper.getStudentAdminNo(cls, name); for (String admission :
- * admissionList) { admissionXML += "<ADMISSION><NUMBER>" + admission +
- * "</NUMBER></ADMISSION>"; } out.print(admissionXML); } else if
- * (uri.endsWith("getMonthDet.examinations")) { String cls =
- * request.getParameter("className"); String adminNo =
- * request.getParameter("adminNo"); ExamSheduleClassOperations schduleOpr = new
- * ExamSheduleClassOperImp(); String attendanceList =
- * schduleOpr.getMonthPercentage(cls, adminNo); out.print(attendanceList); }
- * else if (uri.endsWith("addStudentAtten.examinations")) {
- * List<StudentAttendance> stuAttenList = new ArrayList<StudentAttendance>();
- * ExamSheduleClassOperations scheduleOper = new ExamSheduleClassOperImp();
- * List<StudentAttendance> presentWorkingYear =
- * scheduleOper.getPresentMonthYear(); StudentAttendanceOperation attenOper =
- * new StudentAttendanceOperImp(); String adminNo =
- * request.getParameter("admissionNo"); int i = 1; for (StudentAttendance
- * studAtten : presentWorkingYear) { StudentAttendance stuAtten = new
- * StudentAttendance();
- * stuAtten.setClassName(request.getParameter("className"));
- * stuAtten.setAdmissionNo(request.getParameter("admissionNo"));
- * stuAtten.setDayAttended(Double.parseDouble(request.getParameter("a" + i)));
- * stuAtten.setWorkingDays(Double.parseDouble(request.getParameter("w" + i)));
- * stuAtten.setMonthlyPercentage(Double.parseDouble(request.getParameter("mp" +
- * i))); stuAtten.setMonth(studAtten.getMonth());
- * stuAtten.setYear(studAtten.getYear()); stuAttenList.add(stuAtten); i++; } if
- * (attenOper.updateStudentAttendence(stuAttenList)) {
- * request.setAttribute("message",
- * "Attendance detilas added successfully for Admission No: " + adminNo); } else
- * { request.setAttribute("message",
- * "Error while adding attendance details for Admission No: " + adminNo); }
- * request.getRequestDispatcher("student_attendance.jsp").forward(request,
- * response); } }
- * 
- *//**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 *//*
-	 * protected void doPost(HttpServletRequest request, HttpServletResponse
-	 * response) throws ServletException, IOException { doGet(request,
-	 * response); }
-	 * 
-	 * }
-	 */
