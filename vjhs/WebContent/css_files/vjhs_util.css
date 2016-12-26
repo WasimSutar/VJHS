@@ -651,10 +651,6 @@
 	font-size: 16px;
 }
 
-.leftLabel {
-	width: 200px;
-	text-align: right;
-}
 
 .viewFullRight input[type=text], .viewFullRight select {
 	width: 200px;
@@ -673,10 +669,6 @@
 	width: 40%;
 }
 
-.rightlabel {
-	float: left;
-	width: 50%;
-}
 
 /*++++++++++++++++++++ sCreate_Account +++++++++++++++++*/
 .createUserLeft {

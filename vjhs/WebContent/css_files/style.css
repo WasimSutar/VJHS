@@ -26,9 +26,32 @@ body {
 	font-size: 1.5em;
 }
 
+.lgnHead700 {
+	font-weight: 700;
+	background: #0083b4;
+	color: #fff;
+	text-align: center;
+	font-family: inherit;
+	font-size: 1.5em;
+	text-align: center;
+}
+
+.subHead {
+	font-weight: 700;
+	color: #0083b4;
+	text-align: center;
+	font-family: inherit;
+	font-size: 1.5em;
+}
+
 h1 {
 	margin: 2px;
 	font-size: 1.5em;
+}
+
+h4, h2, h3, h5, h6 {
+	padding: 0;
+	margin: 0;
 }
 
 .mainMenuStyle>.menuStyle>a>span {
@@ -279,39 +302,36 @@ a:HOVER, a:FOCUS {
 	fieldset>div>div>label>input[type="tel"], fieldset>div>div>label>textarea,
 	fieldset>div>div>label>input[type="number"], fieldset>div>div>label>input[type="email"] */
 .inputType {
-	padding: 1px 3px;
+	/* padding: 1px 3px; */
 	color: #808080;
-	border: 1px solid #808080;
+	/* border: 1px solid #808080; */
 	font-size: 13px;
 	width: 96%;
-	border: 1px solid #808080;
 }
 
 .inputType40 {
-	padding: 1px 3px;
+	/* padding: 1px 3px; */
 	color: #808080;
-	border: 1px solid #808080;
+	/* border: 1px solid #808080; */
 	font-size: 13px;
 	width: 40%;
-	border: 1px solid #808080;
 }
 
 /* fieldset>div>label>select, fieldset>div>div>label>select */
 .selectType {
-	padding: 1px 3px;
+	/* padding: 1px 3px; */
 	color: #808080;
 	width: 100%;
-	border: 1px solid #808080;
+	/* border: 1px solid #808080; */
 	font-size: 13px;
-	border: 1px solid #808080;
 }
 
 .selectType42 {
-	padding: 1px 3px;
+	/* 	padding: 1px 3px; */
 	color: #808080;
 	width: 42%;
 	font-size: 13px;
-	border: 1px solid #fff;
+	/* border: 1px solid #fff; */
 }
 
 .leftLabel {
@@ -348,7 +368,8 @@ a:HOVER, a:FOCUS {
 	padding-right: 10px;
 }
 
-.leftLabelText:AFTER, .leftLabel:AFTER, .leftLabelST:AFTER {
+.leftLabelText:AFTER, .leftLabel:AFTER, .leftLabelST:AFTER, .lgnLeftLbl:AFTER,
+	.leftLabelSTS:AFTER {
 	content: ":"
 }
 
@@ -385,7 +406,7 @@ a:HOVER, a:FOCUS {
 }
 
 .btnStyle {
-	padding: 2px 20px;
+	padding: 3px 20px;
 	background: #fff;
 	border: 1px solid #0083b4;
 	color: #0083b4;
@@ -504,6 +525,8 @@ input, select, textarea {
 	font: 90%/1.45em "Helvetica Neue", HelveticaNeue, Helvetica, Arial,
 		sans-serif;
 	color: #808080;
+	padding: 3px 5px;
+	border-radius: 5px;
 }
 
 input:FOCUS, select:FOCUS, textarea:FOCUS {
@@ -577,6 +600,14 @@ input:FOCUS, select:FOCUS, textarea:FOCUS {
 	width: 45%;
 	text-align: right;
 	float: left;
+}
+
+.leftLabelSTS {
+	font-size: 14px;
+	width: 45%;
+	text-align: right;
+	float: left;
+	font-weight: normal;
 }
 
 .rightLabelST {
@@ -653,15 +684,17 @@ input:FOCUS, select:FOCUS, textarea:FOCUS {
 	padding: 0px 5px;
 }
 
-.selectStyleAdd select {
+.selectStyleAdd select, .reportTab select {
 	/*for firefox*/
 	-moz-appearance: none;
 	/*for chrome*/
 	-webkit-appearance: none;
+	padding: 1px 2px;
+	border-radius: 0;
 }
 
 /*for IE10*/
-.selectStyleAdd select::-ms-expand {
+.selectStyleAdd select::-ms-expand, .reportTab select {
 	display: none;
 }
 
@@ -679,9 +712,199 @@ input:FOCUS, select:FOCUS, textarea:FOCUS {
 	border-left: 1px solid #808080;
 }
 
+.subCList {
+	width: 100px;
+	padding-left: 3px;
+	border: 1px solid #fff;
+}
+
 .borderF {
 	border-top: #fff;
 	border-bottom: #fff;
 	border-right: #fff;
 	border-left: #808080;
+}
+
+.loginInput {
+	width: 200px;
+	padding: 3px 10px;
+	border-radius: 5px;
+	font-size: 14px;
+	border: 1px solid #0083b4;
+}
+
+.loginSelect {
+	width: 222px;
+	padding: 3px 10px;
+	border-radius: 5px;
+	font-size: 14px;
+	border: 1px solid #0083b4;
+}
+
+.loginAnchr {
+	font-size: 15px;
+	font-weight: bold;
+}
+
+.lgnRightBin {
+	float: right;
+	width: 25%;
+	padding-left: 10px;
+}
+
+.lgnLeftBin {
+	float: left;
+	width: 73%;
+}
+
+.lgnLeftLbl {
+	float: left;
+	width: 42%;
+	padding: 3px 0px;
+	font-size: 14px;
+	font-weight: bold;
+	text-align: right;
+	font-size: 14px;
+}
+
+.lgnRightLbl {
+	float: left;
+	width: 55%;
+	padding-left: 20px;
+}
+
+.sucMes {
+	padding: 10px 0px;
+	background: #0D7;
+	text-align: center;
+	font-size: 14px;
+	color: #fff;
+	border-radius: 5px;
+	display: inherit;
+}
+
+.errMes {
+	padding: 10px 0px;
+	background: #F63;
+	text-align: center;
+	font-size: 14px;
+	color: #fff;
+	border-radius: 5px;
+	display: inherit;
+}
+
+#width40 {
+	width: 40%;
+}
+
+.width60 {
+	width: 60%;
+	float: left;
+	/* border: 1px solid #0083b4; */
+}
+
+.width37 {
+	width: 37%;
+	float: left;
+	/* border: 1px solid #0083b4; */
+}
+
+.reportHeadding {
+	background: #0083b4;
+	color: #fff;
+	padding: 3px 0px;
+	text-align: center;
+	font-weight: bold;
+}
+
+.fulWidth100 {
+	width: 100%;
+	float: left;
+}
+
+.marginLR10 {
+	margin: 0 10px 0 10px;
+}
+
+.reportTab, .markReTab {
+	width: 100%;
+	border-spacing: 0;
+	padding: 0;
+	border-collapse: collapse;
+}
+
+.markReTab th {
+	background: #99ccff;
+	color: #fff;
+}
+
+.reportTab th {
+	background: #99ccff;
+	color: #fff;
+	padding: 1px 10px;
+}
+
+.reportTab td {
+	padding: 1px 25px;
+}
+
+.reportTab td input {
+	padding: 0 10px;
+	margin: 0;
+	width: 50px;
+	border-radius: 0px;
+	text-align: center;
+}
+
+.reportTab td select {
+	padding: 0 10px;
+	margin: 0;
+	width: 120px;
+	border-radius: 0px;
+}
+
+.algnCentr {
+	text-align: center;
+}
+
+.fontBold {
+	font-weight: bold;
+}
+
+.marginT17 {
+	margin-top: 17px;
+}
+
+.border {
+	border: 1px solid #0083b4;
+}
+
+.marginAuto {
+	margin: auto;
+}
+
+.width58 {
+	width: 58%;
+	float: left;
+}
+
+.width40 {
+	width: 40%;
+	float: left;
+}
+
+.marginR2Pr {
+	margin-right: 2%;
+}
+
+.width49 {
+	width: 49%;
+	float: left;
+}
+
+.cgpDiv {
+	padding: 3px 10px;
+	font-weight: bold;
+	font-size: 14px;
+	float: right;
 }
