@@ -3,6 +3,8 @@
  */
 package com.vjhs.interfaces;
 
+import java.util.List;
+
 import com.vjhs.pojo.ClassTimeTable;
 
 /**
@@ -11,8 +13,11 @@ import com.vjhs.pojo.ClassTimeTable;
  */
 public interface ClassTimeTableOperation {
 
-	boolean addClassTimeTable(ClassTimeTable classTimeTable);
+	boolean addClassTimeTable(List<ClassTimeTable> clsTTList);
+
 	boolean updateClassTimeTable(ClassTimeTable classTimeTable);
-	ClassTimeTable getClassTimeTable(String className);
-	
+
+	List<ClassTimeTable> getClassTimeTable(String className);
+
+	boolean isClassAvail(String cls, String day);
 }

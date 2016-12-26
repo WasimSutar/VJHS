@@ -45,8 +45,7 @@ public class Examinations extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		SubjectOperation subjectOperations = new SubjectOperImp();
 		PrintWriter out = response.getWriter();
 		String uri = request.getRequestURI();
@@ -100,6 +99,8 @@ public class Examinations extends HttpServlet {
 			request.setAttribute("subjectList", subjectsList);
 			request.getRequestDispatcher("subjects2.jsp").forward(request, response);
 		} else if (uri.endsWith("student_mark.examinations")) {
+			List<Subject> subjectsList = subjectOperations.getSubjects();
+			request.setAttribute("subjectList", subjectsList);
 			request.getRequestDispatcher("student_marks_parent2.jsp").forward(request, response);
 		} else if (uri.endsWith("progress_report.examinations")) {
 			List<Subject> subjectsList = subjectOperations.getSubjects();
@@ -134,8 +135,8 @@ public class Examinations extends HttpServlet {
 			StudentOperations studOper = new StudentOperImp();
 			List<Student> admissionList = studOper.getStudentAdminNoByClassName(cls);
 			for (Student student : admissionList) {
-				admissionXML += "<ADMISSION><NUMBER>" + student.getAdmissionNo() + "</NUMBER><NAME>"
-						+ student.getStudentName() + "</NAME></ADMISSION>";
+				admissionXML += "<ADMISSION><NUMBER>" + student.getAdmissionNo() + "</NUMBER><NAME>" + student.getStudentName()
+				    + "</NAME></ADMISSION>";
 			}
 			admissionXML += "</ADMISSIONS>";
 			out.print(admissionXML);
@@ -178,8 +179,7 @@ public class Examinations extends HttpServlet {
 				i++;
 			}
 			if (attenOper.updateStudentAttendence(stuAttenList)) {
-				request.setAttribute("message",
-						"Attendance detilas added successfully for Ad	mission No: " + adminNo);
+				request.setAttribute("message", "Attendance detilas added successfully for Ad	mission No: " + adminNo);
 			} else {
 				request.setAttribute("message", "Error while adding attendance details for Admission No: " + adminNo);
 			}
@@ -189,7 +189,7 @@ public class Examinations extends HttpServlet {
 			String subjects = "<SUBJECTS>";
 			for (Subject subject : subjectsList) {
 				subjects += "<SUBJECT><SUBJECTID>" + subject.getSubjectId() + "</SUBJECTID><SUBJECTNAME>"
-						+ subject.getSubjectName() + "</SUBJECTNAME></SUBJECT>";
+				    + subject.getSubjectName() + "</SUBJECTNAME></SUBJECT>";
 			}
 			subjects += "</SUBJECTS>";
 			out.print(subjects);
@@ -256,12 +256,23 @@ public class Examinations extends HttpServlet {
 			List<ProgressReport> progressReport = operations.getProgressReport(adminNo, className, examType);
 			out.print("<MAIN>");
 			for (ProgressReport pReport : progressReport) {
-				out.print("<LEVEL><SUBJECT>" + pReport.getSubject() + "</SUBJECT><MARKS>" + pReport.getMarks()
-						+ "</MARKS><GPOINT>" + pReport.getGradePoint() + "</GPOINT><MONTH>" + pReport.getMonth()
-						+ "</MONTH></LEVEL>");
+				out.print(
+				    "<LEVEL><SUBJECT>" + pReport.getSubject() + "</SUBJECT><MARKS>" + pReport.getMarks() + "</MARKS><GPOINT>"
+				        + pReport.getGradePoint() + "</GPOINT><MONTH>" + pReport.getMonth() + "</MONTH></LEVEL>");
 			}
 			out.print("</MAIN>");
 
+		} else if (uri.endsWith("getallmarks.examinations")) {
+			ProgressReportOperations operations = new ProgressReportOperImp();
+			String className = request.getParameter("className");
+			String adminNo = request.getParameter("admissionNo");
+			List<ProgressReport> progressReport = operations.getAllMarks(adminNo, className);
+			out.print("<MAIN>");
+			for (ProgressReport pReport : progressReport) {
+				out.print("<LEVEL><SUB>" + pReport.getSubject() + "</SUB><EXTYPE>" + pReport.getExamType() + "</EXTYPE><MARKS>"
+				    + pReport.getMarks() + "</MARKS><GP>" + pReport.getGradePoint() + "</GP></LEVEL>");
+			}
+			out.print("</MAIN>");
 		}
 	}
 
@@ -269,8 +280,7 @@ public class Examinations extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 }

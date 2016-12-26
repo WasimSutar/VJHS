@@ -32,7 +32,7 @@ public class ProgressReport {
 
 	/**
 	 * @param examType
-	 *            the examType to set
+	 *          the examType to set
 	 */
 	public void setExamType(String examType) {
 		this.examType = examType;
@@ -47,7 +47,7 @@ public class ProgressReport {
 
 	/**
 	 * @param className
-	 *            the className to set
+	 *          the className to set
 	 */
 	public void setClassName(String className) {
 		this.className = className;
@@ -62,7 +62,7 @@ public class ProgressReport {
 
 	/**
 	 * @param admissionNo
-	 *            the admissionNo to set
+	 *          the admissionNo to set
 	 */
 	public void setAdmissionNo(String admissionNo) {
 		this.admissionNo = admissionNo;
@@ -77,7 +77,7 @@ public class ProgressReport {
 
 	/**
 	 * @param subject
-	 *            the subject to set
+	 *          the subject to set
 	 */
 	public void setSubject(String subject) {
 		this.subject = subject;
@@ -100,7 +100,7 @@ public class ProgressReport {
 
 	/**
 	 * @param marks
-	 *            the marks to set
+	 *          the marks to set
 	 */
 	public void setMarks(int marks) {
 		this.marks = marks;
@@ -115,7 +115,7 @@ public class ProgressReport {
 
 	/**
 	 * @param gradePoint
-	 *            the gradePoint to set
+	 *          the gradePoint to set
 	 */
 	public void setGradePoint(String gradePoint) {
 		this.gradePoint = gradePoint;
@@ -130,7 +130,7 @@ public class ProgressReport {
 
 	/**
 	 * @param creationDate
-	 *            the creationDate to set
+	 *          the creationDate to set
 	 */
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
@@ -145,7 +145,7 @@ public class ProgressReport {
 
 	/**
 	 * @param createdBy
-	 *            the createdBy to set
+	 *          the createdBy to set
 	 */
 	public void setCreatedBy(String createdBy) {
 		this.createdBy = createdBy;
@@ -160,7 +160,7 @@ public class ProgressReport {
 
 	/**
 	 * @param updatedDate
-	 *            the updatedDate to set
+	 *          the updatedDate to set
 	 */
 	public void setUpdatedDate(Date updatedDate) {
 		this.updatedDate = updatedDate;
@@ -175,9 +175,21 @@ public class ProgressReport {
 
 	/**
 	 * @param updatedBy
-	 *            the updatedBy to set
+	 *          the updatedBy to set
 	 */
 	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ProgressReport [examType=" + examType + ", className=" + className + ", admissionNo=" + admissionNo
+		    + ", subject=" + subject + ", marks=" + marks + ", month=" + month + ", gradePoint=" + gradePoint + "]";
+	}
+
 }

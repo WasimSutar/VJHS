@@ -3,7 +3,12 @@
  */
 package com.vjhs.imp;
 
-import static com.vjhs.interfaces.SQLQuery.*;
+import static com.vjhs.interfaces.SQLQuery.ADD_PROGRESS_REPORT_OF_STUDENT;
+import static com.vjhs.interfaces.SQLQuery.DELETE_PROGRESS_REPORT_OF_STUDENT;
+import static com.vjhs.interfaces.SQLQuery.GET_ALL_MARKS_BY_CLASS_ADNO;
+import static com.vjhs.interfaces.SQLQuery.GET_PROGRESS_REPORT_OF_STUDENT;
+import static com.vjhs.interfaces.SQLQuery.IS_STUDENT_EXISTS;
+import static com.vjhs.interfaces.SQLQuery.UPDATE_PROGRESS_REPORT_OF_STUDENT;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -40,20 +45,18 @@ public class ProgressReportOperImp implements ProgressReportOperations {
 			pst = con.prepareStatement(UPDATE_PROGRESS_REPORT_OF_STUDENT);
 			for (ProgressReport progressReport : progressReportList) {
 				if (isStudentExists(progressReport.getAdmissionNo(), progressReport.getClassName(),
-						progressReport.getExamType())) {
-					pst.setString(1, progressReport.getExamType());
-					pst.setString(2, progressReport.getClassName());
-					pst.setInt(3, progressReport.getMarks());
-					pst.setString(4, progressReport.getGradePoint());
-					pst.setDate(5, progressReport.getUpdatedDate());
-					pst.setString(6, "");
-					pst.setString(7, progressReport.getMonth());
-					pst.setString(8, progressReport.getAdmissionNo());
-					pst.setString(9, progressReport.getSubject());
+				    progressReport.getExamType())) {
+					pst.setInt(1, progressReport.getMarks());
+					pst.setString(2, progressReport.getGradePoint());
+					pst.setDate(3, progressReport.getUpdatedDate());
+					pst.setString(4, progressReport.getUpdatedBy());
+					pst.setString(5, progressReport.getMonth());
+					pst.setString(6, progressReport.getAdmissionNo());
+					pst.setString(7, progressReport.getSubject());
+					pst.setString(8, progressReport.getExamType());
+					pst.setString(9, progressReport.getClassName());
 					pst.addBatch();
-
 				} else {
-
 					pst1.setString(1, progressReport.getExamType());
 					pst1.setString(2, progressReport.getClassName());
 					pst1.setString(3, progressReport.getAdmissionNo());
@@ -63,24 +66,18 @@ public class ProgressReportOperImp implements ProgressReportOperations {
 					pst1.setDate(7, progressReport.getUpdatedDate());
 					pst1.setString(8, progressReport.getUpdatedBy());
 					pst1.setString(9, progressReport.getMonth());
-
 					pst1.addBatch();
-
 				}
 			}
-
 			count = pst.executeBatch();
 			count1 = pst1.executeBatch();
-
 			for (int i : count) {
 				if (i > 0) {
 					res = true;
 				} else {
 					res = false;
 				}
-
 			}
-
 			for (int i : count1) {
 				if (i > 0) {
 					res = true;
@@ -88,7 +85,6 @@ public class ProgressReportOperImp implements ProgressReportOperations {
 					res = false;
 				}
 			}
-
 			con.commit();
 		} catch (SQLException e) {
 			LOGGER.info("While adding Progress report into Database: " + e.getMessage());
@@ -96,7 +92,6 @@ public class ProgressReportOperImp implements ProgressReportOperations {
 			dbConnection.close(pst, con);
 		}
 		return res;
-
 	}
 
 	private boolean isStudentExists(String admissionNo, String className, String examType) {
@@ -192,7 +187,35 @@ public class ProgressReportOperImp implements ProgressReportOperations {
 				progReportList.add(progressReport);
 			}
 		} catch (SQLException e) {
-			LOGGER.info("While getting progress report: " + e.getMessage());
+			LOGGER.info("While Adding Teacher Timetable into Database: " + e.getMessage());
+		} finally {
+			dbConnection.close(pst, con);
+		}
+		return progReportList;
+	}
+
+	@Override
+	public List<ProgressReport> getAllMarks(String admissionNo, String className) {
+		List<ProgressReport> progReportList = new ArrayList<ProgressReport>();
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		try {
+			con = dbConnection.getConnection();
+			pst = con.prepareStatement(GET_ALL_MARKS_BY_CLASS_ADNO);
+			pst.setString(1, admissionNo);
+			pst.setString(2, className);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				ProgressReport progressReport = new ProgressReport();
+				progressReport.setExamType(rs.getString("EXAM_TYPE"));
+				progressReport.setSubject(rs.getString("SUBJECT"));
+				progressReport.setMarks(rs.getInt("MARKS"));
+				progressReport.setGradePoint(rs.getString("GRADEPOINT"));
+				progReportList.add(progressReport);
+			}
+		} catch (SQLException e) {
+			LOGGER.info("While getting All Marks into Database: " + e.getMessage());
 		} finally {
 			dbConnection.close(pst, con);
 		}

@@ -32,8 +32,7 @@ public class LoginAdminServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String uri = request.getRequestURI();
 		LoginAdminOperations loginadminOper = new LoginAdminOperImp();
 		if (uri.endsWith("showAdminLogin.admin")) {
@@ -48,16 +47,16 @@ public class LoginAdminServlet extends HttpServlet {
 			boolean isAdd = loginadminOper.addUserAdmin(loginAdmin);
 			if (isAdd) {
 				request.setAttribute("succMessage",
-						"You are successfully created your account, <a href='showAdminLogin.admin'>click here</a> to login.");
+				    "<span class='sucMes'>We successfully created your account, you can login by using your crendentials.</span>");
 			} else {
 				request.setAttribute("succMessage",
-						"Opps! Something went wrong while creating accocunt, Please try after sometime.");
+				    "<span class='errMes'>Oops! Something went wrong while creating accocunt, Please try after sometime.</span>");
 			}
-			request.getRequestDispatcher("createaccount.jsp").forward(request, response);
+			request.getRequestDispatcher("vjhsadminlogin.jsp").forward(request, response);
 		} else if (uri.endsWith("showAddAdminLogin.admin")) {
-			request.getRequestDispatcher("createaccount.jsp").forward(request, response);
+			request.getRequestDispatcher("createaccount2.jsp").forward(request, response);
 		} else if (uri.endsWith("showUpdateAdminPass.admin")) {
-			request.getRequestDispatcher("forgotpassword.jsp").forward(request, response);
+			request.getRequestDispatcher("forgotpassword2.jsp").forward(request, response);
 		} else if (uri.endsWith("updateAdminPass.admin")) {
 			request.getRequestDispatcher("createaccount.jsp").forward(request, response);
 		} else if (uri.endsWith("deleteAdminLogin.admin")) {
@@ -80,13 +79,13 @@ public class LoginAdminServlet extends HttpServlet {
 						response.addCookie(cookie);
 					}
 				}
-				request.getRequestDispatcher("adminhomepage.jsp").forward(request, response);
+				request.getRequestDispatcher("overview.profile").forward(request, response);
 			} else {
 				request.setAttribute("errorMessage", "Username / Password Invalid");
 				request.getRequestDispatcher("vjhsadminlogin.jsp").forward(request, response);
 			}
 		} else if (uri.endsWith("sessionAlive.admin")) {
-			request.getRequestDispatcher("adminhomepage.jsp").forward(request, response);
+			request.getRequestDispatcher("overview.profile").forward(request, response);
 		} else if (uri.endsWith("getAllAdmin.admin")) {
 			request.getRequestDispatcher("class_strength.jsp").forward(request, response);
 		} else if (uri.endsWith("headerHome.admin")) {
@@ -102,8 +101,7 @@ public class LoginAdminServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
 
