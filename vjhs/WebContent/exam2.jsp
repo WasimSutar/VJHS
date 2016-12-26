@@ -8,167 +8,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>VJHS:: Attendance</title>
-<script type="text/javascript" src="js_files/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="js_files/jquery.validate.min.js"></script>
-<script type="text/javascript" src="js_files/teacher_registration.js"></script>
-<script type="text/javascript" src="js_files/vjhs_util.js"></script>
-<script type="text/javascript" src="js_files/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="css_files/jquery-ui.css" />
-<script type="text/javascript" src="js_files/jquery.dataTables.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="css_files/jquery.dataTables.css">
-<link rel="stylesheet" type="text/css" href="css_files/style.css" />
-<script type="text/javascript">
-	$(function() {
-		$('#examToDate')
-				.change(
-						function() {
-							var date1 = $('#examFrmDate').datepicker('getDate');
-							var date2 = $('#examToDate').datepicker('getDate');
-							var dateFrom = new Date(Date.parse(date1));
-							var dateTo = new Date(Date.parse(date2));
-							var i = 1;
-							$('.tabWidth').attr('id', '');
-							$('.tabWidth tbody').html("");
-							$
-									.ajax({
-										type : "POST",
-										url : "getSubList.examinations",
-										dataType : "xml",
-										cache : false,
-										success : function(xml) {
-											var temp = "";
-											$(xml)
-													.find('SUBJECT')
-													.each(
-															function() {
-																var id = $(this)
-																		.find(
-																				'SUBJECTID')
-																		.text();
-																var name = $(
-																		this)
-																		.find(
-																				'SUBJECTNAME')
-																		.text();
-																temp += '<option value='+id+' >'
-																		+ name
-																		+ '</option>';
-															});
-											for (; $.datepicker.formatDate(
-													"dd/mm/yy", new Date(
-															dateFrom)) <= $.datepicker
-													.formatDate("dd/mm/yy",
-															new Date(dateTo));) {
-												$('.tabWidth tbody')
-														.append(
-																'<tr><td><select name="sub'+i+'"><option value="">Select</option>'
-																		+ temp
-																		+ '</select></td><td><input type="text" readonly name="date'+i+'" id="date'+i+'"/></td><td><input type="text" name="time'+i+'"/></td><td><a href="#" class="removeTr">Delete</a></td></tr>');
-												var dateId = "#date" + i;
-												var newDate = dateFrom
-														.toDateString();
-												newDate = new Date(Date
-														.parse(newDate));
-												$(dateId)
-														.val(
-																$.datepicker
-																		.formatDate(
-																				"dd/mm/yy",
-																				new Date(
-																						dateFrom)));
-												dateFrom.setDate(dateFrom
-														.getDate() + 1);
-												i++;
-											}
-											$('.tabWidth')
-													.attr('id', 'example');
-											$('.tabWidth')
-													.removeClass('noHide');
-
-											$('.tabWidth input').css({
-												"background" : "none",
-												"width" : "150px"
-											});
-
-											$('.tabWidth select').css({
-												"background" : "none",
-												"width" : "154px"
-											});
-											$('#example').dataTable({
-												destroy : true,
-												retrieve : true,
-												paging : false,
-												searching : false,
-												info : false,
-												"bSort" : false
-											});
-										},
-										error : function() {
-											alert("An error occurred while processing XML file.");
-										}
-									});
-
-						});
-
-		$(document).on('click', '.removeTr', function() {
-			$(this).closest('tr').remove();
-			return false;
-		});
-
-	});
-
-	function checkExamType() {
-		var examYear = $('#examType option:selected').val();
-		if (examYear == '') {
-			$('.frmDate,.toDate').addClass('noHide');
-			$("#classType").prop("selectedIndex", 0);
-		}
-	}
-	function checkExamYear() {
-		var examYear = $('#exTypeYear option:selected').val();
-		if (examYear == '') {
-			$('.frmDate,.toDate').addClass('noHide');
-			$("#classType").prop("selectedIndex", 0);
-		}
-	}
-	function getStudentsAdminData() {
-		var selVal = $('#classType option:selected').val();
-		var exTypeYear = $('#exTypeYear option:selected').val();
-		var examYear = $('#examType option:selected').val();
-		if (exTypeYear == '' || examYear == '') {
-			alert('Please Select Exam Type and Year');
-			return;
-		}
-		if (selVal != '') {
-			$('.frmDate,.toDate').removeClass('noHide');
-		} else {
-			$('.frmDate,.toDate').addClass('noHide');
-		}
-	}
-</script>
 </head>
 <body>
-	<div class="head700">
-		<h1>Vignana Jyothi High School (E.M.)</h1>
-	</div>
-	<div class="mainMenuStyle">
-		<div class="menuStyle">
-			<a href="overview.profile"><span
-				class="profileStyle mainMenuSubStyle">Profile</span></a> <a
-				href="add.student"><span class="mainMenuSubStyle studentProfile">Students</span></a>
-			<a href="add.teacher"><span
-				class="mainMenuSubStyle teacherProfile">Teachers</span></a> <a
-				href="academic_calander.schedule"><span
-				class="mainMenuSubStyle scheduleProfile">Schedule</span></a> <a
-				href="attendance.examinations"><span
-				class="mainMenuSubStyle examsProfile activeProfile">Exams</span></a> <a
-				href="#"><span class="mainMenuSubStyle smsProfile">SMS</span></a> <a
-				href="#"><span class="mainMenuSubStyle libraryProfile">Library</span></a>
-			<a href="#"><span class="mainMenuSubStyle vehiclesProfile">Vehicles</span></a>
-			<a href="#"><span class="mainMenuSubStyle accountsProfile">Accounts</span></a>
-		</div>
-	</div>
+	<jsp:include page="vjhstop.jsp" />
+	<c:set var="page" scope="request" value="EXAM" />
+	<jsp:include page="vjhsmenu.jsp" />
 	<div class="mainBody">
 		<div class="mainBodyStyle">
 			<div class="mainLeftBodyStyle">
@@ -298,11 +142,108 @@
 					</fmt:bundle>
 				</form>
 			</div>
-
-
 		</div>
 	</div>
-	<div class="footerStyle">© 2015 All rights Reserved | Vignana
-		Jyothi High School</div>
+	<jsp:include page="vjhsbottom.jsp" />
+	<script type="text/javascript">
+	$(function() {
+		$('#examToDate')
+				.change(
+						function() {
+							var date1 = $('#examFrmDate').datepicker('getDate');
+							var date2 = $('#examToDate').datepicker('getDate');
+							var dateFrom = new Date(Date.parse(date1));
+							var dateTo = new Date(Date.parse(date2));
+							var i = 1;
+							$('.tabWidth').attr('id', '');
+							$('.tabWidth tbody').html("");
+							$
+									.ajax({
+										type : "POST",
+										url : "getSubList.examinations",
+										dataType : "xml",
+										cache : false,
+										success : function(xml) {
+											var temp = "";
+											$(xml)
+													.find('SUBJECT')
+													.each(
+															function() {
+																var id = $(this)
+																		.find(
+																				'SUBJECTID')
+																		.text();
+																var name = $(
+																		this)
+																		.find(
+																				'SUBJECTNAME')
+																		.text();
+																temp += '<option value='+id+' >'
+																		+ name
+																		+ '</option>';
+															});
+											for (; $.datepicker.formatDate(
+													"dd/mm/yy", new Date(
+															dateFrom)) <= $.datepicker
+													.formatDate("dd/mm/yy",
+															new Date(dateTo));) {
+												$('.tabWidth tbody')
+														.append(
+																'<tr><td><select name="sub'+i+'"><option value="">Select</option>'
+																		+ temp
+																		+ '</select></td><td><input type="text" readonly name="date'+i+'" id="date'+i+'"/></td><td><input type="text" name="time'+i+'"/></td><td><a href="#" class="removeTr">Delete</a></td></tr>');
+												var dateId = "#date" + i;
+												var newDate = dateFrom
+														.toDateString();
+												newDate = new Date(Date
+														.parse(newDate));
+												$(dateId)
+														.val(
+																$.datepicker
+																		.formatDate(
+																				"dd/mm/yy",
+																				new Date(
+																						dateFrom)));
+												dateFrom.setDate(dateFrom
+														.getDate() + 1);
+												i++;
+											}
+											$('.tabWidth')
+													.attr('id', 'example');
+											$('.tabWidth')
+													.removeClass('noHide');
+
+											$('.tabWidth input').css({
+												"background" : "none",
+												"width" : "150px"
+											});
+
+											$('.tabWidth select').css({
+												"background" : "none",
+												"width" : "154px"
+											});
+											$('#example').dataTable({
+												destroy : true,
+												retrieve : true,
+												paging : false,
+												searching : false,
+												info : false,
+												"bSort" : false
+											});
+										},
+										error : function() {
+											alert("An error occurred while processing XML file.");
+										}
+									});
+
+						});
+
+		$(document).on('click', '.removeTr', function() {
+			$(this).closest('tr').remove();
+			return false;
+		});
+
+	});
+</script>
 </body>
 </html>

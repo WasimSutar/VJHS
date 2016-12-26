@@ -7,33 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>VJHS:: Overview</title>
-<script type="text/javascript" src="js_files/jquery-1.9.0.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css_files/style.css" />
-<script type="text/javascript">
-	$(document).ready(function() {
-		$(".num").each(function() {
-			$(this).keyup(function() {
-				var sum = calculateSum();
-				$("#total_fee").val(sum);
-			});
-		});
-	});
-
-	function calculateSum() {
-		var sum = 0;
-		$(".num").each(function() {
-			if (!isNaN(this.value) && this.value.length != 0) {
-				sum += parseFloat(this.value)
-			}
-		});
-		return sum;
-	}
-</script>
 </head>
 <body>
-	<div class="head700">
-		<h1>Vignana Jyothi High School (E.M.)</h1>
-	</div>
+	<jsp:include page="vjhstop.jsp" />
 	<div class="mainMenuStyle">
 		<div class="menuStyle">
 			<a href="overview.profile"><span
@@ -71,63 +47,88 @@
 							<fieldset>
 								<legend>Manage Fee Structure</legend>
 								<div class="fulWidth">
+									<c:set var="nursery">
+										<fmt:message key='NURSERY' />
+									</c:set>
+									<c:set var="LKG">
+										<fmt:message key='LKG' />
+									</c:set>
+									<c:set var="UKG">
+										<fmt:message key='UKG' />
+									</c:set>
+									<c:set var="I">
+										<fmt:message key='FIRST_STANDARD' />
+									</c:set>
+									<c:set var="II">
+										<fmt:message key='SECOND_STANDARD' />
+									</c:set>
+									<c:set var="III">
+										<fmt:message key='THIRD_STANDARD' />
+									</c:set>
+									<c:set var="IV">
+										<fmt:message key='FOURTH_STANDARD' />
+									</c:set>
+									<c:set var="V">
+										<fmt:message key='FIFTH_STANDARD' />
+									</c:set>
+									<c:set var="VI">
+										<fmt:message key='SIXTH_STANDARD' />
+									</c:set>
+									<c:set var="VII">
+										<fmt:message key='SEVENTH_STANDARD' />
+									</c:set>
+									<c:set var="VIII">
+										<fmt:message key='EIGHT_STANDARD' />
+									</c:set>
+									<c:set var="IX">
+										<fmt:message key='NINETH_STANDARD' />
+									</c:set>
+									<c:set var="X">
+										<fmt:message key='TENTH_STANDARD' />
+									</c:set>
 									<label class="leftLabelText"><fmt:message key="CLASS"></fmt:message></label>
 									<label class="rightLabelText"> <select
 										class="selectType" name="std" id="std">
-											<option value="select" selected><fmt:message
-													key="SELECT"></fmt:message>
+											<option value="" selected><fmt:message key="SELECT"></fmt:message>
 											</option>
-											<option value="nursery"
-												<c:if test="${feeStructure.className =='nursery'}">selected</c:if>><fmt:message
-													key="NURSERY"></fmt:message>
+											<option value="${nursery}"
+												<c:if test="${feeStructure.className == nursery}">selected</c:if>>${nursery}
 											</option>
-											<option value="lkg"
-												<c:if test="${feeStructure.className =='lkg'}">selected</c:if>><fmt:message
-													key="LKG"></fmt:message>
+											<option value="${LKG}"
+												<c:if test="${feeStructure.className ==LKG}">selected</c:if>>${LKG}
 											</option>
-											<option value="ukg"
-												<c:if test="${feeStructure.className =='ukg'}">selected</c:if>><fmt:message
-													key="UKG"></fmt:message>
+											<option value="${UKG}"
+												<c:if test="${feeStructure.className ==UKG}">selected</c:if>>${LKG}
 											</option>
-											<option value="first"
-												<c:if test="${feeStructure.className =='first'}">selected</c:if>><fmt:message
-													key="FIRST_STANDARD"></fmt:message>
+											<option value="${I}"
+												<c:if test="${feeStructure.className ==I}">selected</c:if>>${I}
 											</option>
-											<option value="second"
-												<c:if test="${feeStructure.className =='second'}">selected</c:if>><fmt:message
-													key="SECOND_STANDARD"></fmt:message>
+											<option value="${II}"
+												<c:if test="${feeStructure.className ==II}">selected</c:if>>${II}
 											</option>
-											<option value="third"
-												<c:if test="${feeStructure.className =='third'}">selected</c:if>><fmt:message
-													key="THIRD_STANDARD"></fmt:message>
+											<option value="${III}"
+												<c:if test="${feeStructure.className ==III}">selected</c:if>>${III}
 											</option>
-											<option value="fourth"
-												<c:if test="${feeStructure.className =='fourth'}">selected</c:if>><fmt:message
-													key="FOURTH_STANDARD"></fmt:message>
+											<option value="${IV}"
+												<c:if test="${feeStructure.className ==IV}">selected</c:if>>${IV}
 											</option>
-											<option value="fifth"
-												<c:if test="${feeStructure.className =='fifth'}">selected</c:if>><fmt:message
-													key="FIFTH_STANDARD"></fmt:message>
+											<option value="${V}"
+												<c:if test="${feeStructure.className ==V}">selected</c:if>>${V}
 											</option>
-											<option value="sixth"
-												<c:if test="${feeStructure.className =='sixth'}">selected</c:if>><fmt:message
-													key="SIXTH_STANDARD"></fmt:message>
+											<option value="${VI}"
+												<c:if test="${feeStructure.className ==VI}">selected</c:if>>${VI}
 											</option>
-											<option value="seventh"
-												<c:if test="${feeStructure.className =='seventh'}">selected</c:if>><fmt:message
-													key="SEVENTH_STANDARD"></fmt:message>
+											<option value="${VII}"
+												<c:if test="${feeStructure.className ==VII}">selected</c:if>>${VII}
 											</option>
-											<option value="eight"
-												<c:if test="${feeStructure.className =='eight'}">selected</c:if>><fmt:message
-													key="EIGHT_STANDARD"></fmt:message>
+											<option value="${VIII}"
+												<c:if test="${feeStructure.className ==VIII}">selected</c:if>>${VIII}
 											</option>
-											<option value="nineth"
-												<c:if test="${feeStructure.className =='nineth'}">selected</c:if>><fmt:message
-													key="NINETH_STANDARD"></fmt:message>
+											<option value="${IX}"
+												<c:if test="${feeStructure.className ==XI}">selected</c:if>>${IX}
 											</option>
-											<option value="tenth"
-												<c:if test="${feeStructure.className =='tenth'}">selected</c:if>><fmt:message
-													key="TENTH_STANDARD"></fmt:message>
+											<option value="${X}"
+												<c:if test="${feeStructure.className ==X}">selected</c:if>>${X}
 											</option>
 									</select>
 									</label>
@@ -219,7 +220,6 @@
 			</div>
 		</div>
 	</div>
-	<div class="footerStyle">© 2015 All rights Reserved | Vignana
-		Jyothi High School</div>
+	<jsp:include page="vjhsbottom.jsp" />
 </body>
 </html>

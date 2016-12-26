@@ -7,18 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>VJHS : Holiday List Upload</title>
-
-<script type="text/javascript" src="js_files/jquery-1.9.0.min.js"></script>
-<script type="text/javascript" src="js_files/jquery.dataTables.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="css_files/jquery.dataTables.css">
-<link rel="stylesheet" type="text/css" href="css_files/style.css" />
 <script type="text/javascript">
 	function showFile() {
 		var countFiles = $('#fileToUpload')[0].files.length;
 		var imgPath = $('#fileToUpload')[0].value;
-		var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1)
-				.toLowerCase();
+		var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
 		var image_holder = $('#imgDisp');
 		image_holder.empty();
 		if (extn == "pdf") {
@@ -53,35 +46,29 @@
 		var uploadedFileName = $('#fileToUpload')[0].files[0].name;
 		$(function() {
 			var isAccepted = true;
-			$
-					.ajax({
-						url : 'getHolidayFiles.upload',
-						dataType : 'xml',
-						cache : false,
-						success : function(xml) {
-							$(xml)
-									.find('FILE')
-									.each(
-											function() {
-												var fileName = $(this).find(
-														'FILENAMES').text();
-												if (fileName == uploadedFileName) {
-													isAccepted = confirm("File Name is alreday exists, Do you want to override?");
-												}
-											});
-							if (isAccepted) {
-								showFile();
-							} else {
-								$('#fileToUpload').val('');
-								return false;
-							}
+			$.ajax({
+				url : 'getHolidayFiles.upload',
+				dataType : 'xml',
+				cache : false,
+				success : function(xml) {
+					$(xml).find('FILE').each(function() {
+						var fileName = $(this).find('FILENAMES').text();
+						if (fileName == uploadedFileName) {
+							isAccepted = confirm("File Name is alreday exists, Do you want to override?");
 						}
 					});
+					if (isAccepted) {
+						showFile();
+					} else {
+						$('#fileToUpload').val('');
+						return false;
+					}
+				}
+			});
 		});
 	}
 
 	function checkFile() {
-
 		if ($('#fileToUpload').val() == '') {
 			alert("Please Select a File to Upload");
 			$('#fileToUpload').select().focus();
@@ -89,34 +76,13 @@
 		} else {
 			return true;
 		}
-
 	}
 </script>
-
 </head>
 <body>
-	<div class="head700">
-		<h1>Vignana Jyothi High School (E.M.)</h1>
-	</div>
-	<div class="mainMenuStyle">
-
-		<div class="menuStyle">
-			<a href="overview.profile"><span
-				class="profileStyle mainMenuSubStyle">Profile</span></a> <a
-				href="add.student"><span class="mainMenuSubStyle studentProfile">Students</span></a>
-			<a href="add.teacher"><span
-				class="mainMenuSubStyle teacherProfile">Teachers</span></a> <a
-				href="academic_calander.schedule"><span
-				class="mainMenuSubStyle scheduleProfile activeProfile">Schedule</span></a>
-			<a href="attendance.examinations"><span
-				class="mainMenuSubStyle examsProfile">Exams</span></a> <a href="#"><span
-				class="mainMenuSubStyle smsProfile">SMS</span></a> <a href="#"><span
-				class="mainMenuSubStyle libraryProfile">Library</span></a> <a href="#"><span
-				class="mainMenuSubStyle vehiclesProfile">Vehicles</span></a> <a href="#"><span
-				class="mainMenuSubStyle accountsProfile">Accounts</span></a>
-		</div>
-
-	</div>
+	<jsp:include page="vjhstop.jsp" />
+	<c:set var="page" scope="request" value="SCHEDULE" />
+	<jsp:include page="vjhsmenu.jsp" />
 	<div class="mainBody">
 		<div class="mainBodyStyle">
 			<div class="mainLeftBodyStyle">
@@ -131,10 +97,8 @@
 				</ul>
 			</div>
 			<div class="mainRightBodyStyle">
-
 				<div>
 					<fieldset>
-
 						<legend>Holiday List</legend>
 						<form method="post" action="holidays.upload"
 							enctype="multipart/form-data" onsubmit="return checkFile();">
@@ -155,11 +119,7 @@
 				<div class="minHeightDiv"></div>
 			</div>
 		</div>
-
-
-
 	</div>
-	<div class="footerStyle">© 2015 All rights Reserved | Vignana
-		Jyothi High School</div>
+	<jsp:include page="vjhsbottom.jsp" />
 </body>
 </html>

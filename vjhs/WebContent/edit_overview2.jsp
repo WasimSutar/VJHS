@@ -7,13 +7,9 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>VJHS:: Overview</title>
-<script type="text/javascript" src="js_files/jquery-1.9.0.min.js"></script>
-<link rel="stylesheet" type="text/css" href="css_files/style.css" />
 </head>
 <body>
-	<div class="head700">
-		<h1>Vignana Jyothi High School (E.M.)</h1>
-	</div>
+	<jsp:include page="vjhstop.jsp" />
 	<div class="mainMenuStyle">
 		<div class="menuStyle">
 			<a href="overview.profile"><span
@@ -152,7 +148,6 @@
 			</div>
 		</div>
 	</div>
-	<div class="footerStyle">© 2015 All rights Reserved | Vignana
-		Jyothi High School</div>
+	<jsp:include page="vjhsbottom.jsp" />
 </body>
 </html>

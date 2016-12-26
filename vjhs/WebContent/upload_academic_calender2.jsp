@@ -7,7 +7,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>VJHS : Academic Calendar Upload</title>
-
 <script type="text/javascript" src="js_files/jquery-1.9.0.min.js"></script>
 <script type="text/javascript" src="js_files/jquery.dataTables.js"></script>
 <link rel="stylesheet" type="text/css"
@@ -95,28 +94,9 @@
 
 </head>
 <body>
-	<div class="head700">
-		<h1>Vignana Jyothi High School (E.M.)</h1>
-	</div>
-	<div class="mainMenuStyle">
-
-		<div class="menuStyle">
-			<a href="overview.profile"><span
-				class="profileStyle mainMenuSubStyle">Profile</span></a> <a
-				href="add.student"><span class="mainMenuSubStyle studentProfile">Students</span></a>
-			<a href="add.teacher"><span
-				class="mainMenuSubStyle teacherProfile">Teachers</span></a> <a
-				href="academic_calander.schedule"><span
-				class="mainMenuSubStyle scheduleProfile activeProfile">Schedule</span></a>
-			<a href="attendance.examinations"><span
-				class="mainMenuSubStyle examsProfile">Exams</span></a> <a href="#"><span
-				class="mainMenuSubStyle smsProfile">SMS</span></a> <a href="#"><span
-				class="mainMenuSubStyle libraryProfile">Library</span></a> <a href="#"><span
-				class="mainMenuSubStyle vehiclesProfile">Vehicles</span></a> <a href="#"><span
-				class="mainMenuSubStyle accountsProfile">Accounts</span></a>
-		</div>
-
-	</div>
+	<jsp:include page="vjhstop.jsp" />
+	<c:set var="page" scope="request" value="SCHEDULE" />
+	<jsp:include page="vjhsmenu.jsp" />
 	<div class="mainBody">
 		<div class="mainBodyStyle">
 			<div class="mainLeftBodyStyle">
@@ -131,18 +111,16 @@
 				</ul>
 			</div>
 			<div class="mainRightBodyStyle">
-
 				<div>
 					<fieldset>
-
 						<legend>Academic Calendar</legend>
 						<form method="post" action="academic.upload"
 							enctype="multipart/form-data" onsubmit="return checkFile()">
 							<div class="fulWidth">
 								<label class="leftLabelST">Select Academic calendar file
-									to upload</label> <label class="rightLabelST"><input type="file"
-									id="fileToUpload" name="uploadFile" width="20" height="20"
-									onchange="nameCheck();" /></label>
+									to upload</label> <label class="rightLabelST"><input
+									type="file" id="fileToUpload" name="uploadFile" width="20"
+									height="20" onchange="nameCheck();" /></label>
 							</div>
 							<div class="formButtons">
 								<input type="submit" class="btnStyle" value="Upload" />
@@ -155,11 +133,7 @@
 				<div class="minHeightDiv"></div>
 			</div>
 		</div>
-
-
-
 	</div>
-	<div class="footerStyle">© 2015 All rights Reserved | Vignana
-		Jyothi High School</div>
+	<jsp:include page="vjhsbottom.jsp" />
 </body>
 </html>

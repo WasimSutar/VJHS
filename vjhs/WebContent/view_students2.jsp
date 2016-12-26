@@ -7,54 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Home Page</title>
-<script type="text/javascript" src="js_files/jquery-1.9.0.min.js"></script>
-<script type="text/javascript" src="js_files/jquery.dataTables.js"></script>
-<link rel="stylesheet" type="text/css"
-	href="css_files/jquery.dataTables.css">
-<link rel="stylesheet" type="text/css" href="css_files/style.css" />
-<script type="text/javascript">
-	/* Custom filtering function which will search data in column four between two values */
-	/* 	$.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
-	 var min = parseInt($('#min').val(), 10);
-	 var max = parseInt($('#max').val(), 10);
-	 var age = parseFloat(data[3]) || 0; // use data for the age column
-	 if ((isNaN(min) && isNaN(max)) || (isNaN(min) && age <= max)
-	 || (min <= age && isNaN(max)) || (min <= age && age <= max)) {
-	 return;
-	 }
-	 return;
-	 }); */
-	$(document).ready(function() {
-		var table = $('#example').DataTable();
-		// Event listener to the two range filtering inputs to redraw on input
-		$('#min, #max').keyup(function() {
-			table.draw();
-		});
-	});
-</script>
 </head>
 <body>
-	<div class="head700">
-		<h1>Vignana Jyothi High School (E.M.)</h1>
-	</div>
-	<div class="mainMenuStyle">
-		<div class="menuStyle">
-			<a href="overview.profile"><span
-				class="profileStyle mainMenuSubStyle">Profile</span></a> <a
-				href="add.student"><span
-				class="mainMenuSubStyle studentProfile activeProfile">Students</span></a>
-			<a href="add.teacher"><span
-				class="mainMenuSubStyle teacherProfile">Teachers</span></a> <a
-				href="academic_calander.schedule"><span
-				class="mainMenuSubStyle scheduleProfile">Schedule</span></a> <a
-				href="attendance.examinations"><span
-				class="mainMenuSubStyle examsProfile">Exams</span></a> <a href="#"><span
-				class="mainMenuSubStyle smsProfile">SMS</span></a> <a href="#"><span
-				class="mainMenuSubStyle libraryProfile">Library</span></a> <a href="#"><span
-				class="mainMenuSubStyle vehiclesProfile">Vehicles</span></a> <a href="#"><span
-				class="mainMenuSubStyle accountsProfile">Accounts</span></a>
-		</div>
-	</div>
+	<jsp:include page="vjhstop.jsp" />
+	<c:set var="page" scope="request" value="STUDENT" />
+	<jsp:include page="vjhsmenu.jsp" />
 	<div class="mainBody">
 		<div class="mainBodyStyle">
 			<div class="mainLeftBodyStyle">
@@ -69,7 +26,7 @@
 				<div>
 					<fieldset>
 						<legend>View Students</legend>
-						<table id="example" class="display compact">
+						<table class="example display compact">
 							<thead>
 								<tr>
 									<th>Admission Number</th>
@@ -114,17 +71,27 @@
 			</div>
 		</div>
 	</div>
-	<div class="footerStyle">© 2015 All rights Reserved | Vignana
-		Jyothi High School</div>
+	<jsp:include page="vjhsbottom.jsp" />
+	<script type="text/javascript">
+		/* Custom filtering function which will search data in column four between two values */
+		/* 	$.fn.dataTable.ext.search.push(function(settings, data, dataIndex) {
+		 var min = parseInt($('#min').val(), 10);
+		 var max = parseInt($('#max').val(), 10);
+		 var age = parseFloat(data[3]) || 0; // use data for the age column
+		 if ((isNaN(min) && isNaN(max)) || (isNaN(min) && age <= max)
+		 || (min <= age && isNaN(max)) || (min <= age && age <= max)) {
+		 return;
+		 }
+		 return;
+		 }); */
+		$(document).ready(function() {
+			var table = $('.example').DataTable();
+			// Event listener to the two range filtering inputs to redraw on input
+			$('#min, #max').keyup(function() {
+				table.draw();
+			});
+		});
+	</script>
+
 </body>
 </html>
-
-<!-- <div>
-	<div class="fulWidth">
-		<label>Minimum Class:</label> <input type="text" id="min" name="min">
-	</div>
-	<div class="fulWidth">
-		<label>Maximum Class:</label> <input type="text" id="max" name="max">
-	</div>
-</div>
- -->

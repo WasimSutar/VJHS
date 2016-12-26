@@ -7,80 +7,11 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Home Page</title>
-<script type="text/javascript" src="js_files/jquery-1.11.0.min.js"></script> 
-<script type="text/javascript" src="js_files/jquery.validate.min.js"></script>
-<script type="text/javascript" src="js_files/student_admission.js"></script>
-<script type="text/javascript" src="js_files/vjhs_util.js"></script> 
-<script type="text/javascript" src="js_files/jquery-ui.js"></script>
-<link rel="stylesheet" type="text/css" href="css_files/jquery-ui.css" />
-<link rel="stylesheet" type="text/css" href="css_files/style.css" />
-<script type="text/javascript">
-	$(function() {
-		/* var adminDet = parseFloat($('.adminDetStyle').height());
-		var conDet = parseFloat($('.conDetStyle').height());
-		var perDet = adminDet + conDet + 18;
-		$('.personlDetails').height(perDet); */
-
-		$('#photo').on(
-				'change',
-				function() {
-					var countFiles = $(this)[0].files.length;
-					var imgPath = $(this)[0].value;
-					var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1)
-							.toLowerCase();
-					if (extn == "gif" || extn == "png" || extn == "jpg"
-							|| extn == "jpeg") {
-						$('.admissionLeft').addClass('adminLeftLabel');
-						$('.admissionRight').addClass('adminRightLabel');
-						$('.adminRightLabel').height(
-								$('.adminLeftLabel').height());
-						var image_holder = $('.adminRightLabel');
-						image_holder.empty();
-						if (typeof (FileReader) != "undefined") {
-							for (var i = 0; i < countFiles; i++) {
-								var reader = new FileReader();
-								reader.onload = function(e) {
-									$("<img/>", {
-										"src" : e.target.result,
-										"class" : "thumb-image"
-									}).appendTo(image_holder);
-								}
-								image_holder.show();
-								reader.readAsDataURL($(this)[0].files[i]);
-							}
-						} else {
-							alert("This browser does not support FileReader.");
-						}
-					} else {
-						alert("Please Select only Images");
-						$('.adminRightLabel').val('');
-					}
-				});
-	});
-</script>
 </head>
 <body>
-	<div class="head700">
-		<h1>Vignana Jyothi High School (E.M.)</h1>
-	</div>
-	<div class="mainMenuStyle">
-		<div class="menuStyle">
-			<a href="overview.profile"><span
-				class="profileStyle mainMenuSubStyle">Profile</span></a> <a
-				href="add.student"><span
-				class="mainMenuSubStyle studentProfile activeProfile">Students</span></a>
-			<a href="add.teacher"><span
-				class="mainMenuSubStyle teacherProfile">Teachers</span></a> <a
-				href="academic_calander.schedule"><span
-				class="mainMenuSubStyle scheduleProfile">Schedule</span></a> <a
-				href="attendance.examinations"><span
-				class="mainMenuSubStyle examsProfile">Exams</span></a> <a href="#"><span
-				class="mainMenuSubStyle smsProfile">SMS</span></a> <a href="#"><span
-				class="mainMenuSubStyle libraryProfile">Library</span></a> <a href="#"><span
-				class="mainMenuSubStyle vehiclesProfile">Vehicles</span></a> <a href="#"><span
-				class="mainMenuSubStyle accountsProfile">Accounts</span></a>
-		</div>
-	</div>
+	<jsp:include page="vjhstop.jsp" />
+	<c:set var="page" scope="request" value="STUDENT" />
+	<jsp:include page="vjhsmenu.jsp" />
 	<div class="mainBody">
 		<div class="mainBodyStyle">
 			<div class="mainLeftBodyStyle">
@@ -119,8 +50,7 @@
 										<label class="leftLabel"><fmt:message key="DOA"></fmt:message></label>
 										<label class="rightLabel"> <input type="text"
 											name="todaydate" class="datepicker inputType"
-											value="${sessionScope.student!=null?sessionScope.student.dateOfAdmission:now}"
-											/></label>
+											value="${sessionScope.student!=null?sessionScope.student.dateOfAdmission:now}" /></label>
 									</div>
 									<div class="fulWidth">
 										<label class="leftLabel"><fmt:message
@@ -256,14 +186,13 @@
 									<label class="leftLabel"><fmt:message key="DOB"></fmt:message></label>
 									<label class="rightLabel"><input type="text" name="dob"
 										class="datepicker inputType"
-										value="${sessionScope.student!=null?sessionScope.student.dateOfBirth:now}"
-										></label>
+										value="${sessionScope.student!=null?sessionScope.student.dateOfBirth:now}"></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="GENDER"></fmt:message></label>
 									<label class="rightLabel"><select id="gender"
 										class="selectType" name="gender">
-											
+
 											<option value="male"
 												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='male'}">selected</c:if>><fmt:message
 													key="GENDER_MALE"></fmt:message>
@@ -382,7 +311,46 @@
 			</div>
 		</div>
 	</div>
-	<div class="footerStyle">© 2015 All rights Reserved | Vignana
-		Jyothi High School</div>
+	<jsp:include page="vjhsbottom.jsp" />
+	<script type="text/javascript">
+		$(function() {
+			var adminDet = parseFloat($('.adminDetStyle').height());
+			var conDet = parseFloat($('.conDetStyle').height());
+			var perDet = adminDet + conDet + 18;
+			$('.personlDetails').height(perDet);
+
+			$('#photo').on('change', function() {
+				var countFiles = $(this)[0].files.length;
+				var imgPath = $(this)[0].value;
+				var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
+				if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
+					$('.admissionLeft').addClass('adminLeftLabel');
+					$('.admissionRight').addClass('adminRightLabel');
+					$('.adminRightLabel').height($('.adminLeftLabel').height());
+					var image_holder = $('.adminRightLabel');
+					image_holder.empty();
+					if (typeof (FileReader) != "undefined") {
+						for (var i = 0; i < countFiles; i++) {
+							var reader = new FileReader();
+							reader.onload = function(e) {
+								$("<img/>", {
+									"src" : e.target.result,
+									"class" : "thumb-image"
+								}).appendTo(image_holder);
+							}
+							image_holder.show();
+							reader.readAsDataURL($(this)[0].files[i]);
+						}
+					} else {
+						alert("This browser does not support FileReader.");
+					}
+				} else {
+					alert("Please Select only Images");
+					$('#photo').val('');
+					$('.adminRightLabel').val('');
+				}
+			});
+		});
+	</script>
 </body>
 </html>
