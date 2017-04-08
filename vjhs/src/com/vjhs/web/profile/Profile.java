@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -58,6 +59,16 @@ public class Profile extends HttpServlet {
 			Overview overview = new Overview();
 			overview = overviewOperations.getOverview();
 			request.setAttribute("overview", overview);
+			Cookie[] cookies = null;
+			cookies = request.getCookies();
+			System.out.println("Cookies: "+cookies);
+			if (cookies != null)
+				for (int i = 0; i < cookies.length; i++) {
+					Cookie cookie = cookies[i];
+					System.out.println("Cookie at overview :"+cookie.getName());
+					
+				}
+		System.out.println("Before dispatching");
 			request.getRequestDispatcher("overview2.jsp").forward(request, response);
 		} else if (uri.endsWith("classes_strength.profile")) {
 			request.getRequestDispatcher("class_strength.jsp").forward(request, response);

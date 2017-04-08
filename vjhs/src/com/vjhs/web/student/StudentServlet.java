@@ -127,8 +127,7 @@ public class StudentServlet extends HttpServlet {
 		} else if (uri.endsWith("regform.student")) {
 			Student student = getStudentDetails(request);
 			student.setAdded(studentOperations.addStudent(student));
-			HttpSession httpSession = request.getSession();
-			httpSession.setAttribute("student", student);
+			request.setAttribute("student", student);
 			request.getRequestDispatcher("confirm_admission2.jsp").forward(request, response);
 		} else if (uri.endsWith("confirmYes.student")) {
 			HttpSession httpSession = request.getSession(false);

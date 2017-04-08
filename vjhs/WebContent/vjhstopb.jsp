@@ -9,7 +9,27 @@
 	<c:forEach items="${cookie}" var="currentCookie">
 		<c:if
 			test="${currentCookie.key == 'userName' && currentCookie.value.value != ''}">
-			<c:redirect url="sessionAlive.admin" />
+			<%-- <c:url url="sessionAlive.admin" /> --%>
+			<jsp:forward page="sessionAlive.admin"></jsp:forward>
 		</c:if>
 	</c:forEach>
 </div>
+
+<%-- <div class="mainBody">
+	<div class="head700">
+		<div class="mainHead">
+			<h1>Vignana Jyothi High School (E.M.)</h1>
+		</div>
+		<div class="logInfo">
+			<c:forEach items="${cookie}" var="currentCookie">
+				<c:if
+					test="${currentCookie.key == 'userName' && currentCookie.value.value != ''}">
+					Welcome Back,&nbsp;<c:out value="${currentCookie.value.value }"></c:out> &nbsp;<a
+						href="logout.admin" class="btnStyle">Logout</a>
+					<c:out value="${currentCookie.value.value }"></c:out>
+					<c:redirect url="sessionAlive.admin" />
+				</c:if>
+			</c:forEach>
+		</div>
+	</div>
+</div> --%>

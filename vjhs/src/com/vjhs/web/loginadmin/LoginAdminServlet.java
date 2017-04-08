@@ -10,8 +10,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.vjhs.imp.LoginAdminOperImp;
+import com.vjhs.imp.OverviewOperImp;
 import com.vjhs.interfaces.LoginAdminOperations;
+import com.vjhs.interfaces.OverviewOperations;
 import com.vjhs.pojo.LoginAdmin;
+import com.vjhs.pojo.Overview;
 
 /**
  * Servlet implementation class LoginAdmin
@@ -19,7 +22,7 @@ import com.vjhs.pojo.LoginAdmin;
 @WebServlet("*.admin")
 public class LoginAdminServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	OverviewOperations overviewOperations = new OverviewOperImp();
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -79,6 +82,11 @@ public class LoginAdminServlet extends HttpServlet {
 						response.addCookie(cookie);
 					}
 				}
+				Overview overview = new Overview();
+				overview = overviewOperations.getOverview();
+				System.out.println("Overview : "+overview);
+				request.setAttribute("overview", overview);
+				
 				request.getRequestDispatcher("overview.profile").forward(request, response);
 			} else {
 				request.setAttribute("errorMessage", "Username / Password Invalid");
@@ -92,6 +100,12 @@ public class LoginAdminServlet extends HttpServlet {
 			request.getRequestDispatcher("adminhomepage.jsp").forward(request, response);
 		} else if (uri.endsWith("logout.admin")) {
 			eraseCookie(request, response);
+			try {
+				Thread.sleep(2000 );
+			} catch (InterruptedException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
 			request.setAttribute("errorMessage", "You have logged out successfully");
 			request.getRequestDispatcher("vjhsadminlogin.jsp").forward(request, response);
 		}
@@ -106,14 +120,29 @@ public class LoginAdminServlet extends HttpServlet {
 	}
 
 	private void eraseCookie(HttpServletRequest req, HttpServletResponse resp) {
-		Cookie[] cookies = req.getCookies();
-		if (cookies != null)
-			for (int i = 0; i < cookies.length; i++) {
-				cookies[i].setValue("");
-				cookies[i].setPath("/");
-				cookies[i].setMaxAge(0);
-				resp.addCookie(cookies[i]);
-			}
+		try {
+			Cookie[] cookies = null;
+			cookies = req.getCookies();
+			
+			if (cookies != null)
+				for (int i = 0; i < cookies.length; i++) {
+					Cookie cookie = cookies[i];
+					System.out.println("Cookie :"+cookie.getName());
+					cookie.setMaxAge(0);
+					resp.addCookie(cookie);
+					//System.out.println("Cookie after clear :"+cookie.getName());
+//					cookies[i].setValue("");
+//					cookies[i].setPath("/");
+//					cookies[i].setMaxAge(0);
+//					resp.addCookie(cookies[i]);
+				}
+			
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		
 	}
 
 }

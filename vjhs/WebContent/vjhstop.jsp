@@ -11,6 +11,39 @@
 	href="css_files/jquery.dataTables.css">
 <link rel="stylesheet" type="text/css" href="css_files/style.css" />
 <!-- <link rel="stylesheet" type="text/css" href="css_files/vjhs_util.css" /> -->
-<div class="head700">
-	<h1>Vignana Jyothi High School (E.M.)</h1>
+<script type="text/javascript">
+	$(function() {
+		var t;
+		window.onload = resetTimer;
+		window.onmousemove = resetTimer;
+		window.onmousedown = resetTimer; // catches touchscreen presses
+		window.onclick = resetTimer; // catches touchpad clicks
+		window.onscroll = resetTimer; // catches scrolling with arrow keys
+		window.onkeypress = resetTimer;
+
+		function logout() {
+			window.location.href = 'logout.admin';
+		}
+
+		function resetTimer() {
+			clearTimeout(t);
+			t = setTimeout(logout, 600000); // time is in milliseconds
+		}
+	});
+</script>
+<div class="mainBody">
+	<div class="head700">
+		<div class="mainHead">
+			<h1>Vignana Jyothi High School (E.M.)</h1>
+		</div>
+		<div class="logInfo">
+			<c:forEach items="${cookie}" var="currentCookie">
+				<c:if
+					test="${currentCookie.key == 'userName' && currentCookie.value.value != ''}"> 
+				Welcome Back,&nbsp;<c:out value="${currentCookie.value.value }"></c:out> &nbsp;<a
+						href="logout.admin" class="btnStyle">Logout</a>
+				</c:if>
+			</c:forEach>
+		</div>
+	</div>
 </div>

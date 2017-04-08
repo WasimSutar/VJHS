@@ -18,6 +18,16 @@
 					<form method="POST" action="addAdminLogin.admin"
 						name="createAdminUser" id="createAdminUser">
 						<div class="fulWidth">
+							<label class="lgnLeftLbl">Enter Name</label> <label
+								class="lgnRightLbl"><input type="text" name="name"
+								id="name" placeholder="Name" class="loginInput" /></label>
+						</div>
+						<div class="fulWidth">
+							<label class="lgnLeftLbl">Enter email id</label> <label
+								class="lgnRightLbl"><input type="text" name="userName"
+								id="userName" placeholder="User Name" class="loginInput" /></label>
+						</div>
+						<div class="fulWidth">
 							<label class="lgnLeftLbl">Enter User Name</label> <label
 								class="lgnRightLbl"><input type="text" name="userName"
 								id="userName" placeholder="User Name" class="loginInput" /></label>

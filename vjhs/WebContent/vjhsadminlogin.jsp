@@ -44,7 +44,6 @@
 			</fmt:bundle>
 		</div>
 	</div>
-	<div class="footerStyle">© 2015 All rights Reserved | Vignana
-		Jyothi High School</div>
+	<jsp:include page="vjhsbottom.jsp" />
 </body>
 </html>

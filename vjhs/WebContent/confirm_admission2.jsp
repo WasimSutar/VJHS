@@ -49,32 +49,32 @@
 									<div class="fulWidth">
 										<label class="leftLabel"><fmt:message key="PHOTO"></fmt:message></label>
 										<label class="rightLabelText2"> <c:out
-												value="${sessionScope.student.photo}"></c:out></label>
+												value="${student.photo}"></c:out></label>
 									</div>
 									<div class="fulWidth">
 										<label class="leftLabel"><fmt:message
 												key="ADMISSION_NO"></fmt:message></label> <label
 											class="rightLabelText2"> <c:out
-												value="${sessionScope.student.admissionNo}"></c:out>
+												value="${student.admissionNo}"></c:out>
 										</label>
 									</div>
 									<div class="fulWidth">
 										<label class="leftLabel"><fmt:message key="DOA"></fmt:message></label>
 										<label class="rightLabelText2"><fmt:formatDate
-												type="date" value="${sessionScope.student.dateOfAdmission}" />
+												type="date" value="${student.dateOfAdmission}" />
 										</label>
 									</div>
 									<div class="fulWidth">
 										<label class="leftLabel"><fmt:message
 												key="ADMISSION_CLASS"></fmt:message></label> <label
 											class="rightLabelText2"><c:out
-												value="${sessionScope.student.classAdmitted}"></c:out> </label>
+												value="${student.classAdmitted}"></c:out> </label>
 									</div>
 									<div class="fulWidth">
 										<label class="leftLabel"><fmt:message
 												key="MEDIUM_OF_INSTRUCTION"></fmt:message></label> <label
 											class="rightLabelText2"><c:out
-												value="${sessionScope.student.medium}"></c:out></label>
+												value="${student.medium}"></c:out></label>
 									</div>
 								</div>
 								<div class="admissionRight"></div>
@@ -84,28 +84,28 @@
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="RESIDENCE"></fmt:message></label>
 									<label class="rightLabelText2"><c:out
-											value="${sessionScope.student.residence}"></c:out></label>
+											value="${student.residence}"></c:out></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="NATIONALITY"></fmt:message></label>
 									<label class="rightLabelText2"><c:out
-											value="${sessionScope.student.nationality}"></c:out></label>
+											value="${student.nationality}"></c:out></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="STATE"></fmt:message></label>
 									<label class="rightLabelText2"><c:out
-											value="${sessionScope.student.state}"></c:out></label>
+											value="${student.state}"></c:out></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message
 											key="FATHER_ADDRESS"></fmt:message></label> <label
 										class="rightLabelText2"><c:out
-											value="${sessionScope.student.address}"></c:out></label>
+											value="${student.address}"></c:out></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="PHONE_NO"></fmt:message></label>
 									<label class="rightLabelText2"><c:out
-											value="${sessionScope.student.mobile}"></c:out></label>
+											value="${student.mobile}"></c:out></label>
 								</div>
 							</fieldset>
 						</div>
@@ -116,61 +116,61 @@
 									<label class="leftLabel"><fmt:message
 											key="NAME_OF_STUDENT"></fmt:message></label> <label
 										class="rightLabelText2"><c:out
-											value="${sessionScope.student.studentName}"></c:out></label>
+											value="${student.studentName}"></c:out></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="DOB"></fmt:message></label>
 									<label class="rightLabelText2"><fmt:formatDate
-											type="date" value="${sessionScope.student.dateOfBirth}" /></label>
+											type="date" value="${student.dateOfBirth}" /></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="GENDER"></fmt:message></label>
 									<label class="rightLabelText2"><c:out
-											value="${sessionScope.student.gender}"></c:out></label>
+											value="${student.gender}"></c:out></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="FATHER_NAME"></fmt:message></label>
 									<label class="rightLabelText2"><c:out
-											value="${sessionScope.student.fatherName}"></c:out></label>
+											value="${student.fatherName}"></c:out></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="MOTHER_NAME"></fmt:message></label>
 									<label class="rightLabelText2"><c:out
-											value="${sessionScope.student.motherName}"></c:out></label>
+											value="${student.motherName}"></c:out></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message
 											key="MOTHER_TONGUE"></fmt:message></label> <label
 										class="rightLabelText2"><c:out
-											value="${sessionScope.student.motherTongue}"></c:out></label>
+											value="${student.motherTongue}"></c:out></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message
 											key="FATHER_OCCUPATION"></fmt:message></label> <label
 										class="rightLabelText2"><c:out
-											value="${sessionScope.student.fatherOccupation}"></c:out></label>
+											value="${student.fatherOccupation}"></c:out></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="RELIGION"></fmt:message></label>
 									<label class="rightLabelText2"><c:out
-											value="${sessionScope.student.religion}"></c:out></label>
+											value="${student.religion}"></c:out></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="CASTE"></fmt:message></label>
 									<label class="rightLabelText2"><c:out
-											value="${sessionScope.student.caste}"></c:out></label>
+											value="${student.caste}"></c:out></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="COC"></fmt:message></label>
 									<label class="rightLabelText2"> <c:out
-											value="${sessionScope.student.coc}"></c:out>
+											value="${student.coc}"></c:out>
 									</label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message
 											key="MARKS_OF_IDENTITY"></fmt:message></label> <label
 										class="rightLabelText2"><c:out
-											value="${sessionScope.student.identityMarks}"></c:out></label>
+											value="${student.identityMarks}"></c:out></label>
 								</div>
 							</fieldset>
 						</div>
@@ -181,17 +181,17 @@
 									<label class="leftLabel"><fmt:message
 											key="PREVIOUS_SCHOOL"></fmt:message></label> <label
 										class="rightLabelText2"><c:out
-											value="${sessionScope.student.previousSchool}"></c:out></label>
+											value="${student.previousSchool}"></c:out></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="TC_NUMBER"></fmt:message></label>
 									<label class="rightLabelText2"><c:out
-											value="${sessionScope.student.tcNumber}"></c:out></label>
+											value="${student.tcNumber}"></c:out></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="TC_DATE"></fmt:message></label>
 									<label class="rightLabelText2"><fmt:formatDate
-											type="date" value="${sessionScope.student.tcDate}" /></label>
+											type="date" value="${student.tcDate}" /></label>
 								</div>
 							</fieldset>
 						</div>
