@@ -19,11 +19,30 @@ body {
 	font-size: 13px;
 } */
 .head700 {
-	font-weight: 700;
+	/* font-weight: 700; */
 	color: #0083b4;
-	text-align: center;
+	/* text-align: center; */
 	font-family: inherit;
+	/* font-size: 1.5em; */
+	width: 1200px;
+	margin: auto;
+	display: inline;
+	line-height: 35px;
+	vertical-align: middle;
+}
+
+.mainHead {
 	font-size: 1.5em;
+	text-align: left;
+	width: 60%;
+	float: left;
+}
+
+.logInfo {
+	text-align: right;
+	width: 40%;
+	float: left;
+	font-size: 15px;
 }
 
 .lgnHead700 {
