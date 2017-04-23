@@ -166,15 +166,15 @@
 											name="occasion" id="occasion" class="inputType40" /></label>
 									</div>
 									<div class="formButtons">
-										<input type="submit" value="Submit" class="btnStyle" />&nbsp;&nbsp;<input
+										<input type="button" value="Submit" class="btnStyle mrtCertBtn" />&nbsp;&nbsp;<input
 											type="reset" class="btnStyle" value="Reset" />
 									</div>
 								</form>
 							</fieldset>
 						</div>
-						<div class="desc">
+						<div class="mrtCertificate desc">
 							<fieldset id="meritCertificate">
-								<div class="fulWidth">
+								<!-- <div class="fulWidth">
 									<h1 class="descStyle alignCenter">Certificate of Merit</h1>
 								</div>
 								<div class="fulWidth">
@@ -197,7 +197,8 @@
 
 									</div>
 
-								</div>
+								</div> -->
+								<jsp:include page="meritCertificate.jsp"></jsp:include>
 								<div class="formButtons">
 									<input type="button" value="Print" class="btnStyle"
 										onclick="getPrint('meritCertificate')" />
