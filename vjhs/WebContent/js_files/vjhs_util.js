@@ -80,12 +80,14 @@ function onChangeClass() {
 						$('.classTTable select').prop('disabled', false);
 						$('#edit').hide();
 						$('#submit').show();
+						$('#reset').show();
 					} else {
 						$('.subCList').css({
 							"border" : "1px solid #fff",
 						});
 						$('#edit').show();
 						$('#submit').hide();
+						$('#reset').hide();
 						$('.classTTable select').prop('disabled', true);
 					}
 					$('.classTTable').removeClass("noHide");
@@ -98,6 +100,10 @@ function onChangeClass() {
 	} else {
 		$('.classTTable').addClass("noHide");
 	}
+}
+
+function showReset(){
+	$('#reset').show();
 }
 
 $(function() {
@@ -728,9 +734,14 @@ $(function() {
 	});
 });
 
-function resetPage() {
-	$('select').val("");
-	$('.techrTable').addClass('noHide');
+function resetFields() {
+	$('tr select').val("");
+}
+
+function resetReportData() {
+	$('td select').val("");
+	$('td input').val("");
+	$('td span').html("");
 }
 
 function getAllMarks() {

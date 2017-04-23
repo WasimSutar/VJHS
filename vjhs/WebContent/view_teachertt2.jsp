@@ -189,7 +189,7 @@
 									<input type="submit" class="btnStyle" id="submit"
 										value="Add / Update"> &nbsp;&nbsp; <input
 										class="btnStyle" type="button" id="reset" value="Clear"
-										onclick="resetPage()">
+										onclick="resetFields()">
 								</div>
 							</div>
 						</fieldset>

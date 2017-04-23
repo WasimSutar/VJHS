@@ -96,7 +96,7 @@
 											</tr>
 
 											<c:forEach begin="1" end="6" var="i">
-												<tr>
+												<tr class=classTtable>
 													<th class="thLabel"><c:choose>
 															<c:when test="${i == 1}">
        MON
@@ -185,11 +185,11 @@
 										</table>
 									</div>
 									<div class="formButtons">
-										<input type="button" class="btnStyle" id="edit" value="Edit">
+										<input type="button" class="btnStyle" id="edit" value="Edit" onclick="showReset()">
 										<input type="submit" class="btnStyle" id="submit"
 											value="Add / Update"> &nbsp;&nbsp; <input
 											class="btnStyle" type="button" id="reset" value="Clear"
-											onclick="resetPage()">
+											onclick="resetFields()">
 									</div>
 								</div>
 							</fieldset>
