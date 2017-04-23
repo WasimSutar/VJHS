@@ -1,13 +1,17 @@
-function showTC() {
+/*function showTC() {
 	if ($("#tcYes").is(":checked")) {
+		alert('hi');
 		$(".noHide").show();
 		$('.noHide').css({
 			'style' : 'width:100px'
 		});
 	} else if ($("#tcNo").is(":checked")) {
+		alert('hello');
 		$(".noHide").hide();
 	}
-}
+}*/
+
+
 
 function allowonlynumber(key) {
 	var datakey = (key.which) ? key.which : key.keyCode;// capturing pressed key
@@ -50,6 +54,13 @@ $.validator.addMethod("valueNotEquals", function(value, element, arg) {
 
 $(function() {
 	$(".datepicker").datepicker({
+		changeMonth : true,
+		changeYear : true,
+		dateFormat : 'dd/mm/yy',
+		maxDate: new Date() 
+	});
+	
+	$(".futuredatepicker").datepicker({
 		changeMonth : true,
 		changeYear : true,
 		dateFormat : 'dd/mm/yy'
@@ -372,6 +383,6 @@ $(function() {
 	});
 
 	$("#cancelFeeStru").click(function() {
-		alert("coming");
+		location.href = "feestructure.profile";
 	});
 });

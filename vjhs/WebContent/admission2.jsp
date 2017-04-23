@@ -6,6 +6,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+
 <title>Home Page</title>
 </head>
 <body>
@@ -250,10 +251,34 @@
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="COC"></fmt:message></label>
-									<label class="rightLabel"> <input type="text"
-										name="coc" id="coc" maxlength="5" class="inputType"
-										placeholder="Enter Category of Caste"
-										value="${sessionScope.student.coc}">
+									<label class="rightLabel"> <select id="coc"
+										class="selectType" name="gender">
+												<option value="<fmt:message
+													key="COC_OTHERS"></fmt:message>"
+												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='Others'}">selected</c:if>><fmt:message
+													key="COC_OTHERS"></fmt:message>
+											</option>
+											<option value="<fmt:message
+													key="COC_OC"></fmt:message>"
+												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='OC'}">selected</c:if>><fmt:message
+													key="COC_OC"></fmt:message>
+											</option>
+											<option value="<fmt:message
+													key="COC_BC"></fmt:message>"
+												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='BC'}">selected</c:if>><fmt:message
+													key="COC_BC"></fmt:message>
+											</option>
+											<option value="<fmt:message
+													key="COC_SC"></fmt:message>"
+												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='SC'}">selected</c:if>><fmt:message
+													key="COC_SC"></fmt:message>
+											</option>
+											<option value="<fmt:message
+													key="COC_ST"></fmt:message>"
+												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='ST'}">selected</c:if>><fmt:message
+													key="COC_ST"></fmt:message>
+											</option>
+									</select>
 									</label>
 								</div>
 								<div class="fulWidth">
@@ -279,26 +304,27 @@
 									<label class="leftLabel"><fmt:message
 											key="RECORD_TC_DATE"></fmt:message></label> <span class="rightLabel"><label><input
 											type="radio" name="tcRad" id="tcNo" checked
-											class="checkboxType" onclick="showTC()"> <fmt:message
-												key="NO"></fmt:message></label> <label><input type="radio"
-											name="tcRad" id="tcYes" class="checkboxType"
-											onclick="showTC()"> <fmt:message key="YES"></fmt:message>
+											class="checkboxType"> <fmt:message key="NO"></fmt:message></label>
+										<label><input type="radio" name="tcRad" id="tcYes"
+											class="checkboxType"> <fmt:message key="YES"></fmt:message>
 									</label></span>
 								</div>
-								<div class="fulWidth">
+
+								<div class="fulWidth noHide">
 									<label class="leftLabel"><fmt:message key="TC_NUMBER"></fmt:message></label>
 									<label class="rightLabel"><input type="text"
-										class="inputType" name="tcNum" id="tcNum" class="noHide"
+										class="inputType" name="tcNum" id="tcNum"
 										placeholder="Enter TC Number"
 										value="${sessionScope.student.tcNumber}" /></label>
 								</div>
-								<div class="fulWidth">
+								<div class="fulWidth noHide">
 									<label class="leftLabel"><fmt:message key="TC_DATE"></fmt:message></label>
-									<label class="rightLabel"><input type="text"
-										class="inputType" name="rec_tc_date"
-										value="${sessionScope.student!=null?sessionScope.student.tcDate:now}"
-										class="datepicker noHide"> </label>
+									<label class="rightLabel"> <input type="text"
+										name="rec_tc_date" class="datepicker inputType"
+										value="${sessionScope.student!=null?sessionScope.student.tcDate:now}" /></label>
+
 								</div>
+
 							</fieldset>
 						</div>
 						<div class="formButtons">
@@ -313,43 +339,62 @@
 	</div>
 	<jsp:include page="vjhsbottom.jsp" />
 	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#tcYes").click(function() {
+				$(".noHide").show();
+			});
+			$("#tcNo").click(function() {
+				$(".noHide").hide();
+			});
+		});
+
 		$(function() {
 			var adminDet = parseFloat($('.adminDetStyle').height());
 			var conDet = parseFloat($('.conDetStyle').height());
 			var perDet = adminDet + conDet + 18;
 			$('.personlDetails').height(perDet);
 
-			$('#photo').on('change', function() {
-				var countFiles = $(this)[0].files.length;
-				var imgPath = $(this)[0].value;
-				var extn = imgPath.substring(imgPath.lastIndexOf('.') + 1).toLowerCase();
-				if (extn == "gif" || extn == "png" || extn == "jpg" || extn == "jpeg") {
-					$('.admissionLeft').addClass('adminLeftLabel');
-					$('.admissionRight').addClass('adminRightLabel');
-					$('.adminRightLabel').height($('.adminLeftLabel').height());
-					var image_holder = $('.adminRightLabel');
-					image_holder.empty();
-					if (typeof (FileReader) != "undefined") {
-						for (var i = 0; i < countFiles; i++) {
-							var reader = new FileReader();
-							reader.onload = function(e) {
-								$("<img/>", {
-									"src" : e.target.result,
-									"class" : "thumb-image"
-								}).appendTo(image_holder);
-							}
-							image_holder.show();
-							reader.readAsDataURL($(this)[0].files[i]);
-						}
-					} else {
-						alert("This browser does not support FileReader.");
-					}
-				} else {
-					alert("Please Select only Images");
-					$('#photo').val('');
-					$('.adminRightLabel').val('');
-				}
-			});
+			$('#photo')
+					.on(
+							'change',
+							function() {
+								var countFiles = $(this)[0].files.length;
+								var imgPath = $(this)[0].value;
+								var extn = imgPath.substring(
+										imgPath.lastIndexOf('.') + 1)
+										.toLowerCase();
+								if (extn == "gif" || extn == "png"
+										|| extn == "jpg" || extn == "jpeg") {
+									$('.admissionLeft').addClass(
+											'adminLeftLabel');
+									$('.admissionRight').addClass(
+											'adminRightLabel');
+									$('.adminRightLabel').height(
+											$('.adminLeftLabel').height());
+									var image_holder = $('.adminRightLabel');
+									image_holder.empty();
+									if (typeof (FileReader) != "undefined") {
+										for (var i = 0; i < countFiles; i++) {
+											var reader = new FileReader();
+											reader.onload = function(e) {
+												$("<img/>", {
+													"src" : e.target.result,
+													"class" : "thumb-image"
+												}).appendTo(image_holder);
+											}
+											image_holder.show();
+											reader
+													.readAsDataURL($(this)[0].files[i]);
+										}
+									} else {
+										alert("This browser does not support FileReader.");
+									}
+								} else {
+									alert("Please Select only Images");
+									$('#photo').val('');
+									$('.adminRightLabel').val('');
+								}
+							});
 		});
 	</script>
 </body>

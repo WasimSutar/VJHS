@@ -112,12 +112,12 @@
 								<div class="fulWidth frmDate noHide">
 									<label class="leftLabelST">From Date</label> <label
 										class="rightLabelST"><input type="text" readonly
-										class="datepicker" name="examFrmDate" id="examFrmDate"></label>
+										class="futuredatepicker" name="examFrmDate" id="examFrmDate"></label>
 								</div>
 								<div class="fulWidth toDate noHide">
 									<label class="leftLabelST">To Date</label> <label
 										class="rightLabelST"><input type="text" readonly
-										class="datepicker" name="examToDate" id="examToDate"></label>
+										class="futuredatepicker" name="examToDate" id="examToDate"></label>
 								</div>
 								<div class="fulWidth">
 									<table class="display compact tabWidth noHide">

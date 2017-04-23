@@ -258,11 +258,36 @@
 										value="${sessionScope.teacher.religion}"></label>
 								</div>
 								<div class="fulWidth">
-									<label class="leftLabel"><fmt:message key="CASTE" /></label> <label
-										class="rightLabel"><input class="inputType"
-										type="text" name="caste" id="caste" maxlength="5" required
-										placeholder="Enter Caste"
-										value="${sessionScope.teacher.religion}"></label>
+									<label class="leftLabel"><fmt:message key="CASTE" /></label> 
+									<label class="rightLabel">
+									<select id="coc" class="selectType" name="gender">
+												<option value="<fmt:message
+													key="COC_OTHERS"></fmt:message>"
+												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='Others'}">selected</c:if>><fmt:message
+													key="COC_OTHERS"></fmt:message>
+											</option>
+											<option value="<fmt:message
+													key="COC_OC"></fmt:message>"
+												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='OC'}">selected</c:if>><fmt:message
+													key="COC_OC"></fmt:message>
+											</option>
+											<option value="<fmt:message
+													key="COC_BC"></fmt:message>"
+												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='BC'}">selected</c:if>><fmt:message
+													key="COC_BC"></fmt:message>
+											</option>
+											<option value="<fmt:message
+													key="COC_SC"></fmt:message>"
+												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='SC'}">selected</c:if>><fmt:message
+													key="COC_SC"></fmt:message>
+											</option>
+											<option value="<fmt:message
+													key="COC_ST"></fmt:message>"
+												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='ST'}">selected</c:if>><fmt:message
+													key="COC_ST"></fmt:message>
+											</option>
+									</select>
+									</label>
 								</div>
 							</fieldset>
 						</div>
