@@ -47,7 +47,7 @@
 							<div class="formButtonsLeft">
 								<input type="button" class="btnStyle" id="add" name="add"
 									value="Add" onclick="addSubject()" /> &nbsp;&nbsp; <input
-									class="btnStyle" type="button" name="edit" id="edit"
+									class="btnStyle" type="button" name="subedit" id="subedit"
 									value="Edit" onclick="editSub()" /> &nbsp;&nbsp;<input
 									type="button" class="btnStyle" name="delete" id="delete"
 									value="Delete" onclick="deleteSubjects()" />

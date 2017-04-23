@@ -35,7 +35,7 @@
 								<div class="fulWidth">
 									<label class="leftLabelST">Class</label> <label
 										class="rightLabelST"> <select name="className"
-										id="className" onchange="getStudentsNames()">
+										id="className" onchange="getAdminssionNumbesByClassName()">
 											<option value=""><fmt:message key="SELECT" />
 											</option>
 											<option value="<fmt:message key="NURSERY" />"><fmt:message
@@ -81,25 +81,24 @@
 									</label>
 								</div>
 								<div class="fulWidth">
-									<label class="leftLabelST">Student Name</label> <label
-										class="rightLabelST"> <select name="studentName"
-										id="studentName" onchange="getStudentAdminNo()">
+									<label class="leftLabelST">Student Name/Admission Number</label> <label
+										class="rightLabelST"> <select name="admissionNo"
+										id="admissionNo" onchange="getStudentAdminNo()">
 											<option value="select"><fmt:message key="SELECT" />
 											</option>
 									</select>
 									</label>
 								</div>
-								<div class="fulWidth">
+								<%-- <div class="fulWidth">
 									<label class="leftLabelST">Student Attendance Number</label> <label
 										class="rightLabelST"> <select name="admissionNo"
 										id="admissionNo" onchange="getTableData()">
 											<option value="select"><fmt:message key="SELECT" />
 												<c:forEach items="${admissionList}" var="addminVal">
 													<option value="${addminVal}">${addminVal}</option>
-												</c:forEach>
-									</select>
+												</c:forEach>									</select>
 									</label>
-								</div>
+								</div> --%>
 								<div class="fulWidth">
 									<table class="monthAttend">
 										<tr>
@@ -116,7 +115,7 @@
 											<th>MARCH</th>
 											<th>APRIL</th>
 										</tr>
-										<tr>
+										<tr class=attended>
 											<th class="toShowNo">Number of Days Attended</th>
 											<td><input type="text" class="attenInput" name="a1"
 												id="a1" onchange="calPercentage(id)" /></td>
@@ -166,7 +165,7 @@
 											<td><input type="text" class="attenInput" name="w11"
 												id="w11" readonly /></td>
 										</tr>
-										<tr>
+										<tr class=attpercent>
 											<th class="toShowNo">Monthly Percentage</th>
 											<td><input type="text" class="attenInput" name="mp1"
 												id="mp1" readonly /></td>
@@ -206,8 +205,8 @@
 						<div class="formButtons">
 							<input type="submit" class="btnStyle" id="submit" name="Submit"
 								value="Add / Update"> &nbsp;&nbsp; <input
-								class="btnStyle" type="reset" id="reset" name="reset"
-								value="Clear">
+								class="btnStyle" type="button" id="reset" name="reset"
+								value="Clear" onclick="clearAttendanceFields()">
 						</div>
 					</fmt:bundle>
 				</form>

@@ -414,8 +414,7 @@ function getStudentsNames() {
 	});
 }
 function getStudentAdminNo() {
-	$('#admissionNo').val($('#studentName option:selected').val());
-	$('#admissionNo').prop('readonly', true);
+
 	$(function() {
 		var count = 1;
 		$.ajax({
@@ -874,4 +873,11 @@ function calculateGPA(marks) {
 		gpa = 10;
 	}
 	return gpa;
+}
+
+function clearAttendanceFields(){
+	$('.attended input').val('');
+	$('.attpercent input').val('');
+	$('#cumPercentage').html('0.0');
+	
 }
