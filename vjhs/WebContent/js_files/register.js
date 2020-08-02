@@ -99,8 +99,7 @@ $(function() {
 								minlength : 4,
 							},
 							coc : {
-								required : true,
-								minlength : 2,
+								required : true
 							},
 							mother_tongue : {
 								required : true,
@@ -172,8 +171,7 @@ $(function() {
 								minlength : "Caste must contain atleast 4 characters",
 							},
 							coc : {
-								required : "Category of caste cannot be empty",
-								minlength : "Category of castemust contain atleast 2 characters",
+								required : "Category of caste cannot be empty"
 							},
 							mother_tongue : {
 								required : "Mother tongue cannot be empty",

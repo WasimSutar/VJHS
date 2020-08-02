@@ -62,56 +62,56 @@
 													<c:if test="${sessionScope.student==null}">selected</c:if>><fmt:message
 														key="SELECT"></fmt:message>
 												</option> --%>
-												<option value="nursery"
-													<c:if test="${sessionScope.student.classAdmitted=='nursery'}">selected</c:if>><fmt:message
+												<option value="NUR"
+													<c:if test="${sessionScope.student.classAdmitted=='NUR'}">selected</c:if>><fmt:message
 														key="NURSERY"></fmt:message>
 												</option>
-												<option value="lkg"
-													<c:if test="${sessionScope.student.classAdmitted=='lkg'}">selected</c:if>><fmt:message
+												<option value="LKG"
+													<c:if test="${sessionScope.student.classAdmitted=='LKG'}">selected</c:if>><fmt:message
 														key="LKG"></fmt:message>
 												</option>
-												<option value="ukg"
-													<c:if test="${sessionScope.student.classAdmitted=='ukg'}">selected</c:if>><fmt:message
+												<option value="UKG"
+													<c:if test="${sessionScope.student.classAdmitted=='UKG'}">selected</c:if>><fmt:message
 														key="UKG"></fmt:message>
 												</option>
-												<option value="first"
-													<c:if test="${sessionScope.student.classAdmitted=='first'}">selected</c:if>><fmt:message
+												<option value="I"
+													<c:if test="${sessionScope.student.classAdmitted=='I'}">selected</c:if>><fmt:message
 														key="FIRST_STANDARD"></fmt:message>
 												</option>
-												<option value="second"
-													<c:if test="${sessionScope.student.classAdmitted=='second'}">selected</c:if>><fmt:message
+												<option value="II"
+													<c:if test="${sessionScope.student.classAdmitted=='II'}">selected</c:if>><fmt:message
 														key="SECOND_STANDARD"></fmt:message>
 												</option>
-												<option value="third"
-													<c:if test="${sessionScope.student.classAdmitted=='third'}">selected</c:if>><fmt:message
+												<option value="III"
+													<c:if test="${sessionScope.student.classAdmitted=='III'}">selected</c:if>><fmt:message
 														key="THIRD_STANDARD"></fmt:message>
 												</option>
-												<option value="fourth"
-													<c:if test="${sessionScope.student.classAdmitted=='fourth'}">selected</c:if>><fmt:message
+												<option value="IV"
+													<c:if test="${sessionScope.student.classAdmitted=='IV'}">selected</c:if>><fmt:message
 														key="FOURTH_STANDARD"></fmt:message>
 												</option>
-												<option value="fifth"
-													<c:if test="${sessionScope.student.classAdmitted=='fifth'}">selected</c:if>><fmt:message
+												<option value="V"
+													<c:if test="${sessionScope.student.classAdmitted=='V'}">selected</c:if>><fmt:message
 														key="FIFTH_STANDARD"></fmt:message>
 												</option>
-												<option value="sixth"
-													<c:if test="${sessionScope.student.classAdmitted=='sixth'}">selected</c:if>><fmt:message
+												<option value="VI"
+													<c:if test="${sessionScope.student.classAdmitted=='VI'}">selected</c:if>><fmt:message
 														key="SIXTH_STANDARD"></fmt:message>
 												</option>
-												<option value="seventh"
-													<c:if test="${sessionScope.student.classAdmitted=='seventh'}">selected</c:if>><fmt:message
+												<option value="VII"
+													<c:if test="${sessionScope.student.classAdmitted=='VII'}">selected</c:if>><fmt:message
 														key="SEVENTH_STANDARD"></fmt:message>
 												</option>
-												<option value="eight"
-													<c:if test="${sessionScope.student.classAdmitted=='eight'}">selected</c:if>><fmt:message
+												<option value="VIII"
+													<c:if test="${sessionScope.student.classAdmitted=='VIII'}">selected</c:if>><fmt:message
 														key="EIGHT_STANDARD"></fmt:message>
 												</option>
-												<option value="nineth"
-													<c:if test="${sessionScope.student.classAdmitted=='nineth'}">selected</c:if>><fmt:message
+												<option value="IX"
+													<c:if test="${sessionScope.student.classAdmitted=='IX'}">selected</c:if>><fmt:message
 														key="NINETH_STANDARD"></fmt:message>
 												</option>
-												<option value="tenth"
-													<c:if test="${sessionScope.student.classAdmitted=='tenth'}">selected</c:if>><fmt:message
+												<option value="X"
+													<c:if test="${sessionScope.student.classAdmitted=='X'}">selected</c:if>><fmt:message
 														key="TENTH_STANDARD"></fmt:message>
 												</option>
 										</select>
@@ -252,7 +252,7 @@
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="COC"></fmt:message></label>
 									<label class="rightLabel"> <select id="coc"
-										class="selectType" name="gender">
+										class="selectType" name="coc">
 												<option value="<fmt:message
 													key="COC_OTHERS"></fmt:message>"
 												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='Others'}">selected</c:if>><fmt:message
