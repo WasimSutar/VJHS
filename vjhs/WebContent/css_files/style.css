@@ -927,3 +927,30 @@ input:FOCUS, select:FOCUS, textarea:FOCUS {
 	font-size: 14px;
 	float: right;
 }
+
+.success-message{
+    font: inherit;
+    padding: 5px 10px;
+    margin-left: 5px;
+    border: #58D68D 1px solid;
+    font-weight: 700;
+    border-left: #58D68D 5px solid;
+}
+
+.error-message{
+    font: inherit;
+    padding: 5px 10px;
+    margin-left: 5px;
+    border: #E74C3C 1px solid;
+    font-weight: 700;
+    border-left: #E74C3C 5px solid;
+}
+
+.warning-message{
+    font: inherit;
+    padding: 5px 10px;
+    margin-left: 5px;
+    border: #F4D03F 1px solid;
+    font-weight: 700;
+    border-left: #F4D03F 5px solid;
+}
