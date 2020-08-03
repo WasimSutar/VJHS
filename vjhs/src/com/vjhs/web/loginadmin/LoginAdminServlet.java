@@ -42,7 +42,6 @@ public class LoginAdminServlet extends HttpServlet {
 			request.getRequestDispatcher("vjhsadminlogin.jsp").forward(request, response);
 		} else if (uri.endsWith("addAdminLogin.admin")) {
 			LoginAdmin loginAdmin = new LoginAdmin();
-			loginAdmin.setUserId("54367");
 			loginAdmin.setUserName(request.getParameter("userName"));
 			loginAdmin.setPassword(request.getParameter("password"));
 			loginAdmin.setBranch(request.getParameter("branch"));

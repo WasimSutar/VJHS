@@ -1,6 +1,8 @@
 package com.vjhs.imp;
 
 import static com.vjhs.interfaces.SQLQuery.ADD_STUDENT;
+import static com.vjhs.interfaces.SQLQuery.UPDATE_STUDENT;
+import static com.vjhs.interfaces.SQLQuery.IS_STUDENT_EXIST;
 import static com.vjhs.interfaces.SQLQuery.ADD_VIEW_STUDENT;
 import static com.vjhs.interfaces.SQLQuery.DELETE_STUDENT;
 import static com.vjhs.interfaces.SQLQuery.DELETE_VIEW_STUDENT;
@@ -41,120 +43,158 @@ public class StudentOperImp implements StudentOperations {
 		Connection con = null;
 		PreparedStatement pst1 = null;
 		PreparedStatement pst2 = null;
-		int count = 0;
-		try {
-			con = dbConnection.getConnection();
-			pst1 = con.prepareStatement(ADD_STUDENT);
+		boolean status = false;
+		boolean isStudentExist = isStudentExist(student.getAdmissionNo());
+		if(!isStudentExist) {
+			int count = 0;
 			try {
-				pst1.setBinaryStream(1, student.getPhoto().getInputStream(), (int) student.getPhoto().getSize());
-			} catch (IOException e) {
-				LOGGER.info("While converstion part to binaryStream" + e.getMessage());
-			}
-			pst1.setString(2, student.getAdmissionNo());
-			pst1.setDate(3, new java.sql.Date(student.getDateOfAdmission().getTime()));
-			pst1.setString(4, student.getStudentName());
-			pst1.setDate(5, new java.sql.Date(student.getDateOfBirth().getTime()));
-			pst1.setString(6, student.getGender());
-			pst1.setString(7, student.getNationality());
-			pst1.setString(8, student.getState());
-			pst1.setString(9, student.getReligion());
-			pst1.setString(10, student.getCaste());
-			pst1.setString(11, student.getCoc());
-			pst1.setString(12, student.getMotherTongue());
-			pst1.setString(13, student.getFatherName());
-			pst1.setString(14, student.getMotherName());
-			pst1.setString(15, student.getResidence());
-			pst1.setString(16, student.getFatherOccupation());
-			pst1.setString(17, student.getAddress());
-			pst1.setLong(18, student.getMobile());
-			pst1.setString(19, student.getPreviousSchool());
-			pst1.setLong(20, student.getTcNumber());
-			if (student.getTcDate() != null) {
-				pst1.setDate(21, new java.sql.Date(student.getTcDate().getTime()));
-			} else {
-				pst1.setDate(21, null);
-			}
-			pst1.setString(22, student.getClassAdmitted());
-			pst1.setString(23, student.getMedium());
-			pst1.setString(24, student.getIdentityMarks());
-			pst1.setDate(25, (Date) student.getCreationDate());
-			pst1.setString(26, student.getCreatedBy());
-
-			count = pst1.executeUpdate();
-			// con.commit();
-			if (count > 0) {
+				con = dbConnection.getConnection();
+				pst1 = con.prepareStatement(ADD_STUDENT);
 				try {
-
-					pst2 = con.prepareStatement(ADD_VIEW_STUDENT);
-					pst2.setString(1, student.getAdmissionNo());
-					pst2.setString(2, student.getStudentName());
-					pst2.setDate(3, new java.sql.Date(student.getDateOfBirth().getTime()));
-					pst2.setString(4, student.getGender());
-					pst2.setString(5, student.getFatherName());
-					pst2.setString(6, student.getMotherName());
-					pst2.setString(7, student.getResidence());
-					pst2.setLong(8, student.getMobile());
-					pst2.setString(9, student.getClassAdmitted());
-					pst2.setString(10, student.getClassAdmitted());
-					pst2.setString(11, student.getCoc());
-					pst2.setDate(12, (Date) student.getCreationDate());
-					pst2.setString(13, student.getCreatedBy());
-					count = pst2.executeUpdate();
-					// con.commit();
-				} catch (SQLException e) {
-					LOGGER.info("While Adding Student into Database: " + e.getMessage());
-				} finally {
-					dbConnection.close(pst2, con);
+					pst1.setBinaryStream(1, student.getPhoto().getInputStream(), (int) student.getPhoto().getSize());
+				} catch (IOException e) {
+					LOGGER.info("While converstion part to binaryStream" + e.getMessage());
 				}
+				pst1.setString(2, student.getAdmissionNo());
+				pst1.setDate(3, new java.sql.Date(student.getDateOfAdmission().getTime()));
+				pst1.setString(4, student.getStudentName());
+				pst1.setDate(5, new java.sql.Date(student.getDateOfBirth().getTime()));
+				pst1.setString(6, student.getGender());
+				pst1.setString(7, student.getNationality());
+				pst1.setString(8, student.getState());
+				pst1.setString(9, student.getReligion());
+				pst1.setString(10, student.getCaste());
+				pst1.setString(11, student.getCoc());
+				pst1.setString(12, student.getMotherTongue());
+				pst1.setString(13, student.getFatherName());
+				pst1.setString(14, student.getMotherName());
+				pst1.setString(15, student.getResidence());
+				pst1.setString(16, student.getFatherOccupation());
+				pst1.setString(17, student.getAddress());
+				pst1.setLong(18, student.getMobile());
+				pst1.setString(19, student.getPreviousSchool());
+				pst1.setLong(20, student.getTcNumber());
+				if (student.getTcDate() != null) {
+					pst1.setDate(21, new java.sql.Date(student.getTcDate().getTime()));
+				} else {
+					pst1.setDate(21, null);
+				}
+				pst1.setString(22, student.getClassAdmitted());
+				pst1.setString(23, student.getMedium());
+				pst1.setString(24, student.getIdentityMarks());
+				pst1.setDate(25, (Date) student.getCreationDate());
+				pst1.setString(26, student.getCreatedBy());
+				
+				count = pst1.executeUpdate();
+				// con.commit();
+				if (count > 0) {
+					try {
+						
+						pst2 = con.prepareStatement(ADD_VIEW_STUDENT);
+						pst2.setString(1, student.getAdmissionNo());
+						pst2.setString(2, student.getStudentName());
+						pst2.setDate(3, new java.sql.Date(student.getDateOfBirth().getTime()));
+						pst2.setString(4, student.getGender());
+						pst2.setString(5, student.getFatherName());
+						pst2.setString(6, student.getMotherName());
+						pst2.setString(7, student.getResidence());
+						pst2.setLong(8, student.getMobile());
+						pst2.setString(9, student.getClassAdmitted());
+						pst2.setString(10, student.getClassAdmitted());
+						pst2.setString(11, student.getCoc());
+						pst2.setDate(12, (Date) student.getCreationDate());
+						pst2.setString(13, student.getCreatedBy());
+						count = pst2.executeUpdate();
+						// con.commit();
+					} catch (SQLException e) {
+						LOGGER.info("While Adding Student into Database: " + e.getMessage());
+					} finally {
+						dbConnection.close(pst2);
+					}
+				}
+			} catch (SQLException e) {
+				LOGGER.info("While Adding Student into Database: " + e.getMessage());
+			} finally {
+				dbConnection.close(pst1, con);
 			}
-		} catch (SQLException e) {
-			LOGGER.info("While Adding Student into Database: " + e.getMessage());
-		} finally {
-			dbConnection.close(pst1, con);
+			status = count > 0;
+		} else {
+			status = updateStudent(student);
 		}
-		return (count > 0);
+		return status;
 	}
 
 	@Override
 	public boolean updateStudent(Student student) {
 		Connection con = null;
 		PreparedStatement pst = null;
+		PreparedStatement pst2 = null;
 		int count = 0;
 		try {
 			con = dbConnection.getConnection();
-			pst = con.prepareStatement(UPDATE_VIEW_STUDENT);
+			pst = con.prepareStatement(UPDATE_STUDENT);
 			try {
 				pst.setBinaryStream(1, student.getPhoto().getInputStream(), (int) student.getPhoto().getSize());
 			} catch (IOException e) {
 				LOGGER.info("While converstion part to binaryStream" + e.getMessage());
 			}
-			pst.setString(2, student.getAdmissionNo());
-			pst.setDate(3, (Date) student.getDateOfAdmission());
-			pst.setString(4, student.getStudentName());
-			pst.setDate(5, (Date) student.getDateOfBirth());
-			pst.setString(6, student.getGender());
-			pst.setString(7, student.getNationality());
-			pst.setString(8, student.getState());
-			pst.setString(9, student.getReligion());
-			pst.setString(10, student.getCaste());
-			pst.setString(11, student.getCoc());
-			pst.setString(12, student.getMotherTongue());
-			pst.setString(13, student.getFatherName());
-			pst.setString(14, student.getMotherName());
-			pst.setString(15, student.getResidence());
-			pst.setString(16, student.getFatherOccupation());
-			pst.setString(17, student.getAddress());
-			pst.setLong(18, student.getMobile());
-			pst.setString(19, student.getPreviousSchool());
-			pst.setLong(20, student.getTcNumber());
-			pst.setDate(21, (Date) student.getTcDate());
-			pst.setString(22, student.getClassAdmitted());
-			pst.setString(23, student.getMedium());
-			pst.setString(24, student.getIdentityMarks());
-			pst.setDate(25, (Date) student.getUpdatedDate());
-			pst.setString(26, student.getUpdatedBy());
+			pst.setDate(2, new java.sql.Date(student.getDateOfAdmission().getTime()));
+			pst.setString(3, student.getStudentName());
+			pst.setDate(4, new java.sql.Date(student.getDateOfBirth().getTime()));
+			pst.setString(5, student.getGender());
+			pst.setString(6, student.getNationality());
+			pst.setString(7, student.getState());
+			pst.setString(8, student.getReligion());
+			pst.setString(9, student.getCaste());
+			pst.setString(10, student.getCoc());
+			pst.setString(11, student.getMotherTongue());
+			pst.setString(12, student.getFatherName());
+			pst.setString(13, student.getMotherName());
+			pst.setString(14, student.getResidence());
+			pst.setString(15, student.getFatherOccupation());
+			pst.setString(16, student.getAddress());
+			pst.setLong(17, student.getMobile());
+			pst.setString(18, student.getPreviousSchool());
+			pst.setLong(19, student.getTcNumber());
+			if (student.getTcDate() != null) {
+				pst.setDate(20, new java.sql.Date(student.getTcDate().getTime()));
+			} else {
+				pst.setDate(20, null);
+			}
+			pst.setString(21, student.getClassAdmitted());
+			pst.setString(22, student.getMedium());
+			pst.setString(23, student.getIdentityMarks());
+			pst.setDate(24, (Date) student.getUpdatedDate());
+			pst.setString(25, student.getUpdatedBy());
+			pst.setString(26, student.getAdmissionNo());
+			System.out.println(pst);
 			count = pst.executeUpdate();
-			con.commit();
+			//con.commit();
+			if(count > 0) {
+				try {
+					pst2 = con.prepareStatement(UPDATE_VIEW_STUDENT);
+					//STUDENT_NAME=?, DOB=?, GENDER=?, FATHER_NAME=?, MOTHER_NAME=?, RESIDENCE=?, PHONE_NUMBER=?, 
+					//CLASS_ADMITTED=?, CURRENT_CLASS=?, CASTE_CATEGORY=?, UPDATED_DATE=?, UPDATED_BY=? WEHRE ADMISSION_NUMBER=?
+					pst2.setString(1, student.getStudentName());
+					pst2.setDate(2, new java.sql.Date(student.getDateOfBirth().getTime()));
+					pst2.setString(3, student.getGender());
+					pst2.setString(4, student.getFatherName());
+					pst2.setString(5, student.getMotherName());
+					pst2.setString(6, student.getResidence());
+					pst2.setLong(7, student.getMobile());
+					pst2.setString(8, student.getClassAdmitted());
+					pst2.setString(9, student.getCurrentClass());
+					pst2.setString(10, student.getCoc());
+					pst2.setDate(11, (Date) student.getUpdatedDate());
+					pst2.setString(12, student.getUpdatedBy());
+					pst2.setString(13, student.getAdmissionNo());
+					count = pst2.executeUpdate();
+				} catch (Exception e) {
+					LOGGER.info("While Updating View Student into database: " + e.getMessage());
+				} finally {
+					dbConnection.close(pst2);
+				}
+			}
 		} catch (SQLException e) {
 			LOGGER.info("While Updating Student into database: " + e.getMessage());
 		} finally {
@@ -413,5 +453,27 @@ public class StudentOperImp implements StudentOperations {
 			dbConnection.close(pst, con);
 		}
 		return stdAdmissionList;
+	}
+
+	@Override
+	public boolean isStudentExist(String admissionNo) {
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		int count = 0;
+		try {
+			con = dbConnection.getConnection();
+			pst = con.prepareStatement(IS_STUDENT_EXIST);
+			pst.setString(1, admissionNo);
+			rs = pst.executeQuery();
+			while (rs.next()) {
+				count = rs.getInt("COUNT");
+			}
+		} catch (SQLException e) {
+			LOGGER.info("While checking Student existing in database:" + e.getMessage());
+		} finally {
+			dbConnection.close(rs, pst, con);
+		}
+		return (count > 0);
 	}
 }

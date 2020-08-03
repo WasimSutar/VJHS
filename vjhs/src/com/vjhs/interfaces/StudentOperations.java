@@ -26,5 +26,7 @@ public interface StudentOperations {
 	List<String> getStudentAdminNo(String cls, String name);
 	
 	List<Student> getStudentAdminNoByClassName(String cls);
+	
+	boolean isStudentExist(String admissionNo);
 
 }

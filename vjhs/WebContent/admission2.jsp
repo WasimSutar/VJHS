@@ -24,6 +24,21 @@
 				</ul>
 			</div>
 			<div class="mainRightBodyStyle">
+				<c:if test="${messageStudent != null}">
+					<div class="
+					<c:if test="${status == 'S'}">
+				         success-message
+				     </c:if>
+				    <c:if test="${status == 'E'}">
+				         error-message
+				     </c:if>
+				     <c:if test="${status == 'W'}">
+				         warning-message
+				     </c:if>
+					">
+				 		<c:out value="${messageStudent}"></c:out>
+					</div>
+				</c:if>
 				<form action="regform.student" enctype="multipart/form-data"
 					method="post" id="registrationform" name="registrationform">
 					<fmt:bundle basename="com.vjhs.labels.label">
@@ -43,7 +58,7 @@
 										<label class="leftLabel"><fmt:message
 												key="ADMISSION_NO"></fmt:message></label> <label class="rightLabel"><input
 											type="text" name="admission_no" id="admission_no"
-											class="inputType" maxlength="8"
+											class="inputType" maxlength="8" onkeypress="return allowonlynumber(event, 8, admission_no)"
 											placeholder="Enter Admission Number"
 											value="${sessionScope.student.admissionNo}"></label>
 									</div>
@@ -51,7 +66,7 @@
 										<label class="leftLabel"><fmt:message key="DOA"></fmt:message></label>
 										<label class="rightLabel"> <input type="text"
 											name="todaydate" class="datepicker inputType"
-											value="${sessionScope.student!=null?sessionScope.student.dateOfAdmission:now}" /></label>
+											value="<fmt:formatDate value="${sessionScope.student!=null?sessionScope.student.dateOfAdmission:now}" pattern="dd/MM/yyyy"/>" /></label>
 									</div>
 									<div class="fulWidth">
 										<label class="leftLabel"><fmt:message
@@ -166,7 +181,7 @@
 									<label class="leftLabel"><fmt:message key="PHONE_NO"></fmt:message></label>
 									<label class="rightLabel"><input type="tel"
 										class="inputType" name="phone_no" id="phone_no" maxlength="10"
-										onkeypress="return allowonlynumber(event)"
+										onkeypress="return allowonlynumber(event, 10, phone_no)"
 										placeholder="Enter Mobile Number"
 										value="${sessionScope.student.mobile}"> </label>
 								</div>
@@ -187,7 +202,7 @@
 									<label class="leftLabel"><fmt:message key="DOB"></fmt:message></label>
 									<label class="rightLabel"><input type="text" name="dob"
 										class="datepicker inputType"
-										value="${sessionScope.student!=null?sessionScope.student.dateOfBirth:now}"></label>
+										value="<fmt:formatDate value="${sessionScope.student!=null?sessionScope.student.dateOfBirth:now}" pattern="dd/MM/yyyy"/>"></label>
 								</div>
 								<div class="fulWidth">
 									<label class="leftLabel"><fmt:message key="GENDER"></fmt:message></label>
@@ -195,11 +210,11 @@
 										class="selectType" name="gender">
 
 											<option value="male"
-												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='male'}">selected</c:if>><fmt:message
+												<c:if test="${sessionScope.student.gender=='male'}">selected</c:if>><fmt:message
 													key="GENDER_MALE"></fmt:message>
 											</option>
 											<option value="female"
-												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='female'}">selected</c:if>><fmt:message
+												<c:if test="${sessionScope.student.gender=='female'}">selected</c:if>><fmt:message
 													key="GENDER_FEMALE"></fmt:message>
 											</option>
 									</select> </label>
@@ -255,27 +270,27 @@
 										class="selectType" name="coc">
 												<option value="<fmt:message
 													key="COC_OTHERS"></fmt:message>"
-												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='Others'}">selected</c:if>><fmt:message
+												<c:if test="${sessionScope.student.coc=='Others'}">selected</c:if>><fmt:message
 													key="COC_OTHERS"></fmt:message>
 											</option>
 											<option value="<fmt:message
 													key="COC_OC"></fmt:message>"
-												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='OC'}">selected</c:if>><fmt:message
+												<c:if test="${sessionScope.student.coc=='OC'}">selected</c:if>><fmt:message
 													key="COC_OC"></fmt:message>
 											</option>
 											<option value="<fmt:message
 													key="COC_BC"></fmt:message>"
-												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='BC'}">selected</c:if>><fmt:message
+												<c:if test="${sessionScope.student.coc=='BC'}">selected</c:if>><fmt:message
 													key="COC_BC"></fmt:message>
 											</option>
 											<option value="<fmt:message
 													key="COC_SC"></fmt:message>"
-												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='SC'}">selected</c:if>><fmt:message
+												<c:if test="${sessionScope.student.coc=='SC'}">selected</c:if>><fmt:message
 													key="COC_SC"></fmt:message>
 											</option>
 											<option value="<fmt:message
 													key="COC_ST"></fmt:message>"
-												<c:if test="${sessionScope.student!=null && sessionScope.student.gender=='ST'}">selected</c:if>><fmt:message
+												<c:if test="${sessionScope.student.coc=='ST'}">selected</c:if>><fmt:message
 													key="COC_ST"></fmt:message>
 											</option>
 									</select>
@@ -313,15 +328,15 @@
 								<div class="fulWidth noHide">
 									<label class="leftLabel"><fmt:message key="TC_NUMBER"></fmt:message></label>
 									<label class="rightLabel"><input type="text"
-										class="inputType" name="tcNum" id="tcNum"
-										placeholder="Enter TC Number"
+										class="inputType" name="tcNum" id="tcNum" maxlength="8"
+										placeholder="Enter TC Number" onkeypress="return allowonlynumber(event, 8, tcNum)"
 										value="${sessionScope.student.tcNumber}" /></label>
 								</div>
 								<div class="fulWidth noHide">
 									<label class="leftLabel"><fmt:message key="TC_DATE"></fmt:message></label>
 									<label class="rightLabel"> <input type="text"
 										name="rec_tc_date" class="datepicker inputType"
-										value="${sessionScope.student!=null?sessionScope.student.tcDate:now}" /></label>
+										value="<fmt:formatDate value="${sessionScope.student!=null?sessionScope.student.tcDate:now}" pattern="dd/MM/yyyy"/>" /></label>
 
 								</div>
 
@@ -346,6 +361,12 @@
 			$("#tcNo").click(function() {
 				$(".noHide").hide();
 			});
+			
+			var tcNumber = $('#tcNum').val();
+			if(tcNumber != null && "" != tcNumber){
+				$("#tcYes").prop("checked","true");
+				$("#tcYes").trigger("click");
+			}
 		});
 
 		$(function() {

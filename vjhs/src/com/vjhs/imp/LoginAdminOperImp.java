@@ -66,13 +66,12 @@ public class LoginAdminOperImp implements LoginAdminOperations {
 		try {
 			con = dbConnection.getConnection();
 			pst = con.prepareStatement(ADD_LOGINADMIN);
-			pst.setString(1, loginAdmin.getUserId());
-			pst.setString(2, loginAdmin.getUserName());
-			pst.setString(3, loginAdmin.getPassword());
-			pst.setString(4, loginAdmin.getRole());
-			pst.setString(5, loginAdmin.getBranch());
+			pst.setString(1, loginAdmin.getUserName());
+			pst.setString(2, loginAdmin.getPassword());
+			pst.setString(3, loginAdmin.getRole());
+			pst.setString(4, loginAdmin.getBranch());
 			count = pst.executeUpdate();
-			con.commit();
+			//con.commit();
 		} catch (SQLException e) {
 			LOGGER.info("While Adding LoginAdmin into Database: "
 					+ e.getMessage());
@@ -139,7 +138,7 @@ public class LoginAdminOperImp implements LoginAdminOperations {
 			pst = con.prepareStatement(UPDATE_LOGINADMIN);
 			pst.setString(1, userId);
 			count = pst.executeUpdate();
-			con.commit();
+			//con.commit();
 		} catch (SQLException e) {
 			LOGGER.info("While Updating LoginAdmin into Database: "
 					+ e.getMessage());

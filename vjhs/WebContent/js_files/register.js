@@ -13,7 +13,7 @@
 
 
 
-function allowonlynumber(key) {
+/*function allowonlynumber(key) {
 	var datakey = (key.which) ? key.which : key.keyCode;// capturing pressed key
 	var textboxdata = document.getElementById("phone_no");// capturing Text
 	// box reference
@@ -25,6 +25,22 @@ function allowonlynumber(key) {
 		// digits
 		return false;
 	else if (textboxdata.value.length < 10)// restricting more than 10 digits
+		return true;
+
+} */
+
+function allowonlynumber(key, maxNumber, id) {
+	var datakey = (key.which) ? key.which : key.keyCode;// capturing pressed key
+	var textboxdata = document.getElementById(id);// capturing Text
+	// box reference
+	if (datakey == 46)// allowing delete key
+		return true;
+	else if (datakey == 8)// allowing backspace key
+		return true;
+	else if ((datakey < 48 || datakey > 57))// avoiding characters other than
+		// digits
+		return false;
+	else if (textboxdata.value.length <= maxNumber)// restricting based on the maxNumber given
 		return true;
 
 }

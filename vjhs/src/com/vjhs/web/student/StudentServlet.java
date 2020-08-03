@@ -104,6 +104,7 @@ public class StudentServlet extends HttpServlet {
 		}
 		String std = request.getParameter("std");
 		student.setClassAdmitted(std);
+		student.setCurrentClass(std);
 		String medium_of_instruction = request.getParameter("medium_of_instruction");
 		student.setMedium(medium_of_instruction);
 		String marks_of_identity = request.getParameter("marks_of_identity");
@@ -128,13 +129,19 @@ public class StudentServlet extends HttpServlet {
 			Student student = getStudentDetails(request);
 			student.setAdded(studentOperations.addStudent(student));
 			request.setAttribute("student", student);
+			HttpSession httpSession = request.getSession(true);
+			httpSession.setAttribute("student", student);
 			request.getRequestDispatcher("confirm_admission2.jsp").forward(request, response);
 		} else if (uri.endsWith("confirmYes.student")) {
 			HttpSession httpSession = request.getSession(false);
+			LOGGER.info("confirmYes httpsession: " + httpSession);
 			Student student = (Student) httpSession.getAttribute("student");
+			LOGGER.info("confirmYes httpsession student: " + student.toString());
 			if (student.isAdded()) {
+				request.setAttribute("status", "S");
 				request.setAttribute("messageStudent", "Student: " + student.getStudentName() + " added Successfully");
 			} else {
+				request.setAttribute("status", "E");
 				request.setAttribute("messageStudent",
 						"Getting Error while adding Student: " + student.getStudentName());
 			}
@@ -147,6 +154,10 @@ public class StudentServlet extends HttpServlet {
 				studentOperations.deleteStudent(student.getAdmissionNo());
 			}
 			httpSession.invalidate();
+			request.setAttribute("status", "W");
+			request.setAttribute("messageStudent", "Operation cancelled");
+			request.getRequestDispatcher("admission2.jsp").forward(request, response);
+		} else if(uri.endsWith("edit.student")) {
 			request.getRequestDispatcher("admission2.jsp").forward(request, response);
 		}
 	}

@@ -61,8 +61,7 @@
 									<div class="fulWidth">
 										<label class="leftLabel"><fmt:message key="DOA"></fmt:message></label>
 										<label class="rightLabelText2"><fmt:formatDate
-												type="date" value="${student.dateOfAdmission}" />
-										</label>
+												type="date" value="${student.dateOfAdmission}" /> </label>
 									</div>
 									<div class="fulWidth">
 										<label class="leftLabel"><fmt:message
@@ -196,11 +195,34 @@
 							</fieldset>
 						</div>
 						<div class="minHeightDiv"></div>
+						<div class="formButtons">
+							<input class="btnStyle" type="button" id="cancel" name="cancel"
+								value="Cancel"> 
+							&nbsp;&nbsp; <input class="btnStyle" type="button" id="edit"
+								name="edit" value="Edit">&nbsp; &nbsp; <input type="button"
+								class="btnStyle" id="confirm" name="confirm" value="Confirm">
+						</div>
 					</fmt:bundle>
 				</form>
 			</div>
 		</div>
 	</div>
 	<jsp:include page="vjhsbottom.jsp" />
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$("#confirm").click(function() {
+				$("#registrationform").attr("action", "confirmYes.student");
+				$("#registrationform").submit();
+			});
+			$("#edit").click(function() {
+				$("#registrationform").attr("action", "edit.student");
+				$("#registrationform").submit();
+			});
+			$("#cancel").click(function() {
+				$("#registrationform").attr("action", "confirmNo.student");
+				$("#registrationform").submit();
+			});
+		});
+	</script>
 </body>
 </html>
