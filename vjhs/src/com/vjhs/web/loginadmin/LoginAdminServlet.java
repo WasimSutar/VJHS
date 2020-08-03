@@ -79,7 +79,8 @@ public class LoginAdminServlet extends HttpServlet {
 					splitObj = loginDet.split("=");
 					if (splitObj[1] != null && !"".equals(splitObj[1]) && !"null".equals(splitObj[1])) {
 						cookie = null;
-						cookie = new Cookie(splitObj[0], splitObj[1]);
+						cookie = new Cookie(splitObj[0].trim(), splitObj[1].split(" ")[0].trim());
+						System.out.println(splitObj[0].trim()+" "+splitObj[1].split(" ")[0].trim());
 						response.addCookie(cookie);
 					}
 				}
@@ -101,12 +102,6 @@ public class LoginAdminServlet extends HttpServlet {
 			request.getRequestDispatcher("adminhomepage.jsp").forward(request, response);
 		} else if (uri.endsWith("logout.admin")) {
 			eraseCookie(request, response);
-			try {
-				Thread.sleep(2000 );
-			} catch (InterruptedException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
 			request.setAttribute("errorMessage", "You have logged out successfully");
 			request.getRequestDispatcher("vjhsadminlogin.jsp").forward(request, response);
 		}
@@ -124,26 +119,16 @@ public class LoginAdminServlet extends HttpServlet {
 		try {
 			Cookie[] cookies = null;
 			cookies = req.getCookies();
-			
 			if (cookies != null)
 				for (int i = 0; i < cookies.length; i++) {
 					Cookie cookie = cookies[i];
 					System.out.println("Cookie :"+cookie.getName());
 					cookie.setMaxAge(0);
 					resp.addCookie(cookie);
-					//System.out.println("Cookie after clear :"+cookie.getName());
-//					cookies[i].setValue("");
-//					cookies[i].setPath("/");
-//					cookies[i].setMaxAge(0);
-//					resp.addCookie(cookies[i]);
 				}
-			
-		
 		} catch (Exception e) {
 			e.printStackTrace();
-			// TODO: handle exception
 		}
-		
 	}
 
 }

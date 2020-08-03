@@ -39,7 +39,7 @@
 		<div class="logInfo">
 			<c:forEach items="${cookie}" var="currentCookie">
 				<c:if
-					test="${currentCookie.key == 'userName' && currentCookie.value.value != ''}"> 
+					test="${currentCookie.key == 'name' && currentCookie.value.value != ''}"> 
 				Welcome Back,&nbsp;<c:out value="${currentCookie.value.value }"></c:out> &nbsp;<a
 						href="logout.admin" class="btnStyle">Logout</a>
 				</c:if>

@@ -48,7 +48,7 @@ public class LoginAdminOperImp implements LoginAdminOperations {
 				loginAdmin.setPassword(rs.getString("PASSWORD"));
 				loginAdmin.setRole(rs.getString("ROLE"));
 				loginAdmin.setBranch(rs.getString("BRANCH"));
-				loginAdmin.setName(rs.getNString("NAME"));
+				loginAdmin.setName(rs.getString("NAME"));
 				loginAdmin.setEmail(rs.getString("EMAIL"));
 			}
 		} catch (SQLException e) {
