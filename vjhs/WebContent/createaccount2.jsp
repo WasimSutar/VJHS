@@ -24,8 +24,8 @@
 						</div>
 						<div class="fulWidth">
 							<label class="lgnLeftLbl">Enter email id</label> <label
-								class="lgnRightLbl"><input type="text" name="userName"
-								id="userName" placeholder="User Name" class="loginInput" /></label>
+								class="lgnRightLbl"><input type="text" name="email"
+								id="email" placeholder="User Name" class="loginInput" /></label>
 						</div>
 						<div class="fulWidth">
 							<label class="lgnLeftLbl">Enter User Name</label> <label

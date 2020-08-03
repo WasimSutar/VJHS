@@ -10,6 +10,8 @@ package com.vjhs.pojo;
 public class LoginAdmin {
 
 	private String userId;
+	private String name;
+	private String email;
 	private String userName;
 	private String password;
 	private String branch;
@@ -91,90 +93,109 @@ public class LoginAdmin {
 	}
 
 	/**
-	 * @param userId
-	 *            the userId to set
+	 * @param userId the userId to set
 	 */
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
 
 	/**
-	 * @param userName
-	 *            the userName to set
+	 * @param userName the userName to set
 	 */
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
 	/**
-	 * @param password
-	 *            the password to set
+	 * @param password the password to set
 	 */
 	public void setPassword(String password) {
 		this.password = password;
 	}
 
 	/**
-	 * @param branch
-	 *            the branch to set
+	 * @param branch the branch to set
 	 */
 	public void setBranch(String branch) {
 		this.branch = branch;
 	}
 
 	/**
-	 * @param role
-	 *            the role to set
+	 * @param role the role to set
 	 */
 	public void setRole(String role) {
 		this.role = role;
 	}
 
 	/**
-	 * @param attribute1
-	 *            the attribute1 to set
+	 * @param attribute1 the attribute1 to set
 	 */
 	public void setAttribute1(String attribute1) {
 		this.attribute1 = attribute1;
 	}
 
 	/**
-	 * @param attribute2
-	 *            the attribute2 to set
+	 * @param attribute2 the attribute2 to set
 	 */
 	public void setAttribute2(String attribute2) {
 		this.attribute2 = attribute2;
 	}
 
 	/**
-	 * @param attribute3
-	 *            the attribute3 to set
+	 * @param attribute3 the attribute3 to set
 	 */
 	public void setAttribute3(String attribute3) {
 		this.attribute3 = attribute3;
 	}
 
 	/**
-	 * @param attribute4
-	 *            the attribute4 to set
+	 * @param attribute4 the attribute4 to set
 	 */
 	public void setAttribute4(String attribute4) {
 		this.attribute4 = attribute4;
 	}
 
 	/**
-	 * @param attribute5
-	 *            the attribute5 to set
+	 * @param attribute5 the attribute5 to set
 	 */
 	public void setAttribute5(String attribute5) {
 		this.attribute5 = attribute5;
 	}
 
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @param name the name to set
+	 */
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * @return the email
+	 */
+	public String getEmail() {
+		return email;
+	}
+
+	/**
+	 * @param email the email to set
+	 */
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
 	@Override
 	public String toString() {
-		return "userId=" + userId + ",userName=" + userName + ",password=" + password + ",branch=" + branch + ",role="
-				+ role + ",attribute1=" + attribute1 + ",attribute2=" + attribute2 + ",attribute3=" + attribute3
-				+ ",attribute4=" + attribute4 + ",attribute5=" + attribute5;
+		return "userId=" + userId + ", name=" + name + ", email=" + email + ", userName=" + userName + ", password="
+				+ password + ", branch=" + branch + ", role=" + role + ", attribute1=" + attribute1 + ", attribute2="
+				+ attribute2 + ", attribute3=" + attribute3 + ", attribute4=" + attribute4 + ", attribute5="
+				+ attribute5;
 	}
 
 }

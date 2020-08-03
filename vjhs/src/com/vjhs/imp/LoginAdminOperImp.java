@@ -48,6 +48,8 @@ public class LoginAdminOperImp implements LoginAdminOperations {
 				loginAdmin.setPassword(rs.getString("PASSWORD"));
 				loginAdmin.setRole(rs.getString("ROLE"));
 				loginAdmin.setBranch(rs.getString("BRANCH"));
+				loginAdmin.setName(rs.getNString("NAME"));
+				loginAdmin.setEmail(rs.getString("EMAIL"));
 			}
 		} catch (SQLException e) {
 			LOGGER.info("While Retreving loginAdmin details from Database: "
@@ -70,6 +72,8 @@ public class LoginAdminOperImp implements LoginAdminOperations {
 			pst.setString(2, loginAdmin.getPassword());
 			pst.setString(3, loginAdmin.getRole());
 			pst.setString(4, loginAdmin.getBranch());
+			pst.setString(5, loginAdmin.getName());
+			pst.setString(6, loginAdmin.getEmail());
 			count = pst.executeUpdate();
 			//con.commit();
 		} catch (SQLException e) {
